@@ -1,0 +1,1 @@
+/home/osnapdev/OSNAP/postgres/src/test/modules/worker_spi/Makefile

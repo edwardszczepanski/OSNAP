@@ -1,0 +1,1 @@
+/home/osnapdev/OSNAP/postgres/src/interfaces/ecpg/test/preproc/Makefile

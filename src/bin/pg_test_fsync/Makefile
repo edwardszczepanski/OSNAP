@@ -1,0 +1,1 @@
+/home/osnapdev/OSNAP/postgres/src/bin/pg_test_fsync/Makefile

@@ -1,0 +1,1 @@
+/home/osnapdev/OSNAP/postgres/contrib/pageinspect/Makefile
