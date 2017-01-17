@@ -1,1 +1,0 @@
-/home/osnapdev/OSNAP/postgres/contrib/hstore_plperl/Makefile

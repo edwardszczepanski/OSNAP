@@ -1,1 +1,0 @@
-/home/osnapdev/OSNAP/postgres/src/test/modules/test_shm_mq/Makefile

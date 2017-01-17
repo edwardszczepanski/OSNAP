@@ -1,1 +1,0 @@
-/home/osnapdev/OSNAP/postgres/src/test/locale/koi8-r/Makefile

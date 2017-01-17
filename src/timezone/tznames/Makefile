@@ -1,1 +1,0 @@
-/home/osnapdev/OSNAP/postgres/src/timezone/tznames/Makefile

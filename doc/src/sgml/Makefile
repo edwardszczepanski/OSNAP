@@ -1,1 +1,0 @@
-/home/osnapdev/OSNAP/postgres/doc/src/sgml/Makefile

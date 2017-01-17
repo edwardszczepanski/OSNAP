@@ -1,1 +1,0 @@
-/home/osnapdev/OSNAP/postgres/contrib/auth_delay/Makefile

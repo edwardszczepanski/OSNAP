@@ -1,1 +1,0 @@
-/home/osnapdev/OSNAP/postgres/contrib/tsm_system_rows/Makefile

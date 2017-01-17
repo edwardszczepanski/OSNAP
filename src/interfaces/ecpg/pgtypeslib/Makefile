@@ -1,1 +1,0 @@
-/home/osnapdev/OSNAP/postgres/src/interfaces/ecpg/pgtypeslib/Makefile
