@@ -71,3 +71,13 @@ STATEMENT:  CREATE TABLE vehicles(
 	    asset_fk integer,
 	    PRIMARY KEY(vehicle_pk),
 	    FOREIGN KEY(asset_fk) REFERENCES assets);
+FATAL:  database "Passowd" does not exist
+FATAL:  database "Password" does not exist
+FATAL:  database "Password:" does not exist
+FATAL:  role "postgres" does not exist
+FATAL:  role "postgres" does not exist
+ERROR:  syntax error at or near ")" at character 64
+STATEMENT:  INSERT INTO vehicles (vehicle_pk, asset_fk) VALUES (1234, 5678));
+ERROR:  insert or update on table "vehicles" violates foreign key constraint "vehicles_asset_fk_fkey"
+DETAIL:  Key (asset_fk)=(5678) is not present in table "assets".
+STATEMENT:  INSERT INTO vehicles (vehicle_pk, asset_fk) VALUES (1234, 5678);
