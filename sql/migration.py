@@ -1,8 +1,5 @@
 import psycopg2, os, sys, csv, glob
-
-db_name = "lost"
-port = "5432"
-cursor = None
+from random import randint
 
 def main():
     connect()
@@ -10,28 +7,44 @@ def main():
     for filename in glob.iglob(dir + "*.csv"):
         if "product_list" in filename:
             product_list(filename)
+    demo()
+    conn.commit()
 
 def product_list(filename):
     print("In product list")
-    reader = csv.reader(open(filename, newline=''), delimiter=' ', quotechar='|')
+    reader = csv.reader(open(filename, newline=''), delimiter=',', quotechar='|')
     first = True
     for row in reader:
         if first: first = False
         else:
-            insert("products", ["product_pk", "vendor", "description", "alt_description"], [gen_pk(row[0]), row[3], row[2], row[1]])
-    cursor.execute("INSERT INTO {}({}) VALUES ({})".format(table, ', '.join(columns), ', '.join(values)))
+            insert("products", ["product_pk", "vendor", "description", "alt_description"], [gen_pk(), row[3], row[2], row[1]])
 
-def gen_pk(string):
-    return abs(hash(string)) % (10 ** 8)
+def gen_pk():
+    range_start = 10**(8-1)
+    range_end = (10**8)-1
+    return randint(range_start, range_end)
+
+    #return abs(hash(string)) % (10 ** 8)
+
 
 def insert(table, columns, values):
-    print(table)
-    print(columns)
-    print(values)
-    cursor.execute("INSERT INTO {}({}) VALUES ({})".format(table, ', '.join(columns), ', '.join(values)))
+    column_string = ','.join(columns)
+    value_string = ""
+    for i in range(len(values)):
+        if type(values[i]) is str:
+            value_string += ("'" + values[i] + "'")
+        else:
+            value_string += (str(values[i]))
+        if i != (len(values) - 1):
+            value_string += ","
+    string = "INSERT INTO {}({}) VALUES ({});".format(table, column_string, value_string)
+    print(string)
+    cursor.execute(string)
+    #cursor.execute("INSERT INTO {}({}) VALUES ({});".format(table, column_string, value_string))
 
 def connect():
     global cursor
+    global conn
     connection_string = "host='localhost' port='" + port + "' dbname='" + db_name + "' user='osnapdev' password='secret'"
     conn = psycopg2.connect(connection_string)
     cursor = conn.cursor()
@@ -50,4 +63,7 @@ if __name__ == '__main__':
     if len(sys.argv) == 3:
         db_name = sys.argv[1]
         port = sys.argv[2]
+    else:
+        db_name = "lost"
+        port = "5432"
     main()
