@@ -3,17 +3,17 @@
  */
 CREATE TABLE products(
     product_pk integer,
-    vendor varchar(20),
-    description varchar(20),
-    alt_description varchar(20),
+    vendor varchar(128),
+    description varchar(128),
+    alt_description varchar(128),
     PRIMARY KEY(product_pk));
 
 CREATE TABLE assets(
     asset_pk integer,
     product_fk integer,
-    asset_tag varchar(20),
-    description varchar(20),
-    alt_description varchar(20),
+    asset_tag varchar(128),
+    description varchar(128),
+    alt_description varchar(128),
     PRIMARY KEY(asset_pk),
     FOREIGN KEY(product_fk) REFERENCES products);
 
@@ -25,9 +25,9 @@ CREATE TABLE vehicles(
 
 CREATE TABLE facilities(
     facility_pk integer,
-    fcode varchar(20),
-    common_name varchar(20),
-    location varchar(20),
+    fcode varchar(128),
+    common_name varchar(128),
+    location varchar(128),
     PRIMARY KEY(facility_pk));
 
 CREATE TABLE convoys(
@@ -56,13 +56,13 @@ CREATE TABLE asset_on(
 
 CREATE TABLE users(
     user_pk integer,
-    username varchar(20),
+    username varchar(128),
     active boolean,
     PRIMARY KEY(user_pk));
 
 CREATE TABLE roles(
     role_pk integer,
-    title varchar(20),
+    title varchar(128),
     PRIMARY KEY(role_pk));
 
 CREATE TABLE user_is(
@@ -83,15 +83,15 @@ CREATE TABLE user_supports(
 
 CREATE TABLE levels(
     level_pk integer,
-    abbrv varchar(20),
-    comment varchar(20),
+    abbrv varchar(128),
+    comment varchar(128),
     PRIMARY KEY(level_pk));
 
 
 CREATE TABLE compartments(
     compartment_pk integer,
-    abbrv varchar(20),
-    comment varchar(20),
+    abbrv varchar(128),
+    comment varchar(128),
     PRIMARY KEY(compartment_Pk));
 
 CREATE TABLE security_tags(
