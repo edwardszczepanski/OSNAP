@@ -2,3 +2,72 @@ LOG:  database system was shut down at 2017-01-22 09:47:26 UTC
 LOG:  MultiXact member wraparound protections are now enabled
 LOG:  database system is ready to accept connections
 LOG:  autovacuum launcher started
+FATAL:  database "osnapdev" does not exist
+FATAL:  database "osnapdev" does not exist
+ERROR:  syntax error at or near ")" at character 214
+STATEMENT:  create table assets(
+	    asset_pk integer,
+	    product_fk integer,
+	    asset_tag varchar(20),
+	    description varchar(20),
+	    alt_description varchar(20),
+	    PRIMARY KEY(product_pk),
+	    FOREIGN KEY(product_fk)
+	);
+ERROR:  syntax error at or near ")" at character 125
+STATEMENT:  create table vehicles(
+	    vehicle_pk integer,
+	    asset_fk integer,
+	    PRIMARY KEY(vehicle_pk),
+	    FOREIGN KEY(asset_fk)
+	);
+ERROR:  relation "products" already exists
+STATEMENT:  create table products(
+	    product_pk integer,
+	    vendor varchar(20),
+	    description varchar(20),
+	    alt_description varchar(20),
+	    PRIMARY KEY(product_pk));
+ERROR:  syntax error at or near ")" at character 213
+STATEMENT:  create table assets(
+	    asset_pk integer,
+	    product_fk integer,
+	    asset_tag varchar(20),
+	    description varchar(20),
+	    alt_description varchar(20),
+	    PRIMARY KEY(product_pk),
+	    FOREIGN KEY(product_fk));
+ERROR:  syntax error at or near ")" at character 124
+STATEMENT:  create table vehicles(
+	    vehicle_pk integer,
+	    asset_fk integer,
+	    PRIMARY KEY(vehicle_pk),
+	    FOREIGN KEY(asset_fk));
+ERROR:  relation "facilities" already exists
+STATEMENT:  create table facilities(
+	    facility_pk integer,
+	    fcode varchar(20),
+	    common_name varchar(20),
+	    location varchar(20),
+	    PRIMARY KEY(facility_pk));
+ERROR:  syntax error at or near "drop" at character 21
+STATEMENT:  drop table products
+	drop table facilities
+	select drop table facilities cascade;
+ERROR:  syntax error at or near "table" at character 13
+STATEMENT:  select drop table facilities cascade;
+ERROR:  column "product_pk" named in key does not exist at character 161
+STATEMENT:  CREATE TABLE assets(
+	    asset_pk integer,
+	    product_fk integer,
+	    asset_tag varchar(20),
+	    description varchar(20),
+	    alt_description varchar(20),
+	    PRIMARY KEY(product_pk),
+	    FOREIGN KEY(product_fk) REFERENCES products);
+ERROR:  relation "assets" does not exist
+STATEMENT:  CREATE TABLE vehicles(
+	    vehicle_pk integer,
+	    asset_fk integer,
+	    PRIMARY KEY(vehicle_pk),
+	    FOREIGN KEY(asset_fk) REFERENCES assets);
