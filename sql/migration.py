@@ -7,25 +7,33 @@ def main():
     for filename in glob.iglob(dir + "*.csv"):
         if "product_list" in filename:
             product_list(filename)
-    demo()
+        elif "inventory" in filename:
+            inventory(filename)
     conn.commit()
 
-def product_list(filename):
-    print("In product list")
-    reader = csv.reader(open(filename, newline=''), delimiter=',', quotechar='|')
-    first = True
+
+def inventory(filename):
+    reader = read(filename)
+    head = next(reader)
     for row in reader:
-        if first: first = False
-        else:
-            insert("products", ["product_pk", "vendor", "description", "alt_description"], [gen_pk(), row[3], row[2], row[1]])
+        # Search products for the row[1]. Use that primary key as the product_key, if generate 1.
+        insert("assets", ["asset_pk", "asset_tag", "description"], [gen_pk(), row[0], row[2]])
+
+def product_list(filename):
+    reader = read(filename)
+    head = next(reader)
+    for row in reader:
+        insert("products", ["product_pk", "vendor", "description", "alt_description"], [gen_pk(), row[3], row[2], row[1]])
+
+def read(filename):
+    return csv.reader(open(filename, newline=''), delimiter=',', quotechar='|')
+
 
 def gen_pk():
     range_start = 10**(8-1)
     range_end = (10**8)-1
     return randint(range_start, range_end)
-
     #return abs(hash(string)) % (10 ** 8)
-
 
 def insert(table, columns, values):
     column_string = ','.join(columns)
@@ -38,9 +46,7 @@ def insert(table, columns, values):
         if i != (len(values) - 1):
             value_string += ","
     string = "INSERT INTO {}({}) VALUES ({});".format(table, column_string, value_string)
-    print(string)
     cursor.execute(string)
-    #cursor.execute("INSERT INTO {}({}) VALUES ({});".format(table, column_string, value_string))
 
 def connect():
     global cursor

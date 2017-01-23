@@ -1,110 +1,106 @@
 /*
- * Asset Tables
+ * Asset Tables :%s/foo/bar/g
  */
+
 CREATE TABLE products(
-    product_pk integer,
+    product_pk serial primary key,
     vendor varchar(128),
     description varchar(128),
-    alt_description varchar(128),
-    PRIMARY KEY(product_pk));
+    alt_description varchar(128)
+);
 
 CREATE TABLE assets(
-    asset_pk integer,
-    product_fk integer,
+    asset_pk serial primary key,
+    product_fk integer REFERENCES products (product_pk),
     asset_tag varchar(128),
     description varchar(128),
-    alt_description varchar(128),
-    PRIMARY KEY(asset_pk),
-    FOREIGN KEY(product_fk) REFERENCES products);
+    alt_description varchar(128)
+);
 
 CREATE TABLE vehicles(
-    vehicle_pk integer,
-    asset_fk integer,
-    PRIMARY KEY(vehicle_pk),
-    FOREIGN KEY(asset_fk) REFERENCES assets);
+    vehicle_pk serial primary key,
+    asset_fk integer REFERENCES assets(asset_pk)
+);
 
 CREATE TABLE facilities(
-    facility_pk integer,
+    facility_pk serial primary key,
     fcode varchar(128),
     common_name varchar(128),
-    location varchar(128),
-    PRIMARY KEY(facility_pk));
+    location varchar(128)
+);
+
+CREATE TABLE asset_at(
+    asset_fk integer REFERENCES assets(asset_pk),
+    facility_fk integer REFERENCES facilities(facility_pk)
+);
 
 CREATE TABLE convoys(
-    convoy_pk integer,
-    facility_fk integer,
-    arrive_dt date,
-    depart_dt date,
-    PRIMARY KEY(convoy_pk),
-    FOREIGN KEY(facility_fk) REFERENCES facilities);
+    convoy_pk serial primary key,
+    facility_fk integer REFERENCES facilities(facility_pk),
+    arrive_dt timestamp,
+    depart_dt timestamp
+);
 
 CREATE TABLE used_by(
-    vehicle_fk integer,
-    convoy_fk integer,
-    FOREIGN KEY(vehicle_fk) REFERENCES vehicles,
-    FOREIGN KEY(convoy_fk) REFERENCES convoys);
+    vehicle_fk integer REFERENCES vehicles(vehicle_pk),
+    convoy_fk integer REFERENCES convoys(convoy_pk)
+);
 
 CREATE TABLE asset_on(
-    vehicle_fk integer,
-    convoy_fk integer,
-    FOREIGN KEY(vehicle_fk) REFERENCES vehicles,
-    FOREIGN KEY(convoy_fk) REFERENCES convoys);
+    asset_fk integer REFERENCES assets(asset_pk),
+    convoy_fk integer REFERENCES convoys(convoy_pk),
+    load_dt timestamp,
+    unload_dt timestamp
+);
 
 /*
  * User Tables
  */
 
 CREATE TABLE users(
-    user_pk integer,
+    user_pk serial primary key,
     username varchar(128),
-    active boolean,
-    PRIMARY KEY(user_pk));
+    active boolean
+);
 
 CREATE TABLE roles(
-    role_pk integer,
-    title varchar(128),
-    PRIMARY KEY(role_pk));
+    role_pk serial primary key,
+    title varchar(128)
+);
 
 CREATE TABLE user_is(
-    vehicle_fk integer,
-    role_fk integer,
-    FOREIGN KEY(vehicle_fk) REFERENCES vehicles,
-    FOREIGN KEY(role_fk) REFERENCES roles);
+    vehicle_fk integer REFERENCES vehicles(vehicle_pk),
+    role_fk integer REFERENCES roles(role_pk)
+);
 
 CREATE TABLE user_supports(
-    user_fk integer,
-    facility_fk integer,
-    FOREIGN KEY(user_fk) REFERENCES users,
-    FOREIGN KEY(facility_fk) REFERENCES facilities);
+    user_fk integer REFERENCES users(user_pk),
+    facility_fk integer REFERENCES facilities(facility_pk)
+);
 
 /*
  * Security Tables
  */
 
 CREATE TABLE levels(
-    level_pk integer,
+    level_pk serial primary key,
     abbrv varchar(128),
-    comment varchar(128),
-    PRIMARY KEY(level_pk));
+    comment varchar(128)
+);
 
 
 CREATE TABLE compartments(
-    compartment_pk integer,
+    compartment_pk serial primary key,
     abbrv varchar(128),
-    comment varchar(128),
-    PRIMARY KEY(compartment_Pk));
+    comment varchar(128)
+);
 
 CREATE TABLE security_tags(
-    tag_pk integer,
-    level_fk integer,
-    compartment_fk integer,
-    user_fk integer,
-    product_fk integer,
-    asset_fk integer,
-    PRIMARY KEY(tag_pk),
-    FOREIGN KEY(level_fk) REFERENCES levels,
-    FOREIGN KEY(compartment_fk) REFERENCES compartments,
-    FOREIGN KEY(user_fk) REFERENCES users,
-    FOREIGN KEY(product_fk) REFERENCES products,
-    FOREIGN KEY(asset_fk) REFERENCES assets);
+    tag_pk serial primary key,
+    level_fk integer REFERENCES levels(level_pk),
+    compartment_fk integer REFERENCES compartments(compartment_pk),
+    user_fk integer REFERENCES users(user_pk),
+    product_fk integer REFERENCES products(product_pk),
+    asset_fk integer REFERENCES assets(asset_pk)
+);
 
