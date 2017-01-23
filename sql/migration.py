@@ -5,35 +5,25 @@ def main():
     connect()
     dir = os.getcwd() + "/osnap_legacy/"
     for filename in glob.iglob(dir + "*.csv"):
-        if "product_list" in filename:
-            product_list(filename)
-        elif "inventory" in filename:
-            inventory(filename)
+        if "inventory" in filename:
+            name = filename.split('/')[-1].split('_')[0]
+            insert("facilities", ["fcode", "common_name", "location"], [name, name, name])
+            cursor.execute("SELECT facility_pk FROM facilities WHERE fcode = '" + name + "';")
+            facility_pk = cursor.fetchone()[0]
+            inventory(filename, facility_pk)
     conn.commit()
 
-
-def inventory(filename):
+def inventory(filename, facility_fk):
     reader = read(filename)
     head = next(reader)
     for row in reader:
-        # Search products for the row[1]. Use that primary key as the product_key, if generate 1.
-        insert("assets", ["asset_pk", "asset_tag", "description"], [gen_pk(), row[0], row[2]])
-
-def product_list(filename):
-    reader = read(filename)
-    head = next(reader)
-    for row in reader:
-        insert("products", ["product_pk", "vendor", "description", "alt_description"], [gen_pk(), row[3], row[2], row[1]])
+        insert("assets", ["asset_tag", "description"], [row[0], row[2]])
+        cursor.execute("SELECT asset_pk FROM assets WHERE asset_tag = '" + row[0] + "';")
+        asset_fk = cursor.fetchone()[0]
+        insert("asset_at", ["asset_fk", "facility_fk"], [asset_fk, facility_fk])
 
 def read(filename):
     return csv.reader(open(filename, newline=''), delimiter=',', quotechar='|')
-
-
-def gen_pk():
-    range_start = 10**(8-1)
-    range_end = (10**8)-1
-    return randint(range_start, range_end)
-    #return abs(hash(string)) % (10 ** 8)
 
 def insert(table, columns, values):
     column_string = ','.join(columns)
@@ -56,12 +46,6 @@ def connect():
     cursor = conn.cursor()
     work_mem = 2048
     cursor.execute('SET work_mem TO ' + str(work_mem))
-
-
-def demo():
-    cursor.execute("SELECT * FROM products")
-    records = cursor.fetchall()
-    print(records)
 
 if __name__ == '__main__':
     global db_name

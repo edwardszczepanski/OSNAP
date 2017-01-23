@@ -1,0 +1,1 @@
+SELECT fcode,asset_tag FROM assets a JOIN asset_at aa  ON a.asset_pk=aa.asset_fk JOIN facilities f ON aa.asset_fk=f.facility_pk;
