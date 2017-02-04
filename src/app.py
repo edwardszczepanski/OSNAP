@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, session, g, redirect, url_for, abort, flash
+import sys, psycopg2
 
 app = Flask(__name__)
 
@@ -6,16 +7,9 @@ app = Flask(__name__)
 def report_filter():
     return render_template('report_filter.html')
 
-@app.route('/facility_inventory')
-def facility_inventory():
-    return render_template('facility_inventory.html')
-
-@app.route('/in_transit')
-def in_transit():
-    return render_template('in_transit.html')
-
 @app.route('/logout')
 def logout():
+    session['logged_in'] = False
     return render_template('logout.html')
 
 @app.route('/', methods=['GET', 'POST'])
@@ -31,7 +25,7 @@ def login():
             session['username'] = request.form['username']
             session['password'] = request.form['password']
             flash('You were logged in')
-            return redirect(url_for('index'))
+            return redirect(url_for('report_filter'))
     return render_template('login.html', error=error)
 
 if __name__ == '__main__':
