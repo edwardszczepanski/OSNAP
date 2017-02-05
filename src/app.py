@@ -3,14 +3,21 @@ import sys, psycopg2
 
 app = Flask(__name__)
 
-@app.route('/report_filter')
+@app.route('/report_filter', methods=['GET', 'POST'])
 def report_filter():
+    val = None
     if request.method == 'POST':
-        return redirect(url_for('in_transit'))
+        if 'facility_name' in request.form:
+            session['facility_name'] = request.form['facility_name']
+            return redirect(url_for('facility_inventory'))
+        elif 'in_transit' in request.form:
+            session['in_transit'] = request.form['in_transit']
+            return redirect(url_for('in_transit'))
     return render_template('report_filter.html')
 
 @app.route('/facility_inventory')
 def facility_inventory():
+    return session['facility_name']
     return render_template('facility_inventory.html')
 
 @app.route('/in_transit')
@@ -26,9 +33,9 @@ def logout():
 def login():
     error = None
     if request.method == 'POST':
-        if False and request.form['username'] != 'USERNAME':#!= app.config['USERNAME']:
+        if False and request.form['username'] != 'USERNAME': #!= app.config['USERNAME']:
             error = 'Invalid username'
-        elif False and request.form['password'] != 'PASSWORD':#app.config['PASSWORD']:
+        elif False and request.form['password'] != 'PASSWORD': #app.config['PASSWORD']:
             error = 'Invalid password'
         else:
             session['logged_in'] = True
@@ -42,3 +49,4 @@ if __name__ == '__main__':
     app.secret_key = 'super secret key'
     app.debug = True
     app.run(host='0.0.0.0', port=8080)
+
