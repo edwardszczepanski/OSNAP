@@ -1,6 +1,9 @@
 {% extends "layout.html" %}
 {% block body %}
   {% if session.logged_in %}
+    <div>
+        What is going on?
+    </div>
     <form action="{{ url_for('report_filter') }}" method="post" class="add-entry">
       <dl>
         <dt>Title:
