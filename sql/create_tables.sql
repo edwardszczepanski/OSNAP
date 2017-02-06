@@ -31,14 +31,18 @@ CREATE TABLE facilities(
 
 CREATE TABLE asset_at(
     asset_fk integer REFERENCES assets(asset_pk),
-    facility_fk integer REFERENCES facilities(facility_pk)
+    facility_fk integer REFERENCES facilities(facility_pk),
+    arrive_dt timestamp,
+    depart_dt timestamp
 );
 
 CREATE TABLE convoys(
     convoy_pk serial primary key,
-    facility_fk integer REFERENCES facilities(facility_pk),
-    arrive_dt timestamp,
-    depart_dt timestamp
+    request varchar(128),
+    source_fk varchar(128),
+    dest_fk varchar(128),
+    depart_dt timestamp,
+    arrive_dt timestamp
 );
 
 CREATE TABLE used_by(

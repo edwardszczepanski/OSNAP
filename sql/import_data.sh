@@ -1,6 +1,6 @@
 #! /bin/bash
-db_name = $1
-port = $2
+db_name=$1
+port=$2
 
 curl -O https://classes.cs.uoregon.edu//17W/cis322/files/osnap_legacy.tar.gz
 tar -xvf osnap_legacy.tar.gz
