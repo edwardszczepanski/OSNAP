@@ -1,0 +1,176 @@
+LOG:  database system was shut down at 2017-02-05 23:26:58 UTC
+LOG:  MultiXact member wraparound protections are now enabled
+LOG:  database system is ready to accept connections
+LOG:  autovacuum launcher started
+ERROR:  relation "facilities" does not exist at character 13
+STATEMENT:  INSERT INTO facilities(fcode,common_name,location) VALUES ('DC','DC','DC');
+FATAL:  role "q" does not exist
+ERROR:  column "source_fk" of relation "convoys" does not exist at character 22
+STATEMENT:  INSERT INTO convoys (source_fk,dest_fk,depart_dt,arrive_dt) VALUES ('MB 005','Headquarters','1/4/2017','1/7/2017');
+ERROR:  column "source_fk" of relation "convoys" does not exist at character 22
+STATEMENT:  INSERT INTO convoys (source_fk,dest_fk,depart_dt,arrive_dt) VALUES ('Site 300','National City','1/8/2017','1/8/2017');
+ERROR:  column "source_fk" of relation "convoys" does not exist at character 22
+STATEMENT:  INSERT INTO convoys (source_fk,dest_fk,depart_dt,arrive_dt) VALUES ('Groom Lake','Sparks, NV','1/8/2017','1/8/2017');
+ERROR:  column "source_fk" of relation "convoys" does not exist at character 22
+STATEMENT:  INSERT INTO convoys (source_fk,dest_fk,depart_dt,arrive_dt) VALUES ('Los Alamos','Washington','1/1/1980','1/1/2030');
+ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
+DETAIL:  Key (convoy_fk)=(1) is not present in table "convoys".
+STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (5,1);
+ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
+DETAIL:  Key (convoy_fk)=(1) is not present in table "convoys".
+STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (6,1);
+ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
+DETAIL:  Key (convoy_fk)=(1) is not present in table "convoys".
+STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (7,1);
+ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
+DETAIL:  Key (convoy_fk)=(1) is not present in table "convoys".
+STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (8,1);
+ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
+DETAIL:  Key (convoy_fk)=(2) is not present in table "convoys".
+STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (9,2);
+ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
+DETAIL:  Key (convoy_fk)=(2) is not present in table "convoys".
+STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (10,2);
+ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
+DETAIL:  Key (convoy_fk)=(2) is not present in table "convoys".
+STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (11,2);
+ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
+DETAIL:  Key (convoy_fk)=(2) is not present in table "convoys".
+STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (12,2);
+ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
+DETAIL:  Key (convoy_fk)=(3) is not present in table "convoys".
+STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (15,3);
+ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
+DETAIL:  Key (convoy_fk)=(3) is not present in table "convoys".
+STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (16,3);
+ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
+DETAIL:  Key (convoy_fk)=(4) is not present in table "convoys".
+STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (1,4);
+ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
+DETAIL:  Key (convoy_fk)=(4) is not present in table "convoys".
+STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (2,4);
+ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
+DETAIL:  Key (convoy_fk)=(4) is not present in table "convoys".
+STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (3,4);
+ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
+DETAIL:  Key (convoy_fk)=(4) is not present in table "convoys".
+STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (4,4);
+ERROR:  column "source_fk" of relation "convoys" does not exist at character 22
+STATEMENT:  INSERT INTO convoys (source_fk,dest_fk,depart_dt,arrive_dt) VALUES ('MB 005','Headquarters','1/4/2017','1/7/2017');
+ERROR:  column "source_fk" of relation "convoys" does not exist at character 22
+STATEMENT:  INSERT INTO convoys (source_fk,dest_fk,depart_dt,arrive_dt) VALUES ('Site 300','National City','1/8/2017','1/8/2017');
+ERROR:  column "source_fk" of relation "convoys" does not exist at character 22
+STATEMENT:  INSERT INTO convoys (source_fk,dest_fk,depart_dt,arrive_dt) VALUES ('Groom Lake','Sparks, NV','1/8/2017','1/8/2017');
+ERROR:  column "source_fk" of relation "convoys" does not exist at character 22
+STATEMENT:  INSERT INTO convoys (source_fk,dest_fk,depart_dt,arrive_dt) VALUES ('Los Alamos','Washington','1/1/1980','1/1/2030');
+ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
+DETAIL:  Key (convoy_fk)=(1) is not present in table "convoys".
+STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (5,1);
+ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
+DETAIL:  Key (convoy_fk)=(1) is not present in table "convoys".
+STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (6,1);
+ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
+DETAIL:  Key (convoy_fk)=(1) is not present in table "convoys".
+STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (7,1);
+ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
+DETAIL:  Key (convoy_fk)=(1) is not present in table "convoys".
+STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (8,1);
+ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
+DETAIL:  Key (convoy_fk)=(2) is not present in table "convoys".
+STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (9,2);
+ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
+DETAIL:  Key (convoy_fk)=(2) is not present in table "convoys".
+STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (10,2);
+ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
+DETAIL:  Key (convoy_fk)=(2) is not present in table "convoys".
+STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (11,2);
+ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
+DETAIL:  Key (convoy_fk)=(2) is not present in table "convoys".
+STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (12,2);
+ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
+DETAIL:  Key (convoy_fk)=(3) is not present in table "convoys".
+STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (15,3);
+ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
+DETAIL:  Key (convoy_fk)=(3) is not present in table "convoys".
+STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (16,3);
+ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
+DETAIL:  Key (convoy_fk)=(4) is not present in table "convoys".
+STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (1,4);
+ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
+DETAIL:  Key (convoy_fk)=(4) is not present in table "convoys".
+STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (2,4);
+ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
+DETAIL:  Key (convoy_fk)=(4) is not present in table "convoys".
+STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (3,4);
+ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
+DETAIL:  Key (convoy_fk)=(4) is not present in table "convoys".
+STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (4,4);
+ERROR:  invalid input syntax for integer: "MB 005" at character 69
+STATEMENT:  INSERT INTO convoys (source_fk,dest_fk,depart_dt,arrive_dt) VALUES ('MB 005','Headquarters','1/4/2017','1/7/2017');
+ERROR:  invalid input syntax for integer: "Site 300" at character 69
+STATEMENT:  INSERT INTO convoys (source_fk,dest_fk,depart_dt,arrive_dt) VALUES ('Site 300','National City','1/8/2017','1/8/2017');
+ERROR:  invalid input syntax for integer: "Groom Lake" at character 69
+STATEMENT:  INSERT INTO convoys (source_fk,dest_fk,depart_dt,arrive_dt) VALUES ('Groom Lake','Sparks, NV','1/8/2017','1/8/2017');
+ERROR:  invalid input syntax for integer: "Los Alamos" at character 69
+STATEMENT:  INSERT INTO convoys (source_fk,dest_fk,depart_dt,arrive_dt) VALUES ('Los Alamos','Washington','1/1/1980','1/1/2030');
+ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
+DETAIL:  Key (convoy_fk)=(1) is not present in table "convoys".
+STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (5,1);
+ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
+DETAIL:  Key (convoy_fk)=(1) is not present in table "convoys".
+STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (6,1);
+ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
+DETAIL:  Key (convoy_fk)=(1) is not present in table "convoys".
+STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (7,1);
+ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
+DETAIL:  Key (convoy_fk)=(1) is not present in table "convoys".
+STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (8,1);
+ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
+DETAIL:  Key (convoy_fk)=(2) is not present in table "convoys".
+STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (9,2);
+ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
+DETAIL:  Key (convoy_fk)=(2) is not present in table "convoys".
+STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (10,2);
+ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
+DETAIL:  Key (convoy_fk)=(2) is not present in table "convoys".
+STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (11,2);
+ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
+DETAIL:  Key (convoy_fk)=(2) is not present in table "convoys".
+STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (12,2);
+ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
+DETAIL:  Key (convoy_fk)=(3) is not present in table "convoys".
+STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (15,3);
+ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
+DETAIL:  Key (convoy_fk)=(3) is not present in table "convoys".
+STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (16,3);
+ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
+DETAIL:  Key (convoy_fk)=(4) is not present in table "convoys".
+STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (1,4);
+ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
+DETAIL:  Key (convoy_fk)=(4) is not present in table "convoys".
+STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (2,4);
+ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
+DETAIL:  Key (convoy_fk)=(4) is not present in table "convoys".
+STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (3,4);
+ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
+DETAIL:  Key (convoy_fk)=(4) is not present in table "convoys".
+STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (4,4);
+ERROR:  canceling statement due to user request
+STATEMENT:  drop schema public cascade;
+ERROR:  canceling statement due to user request
+STATEMENT:  drop schema public cascade;
+ERROR:  syntax error at or near "*" at character 6
+STATEMENT:  drop *;
+ERROR:  syntax error at or near "*" at character 6
+STATEMENT:  drop * tables;
+ERROR:  canceling statement due to user request
+STATEMENT:  drop schema public cascade;
+ERROR:  schema "public" already exists
+STATEMENT:  create schema public;
+ERROR:  canceling statement due to user request
+STATEMENT:  drop schema public cascade;
+FATAL:  database "osnapdev" does not exist
+ERROR:  cannot drop the currently open database
+STATEMENT:  drop database lost;
+ERROR:  canceling statement due to user request
+STATEMENT:  drop schema public cascade;

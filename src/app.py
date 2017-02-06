@@ -17,7 +17,20 @@ def report_filter():
 
 @app.route('/facility_inventory')
 def facility_inventory():
-    return session['facility_name']
+    connect()
+    cursor.execute("SELECT * FROM assets;")
+    res = cursor.fetchall()
+    print(res)
+    processed_data = []
+    for r in res:
+        item = {}
+        item['asset_pk'] = r[0]
+        item['asset_tag'] = r[2]
+        processed_data.append(item)
+    session['processed_data_session_name'] = processed_data
+    print(processed_data)
+
+    #return session['facility_name']
     return render_template('facility_inventory.html')
 
 @app.route('/in_transit')
@@ -44,6 +57,16 @@ def login():
             flash('Welcome ' + session['username'] + '!')
             return redirect(url_for('report_filter'))
     return render_template('login.html', error=error)
+
+def connect():
+    global cursor
+    global conn
+    connection_string = "host='localhost' port='" + "5432" + "' dbname='" + "lost" + "' user='osnapdev' password='secret'"
+    conn = psycopg2.connect(connection_string)
+    cursor = conn.cursor()
+    work_mem = 2048
+    cursor.execute('SET work_mem TO ' + str(work_mem))
+    print("Connected to server")
 
 if __name__ == '__main__':
     app.secret_key = 'super secret key'

@@ -1,24 +1,23 @@
 {% extends "layout.html" %}
 {% block body %}
-  {% if session.logged_in %}
-    <div>
-        What is going on?
-    </div>
-    <form action="{{ url_for('report_filter') }}" method="post" class="add-entry">
-      <dl>
-        <dt>Title:
-        <dd><input type="text" size="30" name="title">
-        <dt>Text:
-        <dd><textarea name="text" rows="5" cols="40"></textarea>
-        <dd><input type="submit" value="Share">
-      </dl>
-    </form>
-  {% endif %}
-  <ul class="entries">
-  {% for entry in entries %}
-    <li><h2>{{ entry.title }}</h2>{{ entry.text|safe }}</li>
-  {% else %}
-    <li><em>Unbelievable.  No entries here so far</em></li>
-  {% endfor %}
-  </ul>
+{% if session.logged_in %}
+<div="container">
+<table class="table">
+    <thead align="center">
+        <tr>
+            <th style="text-align:center !important">Asset PK</th>
+            <th style="text-align:center !important">Asset Tag</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entry in session.processed_data_session_name %}
+    <tr>
+        <td>{{ entry.asset_pk }}</td>
+        <td>{{ entry.asset_tag }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table> 
+</div>
+{% endif %}
 {% endblock %}
