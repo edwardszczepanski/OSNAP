@@ -1,24 +1,29 @@
 {% extends "layout.html" %}
 {% block body %}
-  {% if session.logged_in %}
-    <div>
-        What is going on?
-    </div>
-    <form action="{{ url_for('report_filter') }}" method="post" class="add-entry">
-      <dl>
-        <dt>Title:
-        <dd><input type="text" size="30" name="title">
-        <dt>Text:
-        <dd><textarea name="text" rows="5" cols="40"></textarea>
-        <dd><input type="submit" value="Share">
-      </dl>
-    </form>
-  {% endif %}
-  <ul class="entries">
-  {% for entry in entries %}
-    <li><h2>{{ entry.title }}</h2>{{ entry.text|safe }}</li>
-  {% else %}
-    <li><em>Unbelievable.  No entries here so far</em></li>
-  {% endfor %}
-  </ul>
+{% if session.logged_in %}
+<div="container">
+<table class="table">
+    <thead align="center">
+        <tr>
+            <th style="text-align:center !important">Convoy PK</th>
+            <th style="text-align:center !important">Source Tag</th>
+            <th style="text-align:center !important">Dest PK</th>
+            <th style="text-align:center !important">Depart DT</th>
+            <th style="text-align:center !important">Arrive DT</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entry in session.processed_data_session_name %}
+    <tr>
+        <td>{{ entry.convoy_pk }}</td>
+        <td>{{ entry.source_fk }}</td>
+        <td>{{ entry.dest_fk }}</td>
+        <td>{{ entry.depart_dt }}</td>
+        <td>{{ entry.arrive_dt }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table> 
+</div>
+{% endif %}
 {% endblock %}

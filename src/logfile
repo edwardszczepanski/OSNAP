@@ -1,176 +1,109 @@
-LOG:  database system was shut down at 2017-02-05 23:26:58 UTC
+LOG:  database system was shut down at 2017-02-06 02:21:34 UTC
 LOG:  MultiXact member wraparound protections are now enabled
 LOG:  database system is ready to accept connections
 LOG:  autovacuum launcher started
-ERROR:  relation "facilities" does not exist at character 13
-STATEMENT:  INSERT INTO facilities(fcode,common_name,location) VALUES ('DC','DC','DC');
-FATAL:  role "q" does not exist
-ERROR:  column "source_fk" of relation "convoys" does not exist at character 22
-STATEMENT:  INSERT INTO convoys (source_fk,dest_fk,depart_dt,arrive_dt) VALUES ('MB 005','Headquarters','1/4/2017','1/7/2017');
-ERROR:  column "source_fk" of relation "convoys" does not exist at character 22
-STATEMENT:  INSERT INTO convoys (source_fk,dest_fk,depart_dt,arrive_dt) VALUES ('Site 300','National City','1/8/2017','1/8/2017');
-ERROR:  column "source_fk" of relation "convoys" does not exist at character 22
-STATEMENT:  INSERT INTO convoys (source_fk,dest_fk,depart_dt,arrive_dt) VALUES ('Groom Lake','Sparks, NV','1/8/2017','1/8/2017');
-ERROR:  column "source_fk" of relation "convoys" does not exist at character 22
-STATEMENT:  INSERT INTO convoys (source_fk,dest_fk,depart_dt,arrive_dt) VALUES ('Los Alamos','Washington','1/1/1980','1/1/2030');
-ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
-DETAIL:  Key (convoy_fk)=(1) is not present in table "convoys".
-STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (5,1);
-ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
-DETAIL:  Key (convoy_fk)=(1) is not present in table "convoys".
-STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (6,1);
-ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
-DETAIL:  Key (convoy_fk)=(1) is not present in table "convoys".
-STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (7,1);
-ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
-DETAIL:  Key (convoy_fk)=(1) is not present in table "convoys".
-STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (8,1);
-ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
-DETAIL:  Key (convoy_fk)=(2) is not present in table "convoys".
-STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (9,2);
-ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
-DETAIL:  Key (convoy_fk)=(2) is not present in table "convoys".
-STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (10,2);
-ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
-DETAIL:  Key (convoy_fk)=(2) is not present in table "convoys".
-STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (11,2);
-ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
-DETAIL:  Key (convoy_fk)=(2) is not present in table "convoys".
-STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (12,2);
-ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
-DETAIL:  Key (convoy_fk)=(3) is not present in table "convoys".
-STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (15,3);
-ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
-DETAIL:  Key (convoy_fk)=(3) is not present in table "convoys".
-STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (16,3);
-ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
-DETAIL:  Key (convoy_fk)=(4) is not present in table "convoys".
-STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (1,4);
-ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
-DETAIL:  Key (convoy_fk)=(4) is not present in table "convoys".
-STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (2,4);
-ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
-DETAIL:  Key (convoy_fk)=(4) is not present in table "convoys".
-STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (3,4);
-ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
-DETAIL:  Key (convoy_fk)=(4) is not present in table "convoys".
-STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (4,4);
-ERROR:  column "source_fk" of relation "convoys" does not exist at character 22
-STATEMENT:  INSERT INTO convoys (source_fk,dest_fk,depart_dt,arrive_dt) VALUES ('MB 005','Headquarters','1/4/2017','1/7/2017');
-ERROR:  column "source_fk" of relation "convoys" does not exist at character 22
-STATEMENT:  INSERT INTO convoys (source_fk,dest_fk,depart_dt,arrive_dt) VALUES ('Site 300','National City','1/8/2017','1/8/2017');
-ERROR:  column "source_fk" of relation "convoys" does not exist at character 22
-STATEMENT:  INSERT INTO convoys (source_fk,dest_fk,depart_dt,arrive_dt) VALUES ('Groom Lake','Sparks, NV','1/8/2017','1/8/2017');
-ERROR:  column "source_fk" of relation "convoys" does not exist at character 22
-STATEMENT:  INSERT INTO convoys (source_fk,dest_fk,depart_dt,arrive_dt) VALUES ('Los Alamos','Washington','1/1/1980','1/1/2030');
-ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
-DETAIL:  Key (convoy_fk)=(1) is not present in table "convoys".
-STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (5,1);
-ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
-DETAIL:  Key (convoy_fk)=(1) is not present in table "convoys".
-STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (6,1);
-ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
-DETAIL:  Key (convoy_fk)=(1) is not present in table "convoys".
-STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (7,1);
-ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
-DETAIL:  Key (convoy_fk)=(1) is not present in table "convoys".
-STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (8,1);
-ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
-DETAIL:  Key (convoy_fk)=(2) is not present in table "convoys".
-STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (9,2);
-ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
-DETAIL:  Key (convoy_fk)=(2) is not present in table "convoys".
-STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (10,2);
-ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
-DETAIL:  Key (convoy_fk)=(2) is not present in table "convoys".
-STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (11,2);
-ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
-DETAIL:  Key (convoy_fk)=(2) is not present in table "convoys".
-STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (12,2);
-ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
-DETAIL:  Key (convoy_fk)=(3) is not present in table "convoys".
-STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (15,3);
-ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
-DETAIL:  Key (convoy_fk)=(3) is not present in table "convoys".
-STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (16,3);
-ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
-DETAIL:  Key (convoy_fk)=(4) is not present in table "convoys".
-STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (1,4);
-ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
-DETAIL:  Key (convoy_fk)=(4) is not present in table "convoys".
-STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (2,4);
-ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
-DETAIL:  Key (convoy_fk)=(4) is not present in table "convoys".
-STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (3,4);
-ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
-DETAIL:  Key (convoy_fk)=(4) is not present in table "convoys".
-STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (4,4);
-ERROR:  invalid input syntax for integer: "MB 005" at character 69
-STATEMENT:  INSERT INTO convoys (source_fk,dest_fk,depart_dt,arrive_dt) VALUES ('MB 005','Headquarters','1/4/2017','1/7/2017');
-ERROR:  invalid input syntax for integer: "Site 300" at character 69
-STATEMENT:  INSERT INTO convoys (source_fk,dest_fk,depart_dt,arrive_dt) VALUES ('Site 300','National City','1/8/2017','1/8/2017');
-ERROR:  invalid input syntax for integer: "Groom Lake" at character 69
-STATEMENT:  INSERT INTO convoys (source_fk,dest_fk,depart_dt,arrive_dt) VALUES ('Groom Lake','Sparks, NV','1/8/2017','1/8/2017');
-ERROR:  invalid input syntax for integer: "Los Alamos" at character 69
-STATEMENT:  INSERT INTO convoys (source_fk,dest_fk,depart_dt,arrive_dt) VALUES ('Los Alamos','Washington','1/1/1980','1/1/2030');
-ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
-DETAIL:  Key (convoy_fk)=(1) is not present in table "convoys".
-STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (5,1);
-ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
-DETAIL:  Key (convoy_fk)=(1) is not present in table "convoys".
-STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (6,1);
-ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
-DETAIL:  Key (convoy_fk)=(1) is not present in table "convoys".
-STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (7,1);
-ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
-DETAIL:  Key (convoy_fk)=(1) is not present in table "convoys".
-STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (8,1);
-ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
-DETAIL:  Key (convoy_fk)=(2) is not present in table "convoys".
-STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (9,2);
-ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
-DETAIL:  Key (convoy_fk)=(2) is not present in table "convoys".
-STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (10,2);
-ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
-DETAIL:  Key (convoy_fk)=(2) is not present in table "convoys".
-STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (11,2);
-ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
-DETAIL:  Key (convoy_fk)=(2) is not present in table "convoys".
-STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (12,2);
-ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
-DETAIL:  Key (convoy_fk)=(3) is not present in table "convoys".
-STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (15,3);
-ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
-DETAIL:  Key (convoy_fk)=(3) is not present in table "convoys".
-STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (16,3);
-ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
-DETAIL:  Key (convoy_fk)=(4) is not present in table "convoys".
-STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (1,4);
-ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
-DETAIL:  Key (convoy_fk)=(4) is not present in table "convoys".
-STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (2,4);
-ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
-DETAIL:  Key (convoy_fk)=(4) is not present in table "convoys".
-STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (3,4);
-ERROR:  insert or update on table "asset_on" violates foreign key constraint "asset_on_convoy_fk_fkey"
-DETAIL:  Key (convoy_fk)=(4) is not present in table "convoys".
-STATEMENT:  INSERT INTO asset_on (asset_fk,convoy_fk) VALUES (4,4);
-ERROR:  canceling statement due to user request
-STATEMENT:  drop schema public cascade;
-ERROR:  canceling statement due to user request
-STATEMENT:  drop schema public cascade;
-ERROR:  syntax error at or near "*" at character 6
-STATEMENT:  drop *;
-ERROR:  syntax error at or near "*" at character 6
-STATEMENT:  drop * tables;
-ERROR:  canceling statement due to user request
-STATEMENT:  drop schema public cascade;
-ERROR:  schema "public" already exists
-STATEMENT:  create schema public;
-ERROR:  canceling statement due to user request
-STATEMENT:  drop schema public cascade;
 FATAL:  database "osnapdev" does not exist
-ERROR:  cannot drop the currently open database
-STATEMENT:  drop database lost;
+ERROR:  syntax error at or near "ELECT" at character 1
+STATEMENT:  ELECT fcode,asset_tag FROM assets a JOIN asset_at aa ON a.asset_pk=aa.asset_fk JOIN facilities f ON aa.facility_fk=f.facility_pk;
 ERROR:  canceling statement due to user request
 STATEMENT:  drop schema public cascade;
+ERROR:  canceling statement due to user request
+STATEMENT:  drop schema public cascade;
+ERROR:  syntax error at or near "DROP" at character 20
+STATEMENT:  DROP database lost
+	DROP database data
+	drop schema public cascade;
+ERROR:  canceling statement due to user request
+STATEMENT:  drop schema public cascade;
+ERROR:  database "lost" already exists
+STATEMENT:  CREATE DATABASE lost;
+ERROR:  database "lost" already exists
+STATEMENT:  CREATE DATABASE lost;
+FATAL:  database "osnapdev" does not exist
+ERROR:  database "data" does not exist
+STATEMENT:  DROP database data;
+ERROR:  cannot drop the currently open database
+STATEMENT:  DROP database lost;
+ERROR:  cannot drop the currently open database
+STATEMENT:  DROP database lost;
+ERROR:  database "lost" is being accessed by other users
+DETAIL:  There are 2 other sessions using the database.
+STATEMENT:  DROP DATABASE lost;
+LOG:  unexpected EOF on client connection with an open transaction
+ERROR:  database "lost" is being accessed by other users
+DETAIL:  There is 1 other session using the database.
+STATEMENT:  DROP DATABASE lost;
+ERROR:  invalid input syntax for type timestamp: " NM"" at character 131
+STATEMENT:  INSERT INTO assets(fcode,src_facility,dest_facility,arrive_date,depart_date,expunge_date) VALUES ('DC','DC15467299','"Los Alamos',' NM"','"Washington',' D.C."');
+ERROR:  invalid input syntax for type timestamp: " NM"" at character 131
+STATEMENT:  INSERT INTO assets(fcode,src_facility,dest_facility,arrive_date,depart_date,expunge_date) VALUES ('DC','DC15467299','"Los Alamos',' NM"','"Washington D.C."','1/10/17');
+ERROR:  invalid input syntax for type timestamp: ""Washington D.C."" at character 135
+STATEMENT:  INSERT INTO assets(fcode,src_facility,dest_facility,arrive_date,depart_date,expunge_date) VALUES ('DC','DC15467299','"Los Alamos NM"','"Washington D.C."','1/10/17','1/10/17');
+ERROR:  invalid input syntax for type timestamp: "Washington D.C." at character 133
+STATEMENT:  INSERT INTO assets(fcode,src_facility,dest_facility,arrive_date,depart_date,expunge_date) VALUES ('DC','DC15467299','Los Alamos NM','Washington D.C.','1/10/17','1/10/17');
+ERROR:  invalid input syntax for type timestamp: "Washington D.C." at character 133
+STATEMENT:  INSERT INTO assets(fcode,src_facility,dest_facility,arrive_date,depart_date,expunge_date) VALUES ('DC','DC15467299','Los Alamos NM','Washington D.C.','01/10/2017','01/10/2017');
+ERROR:  invalid input syntax for type timestamp: "Washington D.C." at character 133
+STATEMENT:  INSERT INTO assets(fcode,src_facility,dest_facility,arrive_date,depart_date,expunge_date) VALUES ('DC','DC15467299','Los Alamos NM','Washington D.C.','01/10/2017','01/10/2017');
+ERROR:  syntax error at or near "00" at character 162
+STATEMENT:  INSERT INTO assets(fcode,src_facility,dest_facility,arrive_date,depart_date,expunge_date) VALUES ('DC','DC15467299','Los Alamos NM','Washington D.C.',2017-01-10 00:00:00,2017-01-10 00:00:00,None);
+ERROR:  syntax error at or near "," at character 151
+STATEMENT:  INSERT INTO assets(fcode,src_facility,dest_facility,arrive_date,depart_date,expunge_date) VALUES ('DC','DC15467299','Los Alamos NM','Washington D.C.',,,);
+ERROR:  syntax error at or near "00" at character 163
+STATEMENT:  INSERT INTO assets(fcode,src_facility,dest_facility,arrive_date,depart_date,expunge_date) VALUES ('DC','DC15467299','Los Alamos NM','Washington D.C.',(2017-01-10 00:00:00),(2017-01-10 00:00:00),(None));
+ERROR:  syntax error at or near "00" at character 163
+STATEMENT:  INSERT INTO assets(fcode,src_facility,dest_facility,arrive_date,depart_date,expunge_date) VALUES ('DC','DC15467299','Los Alamos NM','Washington D.C.',(2017-01-10 00:00:00),(2017-01-10 00:00:00),(None));
+ERROR:  syntax error at or near "00" at character 163
+STATEMENT:  INSERT INTO assets(fcode,src_facility,dest_facility,arrive_date,depart_date,expunge_date) VALUES ('DC','DC15467299','Los Alamos NM','Washington D.C.',(2017-01-10 00:00:00),(2017-01-10 00:00:00),(None));
+ERROR:  syntax error at or near ")" at character 200
+STATEMENT:  INSERT INTO assets(fcode,src_facility,dest_facility,arrive_date,depart_date,expunge_date) VALUES ('DC','DC15467299','Los Alamos NM','Washington D.C.',('2017-01-10 00:00:00'),('2017-01-10 00:00:00'),());
+ERROR:  INSERT has more expressions than target columns at character 200
+STATEMENT:  INSERT INTO assets(fcode,src_facility,dest_facility,arrive_date,depart_date,expunge_date) VALUES ('DC','DC15467299','Los Alamos NM','Washington D.C.',('2017-01-10 00:00:00'),('2017-01-10 00:00:00'),(''));
+ERROR:  INSERT has more expressions than target columns at character 200
+STATEMENT:  INSERT INTO assets(fcode,src_facility,dest_facility,arrive_date,depart_date,expunge_date) VALUES ('DC','DC15467299','Los Alamos NM','Washington D.C.',('2017-01-10 00:00:00'),('2017-01-10 00:00:00'),('2017-01-10 00:00:00'));
+ERROR:  syntax error at or near ")" at character 210
+STATEMENT:  INSERT INTO assets(fcode,asset_tag, src_facility,dest_facility,arrive_date,depart_date,expunge_date) VALUES ('DC','DC15467299','Los Alamos NM','Washington D.C.',('2017-01-10 00:00:00'),('2017-01-10 00:00:00'),);
+ERROR:  INSERT has more target columns than expressions at character 88
+STATEMENT:  INSERT INTO assets(fcode,asset_tag, src_facility,dest_facility,arrive_date,depart_date,expunge_date) VALUES ('DC','DC15467299','Los Alamos NM','Washington D.C.',('2017-01-10 00:00:00'),('2017-01-10 00:00:00'));
+ERROR:  syntax error at or near "00" at character 173
+STATEMENT:  INSERT INTO assets(fcode,asset_tag,src_facility,dest_facility,arrive_date,depart_date,expunge_date) VALUES ('DC','DC15467299','Los Alamos NM','Washington D.C.',(2017-01-10 00:00:00),(2017-01-10 00:00:00),(None));
+ERROR:  syntax error at or near "00" at character 173
+STATEMENT:  INSERT INTO assets(fcode,asset_tag,src_facility,dest_facility,arrive_date,depart_date,expunge_date) VALUES ('DC','DC15467299','Los Alamos NM','Washington D.C.',(2017-01-10 00:00:00),(2017-01-10 00:00:00),(None));
+ERROR:  syntax error at or near "00" at character 173
+STATEMENT:  INSERT INTO assets(fcode,asset_tag,src_facility,dest_facility,arrive_date,depart_date,expunge_date) VALUES ('DC','DC15467299','Los Alamos NM','Washington D.C.',(2017-01-10 00:00:00),(2017-01-10 00:00:00),(None));
+ERROR:  syntax error at or near "00" at character 173
+STATEMENT:  INSERT INTO assets(fcode,asset_tag,src_facility,dest_facility,arrive_date,depart_date,expunge_date) VALUES ('DC','DC15467299','Los Alamos NM','Washington D.C.',(2017-01-10 00:00:00),(2017-01-10 00:00:00),(None));
+ERROR:  syntax error at or near "00" at character 173
+STATEMENT:  INSERT INTO assets(fcode,asset_tag,src_facility,dest_facility,arrive_date,depart_date,expunge_date) VALUES ('DC','DC15467299','Los Alamos NM','Washington D.C.',(2017-01-10 00:00:00),(2017-01-10 00:00:00),(None));
+ERROR:  syntax error at or near "00" at character 173
+STATEMENT:  INSERT INTO assets(fcode,asset_tag,src_facility,dest_facility,arrive_date,depart_date,expunge_date) VALUES ('DC','DC15467299','Los Alamos NM','Washington D.C.',(2017-01-10 00:00:00),(2017-01-10 00:00:00),(None));
+ERROR:  syntax error at or near "00" at character 173
+STATEMENT:  INSERT INTO assets(fcode,asset_tag,src_facility,dest_facility,arrive_date,depart_date,expunge_date) VALUES ('DC','DC15467299','Los Alamos NM','Washington D.C.',(2017-01-10 00:00:00),(2017-01-10 00:00:00),(None));
+ERROR:  syntax error at or near "00" at character 173
+STATEMENT:  INSERT INTO assets(fcode,asset_tag,src_facility,dest_facility,arrive_date,depart_date,expunge_date) VALUES ('DC','DC15467299','Los Alamos NM','Washington D.C.',(2017-01-10 00:00:00),(2017-01-10 00:00:00),(None));
+ERROR:  syntax error at or near "00" at character 160
+STATEMENT:  INSERT INTO assets(fcode,asset_tag,src_facility,dest_facility,arrive_date,depart_date) VALUES ('DC','DC15467299','Los Alamos NM','Washington D.C.',(2017-01-10 00:00:00),(2017-01-10 00:00:00));
+ERROR:  syntax error at or near "2017" at character 151
+STATEMENT:  INSERT INTO assets(fcode,asset_tag,src_facility,dest_facility,arrive_date,depart_date) VALUES ('DC','DC15467299','Los Alamos NM','Washington D.C.','('2017-01-10 00:00:00')','('2017-01-10 00:00:00')');
+ERROR:  operator does not exist: character varying =* at character 33
+HINT:  No operator matches the given name and argument type(s). You might need to add explicit type casts.
+STATEMENT:  SELECT * from assets where fcode=*
+	;
+ERROR:  syntax error at or near ";" at character 37
+STATEMENT:  SELECT * from assets where fcode=ANY;
+ERROR:  syntax error at or near ";" at character 37
+STATEMENT:  SELECT * from assets where fcode=ALL;
+ERROR:  column "ALL" does not exist at character 34
+STATEMENT:  SELECT * from assets where fcode="ALL";
+ERROR:  column "DC" does not exist at character 34
+STATEMENT:  SELECT * from assets where fcode="DC";
+ERROR:  syntax error at or near "WHERE" at character 71
+STATEMENT:  SELECT * from assets where ('2020-01-30 00:00:00') >= arrive_date AND WHERE fcode='DC';
+ERROR:  syntax error at or near ">=" at character 49
+STATEMENT:  SELECT * FROM assetsAND ('2017-01-10 00:00:00') >= arrive_dateAND ('2017-01-10 00:00:00') <= depart_date;
+ERROR:  syntax error at or near "AND" at character 22
+STATEMENT:  SELECT * FROM assets AND ('2017-01-10 00:00:00') >= arrive_date AND ('2017-01-10 00:00:00') <= depart_date;
+ERROR:  syntax error at or near "AND" at character 22
+STATEMENT:  SELECT * FROM assets AND ('2017-01-10 00:00:00') >= arrive_date;
+ERROR:  syntax error at or near "AND" at character 22
+STATEMENT:  SELECT * FROM assets AND ('2017-01-31 00:00:00') >= arrive_date;

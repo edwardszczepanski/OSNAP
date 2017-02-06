@@ -1,23 +1,50 @@
 {% extends "layout.html" %}
 {% block body %}
 {% if session.logged_in %}
-<div="container">
-<table class="table">
-    <thead align="center">
-        <tr>
-            <th style="text-align:center !important">Asset PK</th>
-            <th style="text-align:center !important">Asset Tag</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for entry in session.processed_data_session_name %}
-    <tr>
-        <td>{{ entry.asset_pk }}</td>
-        <td>{{ entry.asset_tag }}</td>
-    </tr>
+
+<form action="{{ url_for('report_filter') }}" method="post" id="facility_inventory">
+    <dl>
+        <dt>Facility Inventory Query:
+        <dd>
+        <div>
+            <select name="facility_name">
+                <option value="*">All</option>
+                <option value="DC">DC</option>
+                <option value="HQ">HQ</option>
+                <option value="NC">NC</option>
+                <option value="MB005">MB005</option>
+                <option value="MB006">MB006</option>
+                <option value="SPNV">SPNV</option>
+            </select>
+		</div>
+        <dd><input type="date" name="facility_date">
+        <dd><input type="submit" value="Submit">
+    </dl>
+</form>
+
+<form action="{{ url_for('report_filter') }}" method="post">
+    <dl>
+        <dt>In Transit Query:
+        <dd><input type="date" name="in_transit">
+        <dd><input type="submit" value="Submit">
+    </dl>
+</form>
+
+<!--form action="{{ url_for('report_filter') }}" method="post" class="add-entry">
+    <dl>
+        <dt>Title:
+        <dd><input type="text" size="30" name="title">
+        <dt>Text:
+        <dd><textarea name="text" rows="5" cols="40"></textarea>
+        <dd><input type="submit" value="Share">
+    </dl>
+</form>
+<ul class="entries">
+    {% for entry in entries %}
+    <li><h2>{{ entry.title }}</h2>{{ entry.text|safe }}</li>
+    {% else %}
+    <li><em>Unbelievable.  No entries here so far</em></li>
     {% endfor %}
-    </tbody>
-</table> 
-</div>
+</ul-->
 {% endif %}
 {% endblock %}
