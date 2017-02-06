@@ -11,34 +11,16 @@ def report_filter():
         if 'facility_name' in request.form:
             session['facility_name'] = request.form['facility_name']
             session['facility_date'] = request.form['facility_date']
-            return redirect(url_for('facility_inventory'))
+            session['facility_inventory'] = True;
         elif 'in_transit' in request.form:
-            session['in_transit'] = request.form['in_transit']
-            return redirect(url_for('in_transit'))
+            session['facility_date'] = request.form['in_transit']
+            session['facility_inventory'] = False;
+        return redirect(url_for('reports'))
     return render_template('report_filter.html')
 
-@app.route('/facility_inventory')
-def facility_inventory():
-    sql_query = "SELECT * FROM assets"
-    facility_defined = False
-    if session['facility_name'] != "*":
-        sql_query += " WHERE fcode='" + session['facility_name'] + "'"
-        facility_defined = True
-
-
-    if not session['facility_date'] == "":
-        dt = str(datetime.strptime(session['facility_date'], "%Y-%m-%d"))
-        print(dt)
-        if facility_defined:
-            sql_query += " AND "
-        else:
-            sql_query += " WHERE "
-        sql_query += "('" + dt + "') >= arrive_date"
-        sql_query += " AND ('" + dt + "') <= depart_date"
-
-    sql_query += ";"
-    print(sql_query)
-
+@app.route('/reports')
+def reports():
+    sql_query = sql_query_generator()
     connect()
     cursor.execute(sql_query)
     res = cursor.fetchall()
@@ -55,27 +37,29 @@ def facility_inventory():
         processed_data.append(item)
     session['processed_data_session_name'] = processed_data
 
-    return render_template('facility_inventory.html')
+    return render_template('reports.html')
 
-@app.route('/in_transit')
-def in_transit():
-    connect()
-    cursor.execute("SELECT * FROM convoys;")
-    res = cursor.fetchall()
-    print(res)
-    processed_data = []
-    for r in res:
-        item = {}
-        item['convoy_pk'] = r[0]
-        item['source_fk'] = r[2]
-        item['dest_fk'] = r[3]
-        item['depart_dt'] = r[4]
-        item['arrive_dt'] = r[5]
-        processed_data.append(item)
-    session['processed_data_session_name'] = processed_data
-    print(processed_data)
-
-    return render_template('in_transit.html')
+def sql_query_generator():
+    sql_query = "SELECT * FROM assets"
+    if session['facility_inventory']:
+        facility_defined = False
+        if session['facility_name'] != "*":
+            sql_query += " WHERE fcode='" + session['facility_name'] + "'"
+            facility_defined = True
+        if not session['facility_date'] == "":
+            dt = str(datetime.strptime(session['facility_date'], "%Y-%m-%d"))
+            if facility_defined:
+                sql_query += " AND "
+            else:
+                sql_query += " WHERE "
+            sql_query += "('" + dt + "') >= depart_date"
+    else:
+        if not session['facility_date'] == "":
+            dt = str(datetime.strptime(session['facility_date'], "%Y-%m-%d"))
+            sql_query += " WHERE ('" + dt + "') >= arrive_date"
+            sql_query += " AND ('" + dt + "') <= depart_date"
+    sql_query += ";"
+    return sql_query
 
 @app.route('/logout')
 def logout():
@@ -101,7 +85,7 @@ def login():
 def connect():
     global cursor
     global conn
-    connection_string = "host='localhost' port='" + "5432" + "' dbname='" + "lost" + "' user='osnapdev' password='secret'"
+    connection_string = "host='localhost' port='" + "5432" + "' dbname='" + db_name + "' user='osnapdev' password='secret'"
     conn = psycopg2.connect(connection_string)
     cursor = conn.cursor()
     work_mem = 2048
@@ -109,7 +93,11 @@ def connect():
     print("Connected to server")
 
 if __name__ == '__main__':
+    global db_name
+    if len(sys.argv) > 1:
+        db_name = sys.argv[1]
+    else:
+        db_name = "lost"
     app.secret_key = 'super secret key'
     app.debug = True
     app.run(host='0.0.0.0', port=8080)
-
