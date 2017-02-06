@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, session, g, redirect, url_for, abort, flash
 import sys, psycopg2
 from datetime import datetime
+from config import dbname, dbhost, dbport
 
 app = Flask(__name__)
 
@@ -85,7 +86,7 @@ def login():
 def connect():
     global cursor
     global conn
-    connection_string = "host='localhost' port='" + "5432" + "' dbname='" + db_name + "' user='osnapdev' password='secret'"
+    connection_string = "host='localhost' port='" + str(dbport) + "' dbname='" + db_name + "' user='osnapdev' password='secret'"
     conn = psycopg2.connect(connection_string)
     cursor = conn.cursor()
     work_mem = 2048
@@ -97,7 +98,7 @@ if __name__ == '__main__':
     if len(sys.argv) > 1:
         db_name = sys.argv[1]
     else:
-        db_name = "lost"
+        db_name = dbname
     app.secret_key = 'super secret key'
     app.debug = True
     app.run(host='0.0.0.0', port=8080)
