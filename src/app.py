@@ -5,10 +5,6 @@ import psycopg2
 
 app = Flask(__name__)
 
-@app.route('/')
-def index():
-    return render_template('index.html')
-
 @app.route('/rest')
 def rest():
     return render_template('rest.html')
@@ -110,7 +106,6 @@ where product_fk is not NULL and c.abbrv||':'||l.abbrv = ANY(%s)"""
     
 @app.route('/rest/suspend_user', methods=('POST',))
 def suspend_user():
-    # Try to handle as plaintext
     if request.method=='POST' and 'arguments' in request.form:
         req=json.loads(request.form['arguments'])
 
@@ -120,13 +115,44 @@ def suspend_user():
     data = json.dumps(dat)
     return data
 
-#@app.route('/goodbye')
-#def goodbye():
-#    if request.method=='GET' and 'mytext' in request.args:
-#        return render_template('goodbye.html',data=request.args.get('mytext'))
+@app.route('/rest/activate_user', methods=('POST',))
+def activate_user():
+    if request.method=='POST' and 'arguments' in request.form:
+        req=json.loads(request.form['arguments'])
 
-#    # request.form is only populated for POST messages
-#    if request.method=='POST' and 'mytext' in request.form:
-#        return render_template('goodbye.html',data=request.form['mytext'])
-#    return render_template('index.html')
+    dat = dict()
+    dat['timestamp'] = req['timestamp']
+    dat['result'] = 'OK'
+    data = json.dumps(dat)
+    return data
 
+@app.route('/rest/new_products', methods=('POST',))
+def new_products():
+    if request.method=='POST' and 'arguments' in request.form:
+        req=json.loads(request.form['arguments'])
+
+    dat = dict()
+    dat['timestamp'] = req['timestamp']
+    dat['result'] = 'OK'
+    data = json.dumps(dat)
+    return data
+
+@app.route('/rest/add_product', methods=('POST',))
+def add_product():
+    if request.method=='POST' and 'arguments' in request.form:
+        req=json.loads(request.form['arguments'])
+
+    dat = dict()
+    dat['timestamp'] = req['timestamp']
+    dat['result'] = 'OK'
+    data = json.dumps(dat)
+    return data
+
+@app.route('/rest/lost_key', methods=('POST',))
+def lost_key():
+    dat = dict()
+    dat['timestamp'] = req['timestamp']
+    dat['result'] = 'OK'
+    dat['key'] = 'bksaoudu......aoelchsauh'
+    data = json.dumps(dat)
+    return data
