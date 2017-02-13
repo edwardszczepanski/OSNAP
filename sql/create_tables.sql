@@ -1,110 +1,105 @@
-/*
- * Asset Tables :%s/foo/bar/g
- */
-
-CREATE TABLE products(
-    product_pk serial primary key,
-    vendor varchar(128),
-    description varchar(128),
-    alt_description varchar(128)
+create table products (
+    product_pk      serial primary key,
+    vendor          varchar(128) not null,
+    description     text,
+    alt_description text,
+    product_name    varchar(128),
+    product_model   varchar(128),
+    price           numeric
 );
 
-CREATE TABLE assets(
-    asset_pk serial primary key,
-    product_fk integer REFERENCES products (product_pk),
-    asset_tag varchar(128),
-    description varchar(128),
-    alt_description varchar(128)
+create table assets (
+    asset_pk        serial primary key,
+    product_fk      integer, -- Nullable, not purchased asset
+    asset_tag       varchar(32),
+    description     text,
+    alt_description text
 );
 
-CREATE TABLE vehicles(
-    vehicle_pk serial primary key,
-    asset_fk integer REFERENCES assets(asset_pk)
+create table vehicles (
+    vehicle_pk      serial primary key,
+    asset_fk        integer REFERENCES assets(asset_pk) not null -- Convoy vehicles must be OSNAP assets
 );
 
-CREATE TABLE facilities(
-    facility_pk serial primary key,
-    fcode varchar(128),
-    common_name varchar(128),
-    location varchar(128)
+create table facilities (
+    facility_pk     serial primary key,
+    fcode           varchar(16),
+    common_name     varchar(128),
+    location        varchar(128) -- May make this a reference later
 );
 
-CREATE TABLE asset_at(
-    asset_fk integer REFERENCES assets(asset_pk),
-    facility_fk integer REFERENCES facilities(facility_pk),
-    arrive_dt timestamp,
-    depart_dt timestamp
+create table asset_at (
+    asset_fk        integer REFERENCES assets(asset_pk) not null,
+    facility_fk     integer REFERENCES facilities(facility_pk) not null,
+    arrive_dt       timestamp, -- UTC
+    depart_dt       timestamp -- UTC
 );
 
-CREATE TABLE convoys(
-    convoy_pk serial primary key,
-    request varchar(128),
-    source_fk varchar(128),
-    dest_fk varchar(128),
-    depart_dt timestamp,
-    arrive_dt timestamp
+create table convoys (
+    convoy_pk       serial primary key,
+    request_id      varchar(16),
+    src_fk          integer REFERENCES facilities(facility_pk) not null,
+    dst_fk          integer REFERENCES facilities(facility_pk) not null,
+    depart_dt       timestamp, -- UTC
+    arrive_dt       timestamp  -- UTC
 );
 
-CREATE TABLE used_by(
-    vehicle_fk integer REFERENCES vehicles(vehicle_pk),
-    convoy_fk integer REFERENCES convoys(convoy_pk)
+create table waypoints (
+    convoy_fk   integer REFERENCES convoys(convoy_pk) not null,
+    point_dt    timestamp --UTC
 );
 
-CREATE TABLE asset_on(
-    asset_fk integer REFERENCES assets(asset_pk),
-    convoy_fk integer REFERENCES convoys(convoy_pk),
-    load_dt timestamp,
-    unload_dt timestamp
+create table used_by (
+    vehicle_fk  integer REFERENCES vehicles(vehicle_pk) not null,
+    convoy_fk   integer REFERENCES convoys(convoy_pk) not null
 );
 
-/*
- * User Tables
- */
-
-CREATE TABLE users(
-    user_pk serial primary key,
-    username varchar(128),
-    active boolean
+create table asset_on (
+    asset_fk    integer REFERENCES assets(asset_pk) not null,
+    convoy_fk   integer REFERENCES convoys(convoy_pk) not null,
+    load_dt     timestamp, -- UTC
+    unload_dt   timestamp  -- UTC
 );
 
-CREATE TABLE roles(
-    role_pk serial primary key,
-    title varchar(128)
+create table users (
+    user_pk     serial primary key,
+    username    varchar(64) not null,
+    active      boolean default FALSE
 );
 
-CREATE TABLE user_is(
-    vehicle_fk integer REFERENCES vehicles(vehicle_pk),
-    role_fk integer REFERENCES roles(role_pk)
+create table roles (
+    role_pk     serial primary key,
+    title       varchar(32)
 );
 
-CREATE TABLE user_supports(
-    user_fk integer REFERENCES users(user_pk),
-    facility_fk integer REFERENCES facilities(facility_pk)
+create table user_is (
+    user_fk     integer REFERENCES users(user_pk) not null,
+    role_fk     integer REFERENCES roles(role_pk) not null
 );
 
-/*
- * Security Tables
- */
-
-CREATE TABLE levels(
-    level_pk serial primary key,
-    abbrv varchar(128),
-    comment varchar(128)
+create table user_supports (
+    user_fk     integer REFERENCES users(user_pk) not null,
+    facility_fk integer REFERENCES facilities(facility_pk) not null
 );
 
-
-CREATE TABLE compartments(
-    compartment_pk serial primary key,
-    abbrv varchar(128),
-    comment varchar(128)
+create table sec_levels (
+    level_pk    integer primary key, -- levels have order
+    abbrv       varchar(3),
+    comment     varchar(128)
 );
 
-CREATE TABLE security_tags(
-    tag_pk serial primary key,
-    level_fk integer REFERENCES levels(level_pk),
-    compartment_fk integer REFERENCES compartments(compartment_pk),
-    user_fk integer REFERENCES users(user_pk),
-    product_fk integer REFERENCES products(product_pk),
-    asset_fk integer REFERENCES assets(asset_pk)
+create table sec_compartments (
+    compartment_pk  serial primary key,
+    abbrv           varchar(8),
+    comment         varchar(128)
 );
 
+create table security_tags (
+    tag_pk          serial primary key,
+    level_fk        integer REFERENCES sec_levels(level_pk) not null,
+    compartment_fk  integer REFERENCES sec_compartments(compartment_pk) not null,
+    -- Need to add a constraint so that exactly one of the following is set
+    user_fk         integer REFERENCES users(user_pk),
+    asset_fk        integer REFERENCES assets(asset_pk),
+    product_fk      integer REFERENCES products(product_pk)
+);
