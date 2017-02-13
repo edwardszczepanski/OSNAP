@@ -124,3 +124,11 @@ STATEMENT:  INSERT INTO sec_levels (level_pk,abbrv,comment) VALUES (2,'ss','*RED
 ERROR:  duplicate key value violates unique constraint "sec_levels_pkey"
 DETAIL:  Key (level_pk)=(1) already exists.
 STATEMENT:  INSERT INTO sec_levels (level_pk,abbrv,comment) VALUES (1,'z','*REDACTED*');
+ERROR:  column "vendor" of relation "assets" does not exist at character 21
+STATEMENT:  INSERT INTO assets (vendor, description, facility) VALUES ('arst','wqfp','qwfp');
+FATAL:  database "osnapdev" does not exist
+ERROR:  syntax error at or near "VALUE" at character 36
+STATEMENT:  INSERT INTO products (description) VALUE ('arstw');
+ERROR:  null value in column "vendor" violates not-null constraint
+DETAIL:  Failing row contains (11, null, arstw, null, null, null, null).
+STATEMENT:  INSERT INTO products (description) VALUEs ('arstw');

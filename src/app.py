@@ -2,6 +2,7 @@ from flask import Flask, render_template, request
 from config import dbname, dbhost, dbport, lost_priv, lost_pub, user_pub, prod_pub
 import json
 import psycopg2
+import datetime
 
 app = Flask(__name__)
 
@@ -9,35 +10,24 @@ app = Flask(__name__)
 def rest():
     return render_template('rest.html')
 
-#@app.route('/welcome')
-#def welcome():
-#    return render_template('welcome.html',dbname=dbname,dbhost=dbhost,dbport=dbport)
-
 @app.route('/rest/list_products', methods=('POST',))
 def list_products():
-    # Check maybe process as plaintext
     if request.method=='POST' and 'arguments' in request.form:
         req=json.loads(request.form['arguments'])
-    # Unmatched, take the user somewhere else
     else:
         redirect('rest')
     
-    # Setup a connection to the database
     conn = psycopg2.connect(dbname=dbname,host=dbhost,port=dbport)
     cur  = conn.cursor()
     
-    # If execution gets here we have request json to work with
-    # Do I need to handle compartments in this query?
     if len(req['compartments'])==0:
         print("have not compartment")
-        # Just handle vendor and description
         SQLstart = """select vendor,description,string_agg(c.abbrv||':'||l.abbrv,',')
 from products p
 left join security_tags t on p.product_pk=t.product_fk
 left join sec_compartments c on t.compartment_fk=c.compartment_pk
 left join sec_levels l on t.level_fk=l.level_pk"""
         if req['vendor']=='' and req['description']=='':
-            # No filters, add the group by and query is ready to go
             SQLstart += " group by vendor,description"
             cur.execute(SQLstart)
         else:
@@ -56,7 +46,6 @@ left join sec_levels l on t.level_fk=l.level_pk"""
                 cur.execute(SQLstart,(req['vendor'],))
     else:
         print("have compartment %s"%len(req['compartments']))
-        # Need to handle compartments too
         SQLstart = """select vendor,description,string_agg(c.abbrv||':'||l.abbrv,',')
 from security_tags t
 left join sec_compartments c on t.compartment_fk=c.compartment_pk
@@ -64,7 +53,6 @@ left join sec_levels l on t.level_fk=l.level_pk
 left join products p on t.product_fk=p.product_pk
 where product_fk is not NULL and c.abbrv||':'||l.abbrv = ANY(%s)"""
         if req['vendor']=='' and req['description']=='':
-            # No filters, add the group by and query is ready to go
             SQLstart += " group by vendor,description,product_fk having count(*)=%s"
             cur.execute(SQLstart,(req['compartments'],len(req['compartments'])))
         else:
@@ -82,7 +70,6 @@ where product_fk is not NULL and c.abbrv||':'||l.abbrv = ANY(%s)"""
                 SQLstart += " and vendor ilike %s group by vendor,description,product_fk having count(*)=%s"
                 cur.execute(SQLstart,(req['compartments'],req['vendor'],len(req['compartments'])))
     
-    # One of the 8 cases should've run... process the results
     dbres = cur.fetchall()
     listing = list()
     for row in dbres:
@@ -117,41 +104,71 @@ def suspend_user():
 
 @app.route('/rest/activate_user', methods=('POST',))
 def activate_user():
+    conn = psycopg2.connect(dbname=dbname,host=dbhost,port=dbport)
+    cur  = conn.cursor()
     if request.method=='POST' and 'arguments' in request.form:
         req=json.loads(request.form['arguments'])
 
     dat = dict()
     dat['timestamp'] = req['timestamp']
     dat['result'] = 'OK'
+
+    try:
+        cur.execute("INSERT INTO users (username) VALUES ('" + req['username'] + "');")
+        conn.commit()
+    except Exception as e:
+        dat['result'] = 'FAIL'
+
     data = json.dumps(dat)
+    conn.close()
     return data
 
-@app.route('/rest/new_products', methods=('POST',))
-def new_products():
+@app.route('/rest/add_products', methods=('POST',))
+def add_products():
+    conn = psycopg2.connect(dbname=dbname,host=dbhost,port=dbport)
+    cur  = conn.cursor()
     if request.method=='POST' and 'arguments' in request.form:
         req=json.loads(request.form['arguments'])
 
     dat = dict()
     dat['timestamp'] = req['timestamp']
     dat['result'] = 'OK'
+
+    try:
+        cur.execute("INSERT INTO products (description, vendor) VALUEs ('" + "description" + "', 'vendor');")
+        conn.commit()
+    except Exception as e:
+        dat['result'] = 'FAIL'
+
     data = json.dumps(dat)
+    conn.close()
     return data
 
-@app.route('/rest/add_product', methods=('POST',))
-def add_product():
+@app.route('/rest/add_asset', methods=('POST',))
+def add_asset():
+    conn = psycopg2.connect(dbname=dbname,host=dbhost,port=dbport)
+    cur  = conn.cursor()
     if request.method=='POST' and 'arguments' in request.form:
         req=json.loads(request.form['arguments'])
 
     dat = dict()
     dat['timestamp'] = req['timestamp']
     dat['result'] = 'OK'
+
+    try:
+        cur.execute("INSERT INTO assets (description) VALUES ('" + req['description'] + "');")
+        conn.commit()
+    except Exception as e:
+        dat['result'] = 'FAIL'
+
     data = json.dumps(dat)
+    conn.close()
     return data
 
 @app.route('/rest/lost_key', methods=('POST',))
 def lost_key():
     dat = dict()
-    dat['timestamp'] = req['timestamp']
+    dat['timestamp'] = str(datetime.datetime.now())
     dat['result'] = 'OK'
     dat['key'] = 'bksaoudu......aoelchsauh'
     data = json.dumps(dat)
