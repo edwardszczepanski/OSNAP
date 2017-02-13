@@ -10,9 +10,12 @@ def index():
     return render_template('index.html')
 
 @app.route('/rest')
-@app.route('/welcome')
-def welcome():
-    return render_template('welcome.html',dbname=dbname,dbhost=dbhost,dbport=dbport)
+def rest():
+    return render_template('rest.html')
+
+#@app.route('/welcome')
+#def welcome():
+#    return render_template('welcome.html',dbname=dbname,dbhost=dbhost,dbport=dbport)
 
 @app.route('/rest/list_products', methods=('POST',))
 def list_products():
@@ -117,13 +120,13 @@ def suspend_user():
     data = json.dumps(dat)
     return data
 
-@app.route('/goodbye')
-def goodbye():
-    if request.method=='GET' and 'mytext' in request.args:
-        return render_template('goodbye.html',data=request.args.get('mytext'))
+#@app.route('/goodbye')
+#def goodbye():
+#    if request.method=='GET' and 'mytext' in request.args:
+#        return render_template('goodbye.html',data=request.args.get('mytext'))
 
-    # request.form is only populated for POST messages
-    if request.method=='POST' and 'mytext' in request.form:
-        return render_template('goodbye.html',data=request.form['mytext'])
-    return render_template('index.html')
+#    # request.form is only populated for POST messages
+#    if request.method=='POST' and 'mytext' in request.form:
+#        return render_template('goodbye.html',data=request.form['mytext'])
+#    return render_template('index.html')
 
