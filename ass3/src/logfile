@@ -1,0 +1,515 @@
+LOG:  database system was shut down at 2017-02-06 02:21:34 UTC
+LOG:  MultiXact member wraparound protections are now enabled
+LOG:  database system is ready to accept connections
+LOG:  autovacuum launcher started
+FATAL:  database "osnapdev" does not exist
+ERROR:  syntax error at or near "ELECT" at character 1
+STATEMENT:  ELECT fcode,asset_tag FROM assets a JOIN asset_at aa ON a.asset_pk=aa.asset_fk JOIN facilities f ON aa.facility_fk=f.facility_pk;
+ERROR:  canceling statement due to user request
+STATEMENT:  drop schema public cascade;
+ERROR:  canceling statement due to user request
+STATEMENT:  drop schema public cascade;
+ERROR:  syntax error at or near "DROP" at character 20
+STATEMENT:  DROP database lost
+	DROP database data
+	drop schema public cascade;
+ERROR:  canceling statement due to user request
+STATEMENT:  drop schema public cascade;
+ERROR:  database "lost" already exists
+STATEMENT:  CREATE DATABASE lost;
+ERROR:  database "lost" already exists
+STATEMENT:  CREATE DATABASE lost;
+FATAL:  database "osnapdev" does not exist
+ERROR:  database "data" does not exist
+STATEMENT:  DROP database data;
+ERROR:  cannot drop the currently open database
+STATEMENT:  DROP database lost;
+ERROR:  cannot drop the currently open database
+STATEMENT:  DROP database lost;
+ERROR:  database "lost" is being accessed by other users
+DETAIL:  There are 2 other sessions using the database.
+STATEMENT:  DROP DATABASE lost;
+LOG:  unexpected EOF on client connection with an open transaction
+ERROR:  database "lost" is being accessed by other users
+DETAIL:  There is 1 other session using the database.
+STATEMENT:  DROP DATABASE lost;
+ERROR:  invalid input syntax for type timestamp: " NM"" at character 131
+STATEMENT:  INSERT INTO assets(fcode,src_facility,dest_facility,arrive_date,depart_date,expunge_date) VALUES ('DC','DC15467299','"Los Alamos',' NM"','"Washington',' D.C."');
+ERROR:  invalid input syntax for type timestamp: " NM"" at character 131
+STATEMENT:  INSERT INTO assets(fcode,src_facility,dest_facility,arrive_date,depart_date,expunge_date) VALUES ('DC','DC15467299','"Los Alamos',' NM"','"Washington D.C."','1/10/17');
+ERROR:  invalid input syntax for type timestamp: ""Washington D.C."" at character 135
+STATEMENT:  INSERT INTO assets(fcode,src_facility,dest_facility,arrive_date,depart_date,expunge_date) VALUES ('DC','DC15467299','"Los Alamos NM"','"Washington D.C."','1/10/17','1/10/17');
+ERROR:  invalid input syntax for type timestamp: "Washington D.C." at character 133
+STATEMENT:  INSERT INTO assets(fcode,src_facility,dest_facility,arrive_date,depart_date,expunge_date) VALUES ('DC','DC15467299','Los Alamos NM','Washington D.C.','1/10/17','1/10/17');
+ERROR:  invalid input syntax for type timestamp: "Washington D.C." at character 133
+STATEMENT:  INSERT INTO assets(fcode,src_facility,dest_facility,arrive_date,depart_date,expunge_date) VALUES ('DC','DC15467299','Los Alamos NM','Washington D.C.','01/10/2017','01/10/2017');
+ERROR:  invalid input syntax for type timestamp: "Washington D.C." at character 133
+STATEMENT:  INSERT INTO assets(fcode,src_facility,dest_facility,arrive_date,depart_date,expunge_date) VALUES ('DC','DC15467299','Los Alamos NM','Washington D.C.','01/10/2017','01/10/2017');
+ERROR:  syntax error at or near "00" at character 162
+STATEMENT:  INSERT INTO assets(fcode,src_facility,dest_facility,arrive_date,depart_date,expunge_date) VALUES ('DC','DC15467299','Los Alamos NM','Washington D.C.',2017-01-10 00:00:00,2017-01-10 00:00:00,None);
+ERROR:  syntax error at or near "," at character 151
+STATEMENT:  INSERT INTO assets(fcode,src_facility,dest_facility,arrive_date,depart_date,expunge_date) VALUES ('DC','DC15467299','Los Alamos NM','Washington D.C.',,,);
+ERROR:  syntax error at or near "00" at character 163
+STATEMENT:  INSERT INTO assets(fcode,src_facility,dest_facility,arrive_date,depart_date,expunge_date) VALUES ('DC','DC15467299','Los Alamos NM','Washington D.C.',(2017-01-10 00:00:00),(2017-01-10 00:00:00),(None));
+ERROR:  syntax error at or near "00" at character 163
+STATEMENT:  INSERT INTO assets(fcode,src_facility,dest_facility,arrive_date,depart_date,expunge_date) VALUES ('DC','DC15467299','Los Alamos NM','Washington D.C.',(2017-01-10 00:00:00),(2017-01-10 00:00:00),(None));
+ERROR:  syntax error at or near "00" at character 163
+STATEMENT:  INSERT INTO assets(fcode,src_facility,dest_facility,arrive_date,depart_date,expunge_date) VALUES ('DC','DC15467299','Los Alamos NM','Washington D.C.',(2017-01-10 00:00:00),(2017-01-10 00:00:00),(None));
+ERROR:  syntax error at or near ")" at character 200
+STATEMENT:  INSERT INTO assets(fcode,src_facility,dest_facility,arrive_date,depart_date,expunge_date) VALUES ('DC','DC15467299','Los Alamos NM','Washington D.C.',('2017-01-10 00:00:00'),('2017-01-10 00:00:00'),());
+ERROR:  INSERT has more expressions than target columns at character 200
+STATEMENT:  INSERT INTO assets(fcode,src_facility,dest_facility,arrive_date,depart_date,expunge_date) VALUES ('DC','DC15467299','Los Alamos NM','Washington D.C.',('2017-01-10 00:00:00'),('2017-01-10 00:00:00'),(''));
+ERROR:  INSERT has more expressions than target columns at character 200
+STATEMENT:  INSERT INTO assets(fcode,src_facility,dest_facility,arrive_date,depart_date,expunge_date) VALUES ('DC','DC15467299','Los Alamos NM','Washington D.C.',('2017-01-10 00:00:00'),('2017-01-10 00:00:00'),('2017-01-10 00:00:00'));
+ERROR:  syntax error at or near ")" at character 210
+STATEMENT:  INSERT INTO assets(fcode,asset_tag, src_facility,dest_facility,arrive_date,depart_date,expunge_date) VALUES ('DC','DC15467299','Los Alamos NM','Washington D.C.',('2017-01-10 00:00:00'),('2017-01-10 00:00:00'),);
+ERROR:  INSERT has more target columns than expressions at character 88
+STATEMENT:  INSERT INTO assets(fcode,asset_tag, src_facility,dest_facility,arrive_date,depart_date,expunge_date) VALUES ('DC','DC15467299','Los Alamos NM','Washington D.C.',('2017-01-10 00:00:00'),('2017-01-10 00:00:00'));
+ERROR:  syntax error at or near "00" at character 173
+STATEMENT:  INSERT INTO assets(fcode,asset_tag,src_facility,dest_facility,arrive_date,depart_date,expunge_date) VALUES ('DC','DC15467299','Los Alamos NM','Washington D.C.',(2017-01-10 00:00:00),(2017-01-10 00:00:00),(None));
+ERROR:  syntax error at or near "00" at character 173
+STATEMENT:  INSERT INTO assets(fcode,asset_tag,src_facility,dest_facility,arrive_date,depart_date,expunge_date) VALUES ('DC','DC15467299','Los Alamos NM','Washington D.C.',(2017-01-10 00:00:00),(2017-01-10 00:00:00),(None));
+ERROR:  syntax error at or near "00" at character 173
+STATEMENT:  INSERT INTO assets(fcode,asset_tag,src_facility,dest_facility,arrive_date,depart_date,expunge_date) VALUES ('DC','DC15467299','Los Alamos NM','Washington D.C.',(2017-01-10 00:00:00),(2017-01-10 00:00:00),(None));
+ERROR:  syntax error at or near "00" at character 173
+STATEMENT:  INSERT INTO assets(fcode,asset_tag,src_facility,dest_facility,arrive_date,depart_date,expunge_date) VALUES ('DC','DC15467299','Los Alamos NM','Washington D.C.',(2017-01-10 00:00:00),(2017-01-10 00:00:00),(None));
+ERROR:  syntax error at or near "00" at character 173
+STATEMENT:  INSERT INTO assets(fcode,asset_tag,src_facility,dest_facility,arrive_date,depart_date,expunge_date) VALUES ('DC','DC15467299','Los Alamos NM','Washington D.C.',(2017-01-10 00:00:00),(2017-01-10 00:00:00),(None));
+ERROR:  syntax error at or near "00" at character 173
+STATEMENT:  INSERT INTO assets(fcode,asset_tag,src_facility,dest_facility,arrive_date,depart_date,expunge_date) VALUES ('DC','DC15467299','Los Alamos NM','Washington D.C.',(2017-01-10 00:00:00),(2017-01-10 00:00:00),(None));
+ERROR:  syntax error at or near "00" at character 173
+STATEMENT:  INSERT INTO assets(fcode,asset_tag,src_facility,dest_facility,arrive_date,depart_date,expunge_date) VALUES ('DC','DC15467299','Los Alamos NM','Washington D.C.',(2017-01-10 00:00:00),(2017-01-10 00:00:00),(None));
+ERROR:  syntax error at or near "00" at character 173
+STATEMENT:  INSERT INTO assets(fcode,asset_tag,src_facility,dest_facility,arrive_date,depart_date,expunge_date) VALUES ('DC','DC15467299','Los Alamos NM','Washington D.C.',(2017-01-10 00:00:00),(2017-01-10 00:00:00),(None));
+ERROR:  syntax error at or near "00" at character 160
+STATEMENT:  INSERT INTO assets(fcode,asset_tag,src_facility,dest_facility,arrive_date,depart_date) VALUES ('DC','DC15467299','Los Alamos NM','Washington D.C.',(2017-01-10 00:00:00),(2017-01-10 00:00:00));
+ERROR:  syntax error at or near "2017" at character 151
+STATEMENT:  INSERT INTO assets(fcode,asset_tag,src_facility,dest_facility,arrive_date,depart_date) VALUES ('DC','DC15467299','Los Alamos NM','Washington D.C.','('2017-01-10 00:00:00')','('2017-01-10 00:00:00')');
+ERROR:  operator does not exist: character varying =* at character 33
+HINT:  No operator matches the given name and argument type(s). You might need to add explicit type casts.
+STATEMENT:  SELECT * from assets where fcode=*
+	;
+ERROR:  syntax error at or near ";" at character 37
+STATEMENT:  SELECT * from assets where fcode=ANY;
+ERROR:  syntax error at or near ";" at character 37
+STATEMENT:  SELECT * from assets where fcode=ALL;
+ERROR:  column "ALL" does not exist at character 34
+STATEMENT:  SELECT * from assets where fcode="ALL";
+ERROR:  column "DC" does not exist at character 34
+STATEMENT:  SELECT * from assets where fcode="DC";
+ERROR:  syntax error at or near "WHERE" at character 71
+STATEMENT:  SELECT * from assets where ('2020-01-30 00:00:00') >= arrive_date AND WHERE fcode='DC';
+ERROR:  syntax error at or near ">=" at character 49
+STATEMENT:  SELECT * FROM assetsAND ('2017-01-10 00:00:00') >= arrive_dateAND ('2017-01-10 00:00:00') <= depart_date;
+ERROR:  syntax error at or near "AND" at character 22
+STATEMENT:  SELECT * FROM assets AND ('2017-01-10 00:00:00') >= arrive_date AND ('2017-01-10 00:00:00') <= depart_date;
+ERROR:  syntax error at or near "AND" at character 22
+STATEMENT:  SELECT * FROM assets AND ('2017-01-10 00:00:00') >= arrive_date;
+ERROR:  syntax error at or near "AND" at character 22
+STATEMENT:  SELECT * FROM assets AND ('2017-01-31 00:00:00') >= arrive_date;
+LOG:  unexpected EOF on client connection with an open transaction
+LOG:  unexpected EOF on client connection with an open transaction
+ERROR:  relation "assets" already exists
+STATEMENT:  create table assets (
+	    asset_pk        serial primary key,
+	    product_fk      integer, 
+	    asset_tag       varchar(32),
+	    description     text,
+	    alt_description text
+	);
+ERROR:  column "asset_pk" referenced in foreign key constraint does not exist
+STATEMENT:  create table vehicles (
+	    vehicle_pk      serial primary key,
+	    asset_fk        integer REFERENCES assets(asset_pk) not null 
+	);
+ERROR:  column "asset_pk" referenced in foreign key constraint does not exist
+STATEMENT:  create table asset_at (
+	    asset_fk        integer REFERENCES assets(asset_pk) not null,
+	    facility_fk     integer REFERENCES facilities(facility_pk) not null,
+	    arrive_dt       timestamp, 
+	    depart_dt       timestamp 
+	);
+ERROR:  relation "vehicles" does not exist
+STATEMENT:  create table used_by (
+	    vehicle_fk  integer REFERENCES vehicles(vehicle_pk) not null,
+	    convoy_fk   integer REFERENCES convoys(convoy_pk) not null
+	);
+ERROR:  column "asset_pk" referenced in foreign key constraint does not exist
+STATEMENT:  create table asset_on (
+	    asset_fk    integer REFERENCES assets(asset_pk) not null,
+	    convoy_fk   integer REFERENCES convoys(convoy_pk) not null,
+	    load_dt     timestamp, 
+	    unload_dt   timestamp  
+	);
+ERROR:  column "asset_pk" referenced in foreign key constraint does not exist
+STATEMENT:  create table security_tags (
+	    tag_pk          serial primary key,
+	    level_fk        integer REFERENCES sec_levels(level_pk) not null,
+	    compartment_fk  integer REFERENCES sec_compartments(compartment_pk) not null,
+	    
+	    user_fk         integer REFERENCES users(user_pk),
+	    asset_fk        integer REFERENCES assets(asset_pk),
+	    product_fk      integer REFERENCES products(product_pk)
+	);
+ERROR:  relation "security_tags" does not exist at character 13
+STATEMENT:  INSERT INTO security_tags (level_fk, compartment_fk, product_fk) SELECT level_pk, compartment_pk, max(product_pk) FROM sec_levels l,sec_compartments c,products p WHERE l.abbrv='ss' and c.abbrv='nrg' GROUP BY level_pk,compartment_pk,product_pk;
+ERROR:  column "description" of relation "assets" does not exist at character 31
+STATEMENT:  INSERT INTO assets (asset_tag,description) VALUES ('DC15467299','Red Lion');
+ERROR:  relation "asset_at" does not exist at character 13
+STATEMENT:  INSERT INTO asset_at (asset_fk,facility_fk,arrive_dt,depart_dt) SELECT asset_pk,facility_pk,'2017-01-10T00:00:00',NULL FROM assets a, facilities f WHERE a.asset_tag='DC15467299' and f.fcode='DC';
+ERROR:  relation "security_tags" does not exist at character 13
+STATEMENT:  INSERT into security_tags (level_fk, compartment_fk, asset_fk) SELECT level_pk, compartment_pk, asset_pk FROM sec_levels l,sec_compartments c,assets a WHERE l.abbrv='z' and c.abbrv='volt' and a.asset_tag='DC15467299';
+ERROR:  column "description" of relation "assets" does not exist at character 31
+STATEMENT:  INSERT INTO assets (asset_tag,description) VALUES ('DC25467300','Green Lion');
+ERROR:  relation "asset_at" does not exist at character 13
+STATEMENT:  INSERT INTO asset_at (asset_fk,facility_fk,arrive_dt,depart_dt) SELECT asset_pk,facility_pk,'2017-01-10T00:00:00',NULL FROM assets a, facilities f WHERE a.asset_tag='DC25467300' and f.fcode='DC';
+ERROR:  relation "security_tags" does not exist at character 13
+STATEMENT:  INSERT into security_tags (level_fk, compartment_fk, asset_fk) SELECT level_pk, compartment_pk, asset_pk FROM sec_levels l,sec_compartments c,assets a WHERE l.abbrv='z' and c.abbrv='volt' and a.asset_tag='DC25467300';
+ERROR:  column "description" of relation "assets" does not exist at character 31
+STATEMENT:  INSERT INTO assets (asset_tag,description) VALUES ('DC25467301','Blue Lion ');
+ERROR:  relation "asset_at" does not exist at character 13
+STATEMENT:  INSERT INTO asset_at (asset_fk,facility_fk,arrive_dt,depart_dt) SELECT asset_pk,facility_pk,'2017-01-10T00:00:00',NULL FROM assets a, facilities f WHERE a.asset_tag='DC25467301' and f.fcode='DC';
+ERROR:  relation "security_tags" does not exist at character 13
+STATEMENT:  INSERT into security_tags (level_fk, compartment_fk, asset_fk) SELECT level_pk, compartment_pk, asset_pk FROM sec_levels l,sec_compartments c,assets a WHERE l.abbrv='z' and c.abbrv='volt' and a.asset_tag='DC25467301';
+ERROR:  column "description" of relation "assets" does not exist at character 31
+STATEMENT:  INSERT INTO assets (asset_tag,description) VALUES ('DC25467302','Yellow Lion');
+ERROR:  relation "asset_at" does not exist at character 13
+STATEMENT:  INSERT INTO asset_at (asset_fk,facility_fk,arrive_dt,depart_dt) SELECT asset_pk,facility_pk,'2017-01-10T00:00:00',NULL FROM assets a, facilities f WHERE a.asset_tag='DC25467302' and f.fcode='DC';
+ERROR:  relation "security_tags" does not exist at character 13
+STATEMENT:  INSERT into security_tags (level_fk, compartment_fk, asset_fk) SELECT level_pk, compartment_pk, asset_pk FROM sec_levels l,sec_compartments c,assets a WHERE l.abbrv='z' and c.abbrv='volt' and a.asset_tag='DC25467302';
+ERROR:  column "description" of relation "assets" does not exist at character 31
+STATEMENT:  INSERT INTO assets (asset_tag,description) VALUES ('CA15467287','Olivine basalt ');
+ERROR:  relation "asset_at" does not exist at character 13
+STATEMENT:  INSERT INTO asset_at (asset_fk,facility_fk,arrive_dt,depart_dt) SELECT asset_pk,facility_pk,'2017-01-07T00:00:00',NULL FROM assets a, facilities f WHERE a.asset_tag='CA15467287' and f.fcode='HQ';
+ERROR:  relation "security_tags" does not exist at character 13
+STATEMENT:  INSERT into security_tags (level_fk, compartment_fk, asset_fk) SELECT level_pk, compartment_pk, asset_pk FROM sec_levels l,sec_compartments c,assets a WHERE l.abbrv='u' and c.abbrv='moon' and a.asset_tag='CA15467287';
+ERROR:  column "description" of relation "assets" does not exist at character 31
+STATEMENT:  INSERT INTO assets (asset_tag,description) VALUES ('CA15467288','Anorthosite');
+ERROR:  relation "asset_at" does not exist at character 13
+STATEMENT:  INSERT INTO asset_at (asset_fk,facility_fk,arrive_dt,depart_dt) SELECT asset_pk,facility_pk,'2017-01-07T00:00:00',NULL FROM assets a, facilities f WHERE a.asset_tag='CA15467288' and f.fcode='HQ';
+ERROR:  relation "security_tags" does not exist at character 13
+STATEMENT:  INSERT into security_tags (level_fk, compartment_fk, asset_fk) SELECT level_pk, compartment_pk, asset_pk FROM sec_levels l,sec_compartments c,assets a WHERE l.abbrv='u' and c.abbrv='moon' and a.asset_tag='CA15467288';
+ERROR:  column "description" of relation "assets" does not exist at character 31
+STATEMENT:  INSERT INTO assets (asset_tag,description) VALUES ('CA15467289','breccias');
+ERROR:  relation "asset_at" does not exist at character 13
+STATEMENT:  INSERT INTO asset_at (asset_fk,facility_fk,arrive_dt,depart_dt) SELECT asset_pk,facility_pk,'2017-01-07T00:00:00',NULL FROM assets a, facilities f WHERE a.asset_tag='CA15467289' and f.fcode='HQ';
+ERROR:  relation "security_tags" does not exist at character 13
+STATEMENT:  INSERT into security_tags (level_fk, compartment_fk, asset_fk) SELECT level_pk, compartment_pk, asset_pk FROM sec_levels l,sec_compartments c,assets a WHERE l.abbrv='u' and c.abbrv='moon' and a.asset_tag='CA15467289';
+ERROR:  column "description" of relation "assets" does not exist at character 31
+STATEMENT:  INSERT INTO assets (asset_tag,description) VALUES ('CA15467290','breccias');
+ERROR:  relation "asset_at" does not exist at character 13
+STATEMENT:  INSERT INTO asset_at (asset_fk,facility_fk,arrive_dt,depart_dt) SELECT asset_pk,facility_pk,'2017-01-07T00:00:00',NULL FROM assets a, facilities f WHERE a.asset_tag='CA15467290' and f.fcode='HQ';
+ERROR:  relation "security_tags" does not exist at character 13
+STATEMENT:  INSERT into security_tags (level_fk, compartment_fk, asset_fk) SELECT level_pk, compartment_pk, asset_pk FROM sec_levels l,sec_compartments c,assets a WHERE l.abbrv='u' and c.abbrv='moon' and a.asset_tag='CA15467290';
+ERROR:  column "description" of relation "assets" does not exist at character 31
+STATEMENT:  INSERT INTO assets (asset_tag,description) VALUES ('MB2222761','1 L H2O x1872');
+ERROR:  relation "asset_at" does not exist at character 13
+STATEMENT:  INSERT INTO asset_at (asset_fk,facility_fk,arrive_dt,depart_dt) SELECT asset_pk,facility_pk,'2016-12-15T00:00:00','2019-12-31T00:00:00' FROM assets a, facilities f WHERE a.asset_tag='MB2222761' and f.fcode='MB005';
+ERROR:  column "description" of relation "assets" does not exist at character 31
+STATEMENT:  INSERT INTO assets (asset_tag,description) VALUES ('MB2222762','2 L H2O x1872');
+ERROR:  relation "asset_at" does not exist at character 13
+STATEMENT:  INSERT INTO asset_at (asset_fk,facility_fk,arrive_dt,depart_dt) SELECT asset_pk,facility_pk,'2016-12-15T00:00:00','2019-12-31T00:00:00' FROM assets a, facilities f WHERE a.asset_tag='MB2222762' and f.fcode='MB005';
+ERROR:  column "description" of relation "assets" does not exist at character 31
+STATEMENT:  INSERT INTO assets (asset_tag,description) VALUES ('CA15467291','notepad');
+ERROR:  relation "asset_at" does not exist at character 13
+STATEMENT:  INSERT INTO asset_at (asset_fk,facility_fk,arrive_dt,depart_dt) SELECT asset_pk,facility_pk,'2017-01-08T00:00:00','2020-12-31T00:00:00' FROM assets a, facilities f WHERE a.asset_tag='CA15467291' and f.fcode='NC';
+ERROR:  relation "security_tags" does not exist at character 13
+STATEMENT:  INSERT into security_tags (level_fk, compartment_fk, asset_fk) SELECT level_pk, compartment_pk, asset_pk FROM sec_levels l,sec_compartments c,assets a WHERE l.abbrv='u' and c.abbrv='adm' and a.asset_tag='CA15467291';
+ERROR:  column "description" of relation "assets" does not exist at character 31
+STATEMENT:  INSERT INTO assets (asset_tag,description) VALUES ('CA15467292','H2O');
+ERROR:  relation "asset_at" does not exist at character 13
+STATEMENT:  INSERT INTO asset_at (asset_fk,facility_fk,arrive_dt,depart_dt) SELECT asset_pk,facility_pk,'2017-01-08T00:00:00','2021-12-31T00:00:00' FROM assets a, facilities f WHERE a.asset_tag='CA15467292' and f.fcode='NC';
+ERROR:  column "description" of relation "assets" does not exist at character 31
+STATEMENT:  INSERT INTO assets (asset_tag,description) VALUES ('CA15467293','Zapper');
+ERROR:  relation "asset_at" does not exist at character 13
+STATEMENT:  INSERT INTO asset_at (asset_fk,facility_fk,arrive_dt,depart_dt) SELECT asset_pk,facility_pk,'2017-01-08T00:00:00','2017-12-31T00:00:00' FROM assets a, facilities f WHERE a.asset_tag='CA15467293' and f.fcode='NC';
+ERROR:  relation "security_tags" does not exist at character 13
+STATEMENT:  INSERT into security_tags (level_fk, compartment_fk, asset_fk) SELECT level_pk, compartment_pk, asset_pk FROM sec_levels l,sec_compartments c,assets a WHERE l.abbrv='s' and c.abbrv='wpn' and a.asset_tag='CA15467293';
+ERROR:  column "description" of relation "assets" does not exist at character 31
+STATEMENT:  INSERT INTO assets (asset_tag,description) VALUES ('CA15467294','XJ 3000 scanner');
+ERROR:  relation "asset_at" does not exist at character 13
+STATEMENT:  INSERT INTO asset_at (asset_fk,facility_fk,arrive_dt,depart_dt) SELECT asset_pk,facility_pk,'2017-01-08T00:00:00',NULL FROM assets a, facilities f WHERE a.asset_tag='CA15467294' and f.fcode='NC';
+ERROR:  relation "security_tags" does not exist at character 13
+STATEMENT:  INSERT into security_tags (level_fk, compartment_fk, asset_fk) SELECT level_pk, compartment_pk, asset_pk FROM sec_levels l,sec_compartments c,assets a WHERE l.abbrv='u' and c.abbrv='adm' and a.asset_tag='CA15467294';
+ERROR:  column "description" of relation "assets" does not exist at character 31
+STATEMENT:  INSERT INTO assets (asset_tag,description) VALUES ('CA15467295','50 mm film');
+ERROR:  relation "asset_at" does not exist at character 13
+STATEMENT:  INSERT INTO asset_at (asset_fk,facility_fk,arrive_dt,depart_dt) SELECT asset_pk,facility_pk,'2017-01-08T00:00:00',NULL FROM assets a, facilities f WHERE a.asset_tag='CA15467295' and f.fcode='SPNV';
+ERROR:  relation "security_tags" does not exist at character 13
+STATEMENT:  INSERT into security_tags (level_fk, compartment_fk, asset_fk) SELECT level_pk, compartment_pk, asset_pk FROM sec_levels l,sec_compartments c,assets a WHERE l.abbrv='TS' and c.abbrv='ET' and a.asset_tag='CA15467295';
+ERROR:  relation "security_tags" does not exist at character 13
+STATEMENT:  INSERT into security_tags (level_fk, compartment_fk, asset_fk) SELECT level_pk, compartment_pk, asset_pk FROM sec_levels l,sec_compartments c,assets a WHERE l.abbrv='S' and c.abbrv='LGM' and a.asset_tag='CA15467295';
+ERROR:  column "description" of relation "assets" does not exist at character 31
+STATEMENT:  INSERT INTO assets (asset_tag,description) VALUES ('CA15467296','Atari ET video game cartridge');
+ERROR:  relation "asset_at" does not exist at character 13
+STATEMENT:  INSERT INTO asset_at (asset_fk,facility_fk,arrive_dt,depart_dt) SELECT asset_pk,facility_pk,'2017-01-08T00:00:00',NULL FROM assets a, facilities f WHERE a.asset_tag='CA15467296' and f.fcode='SPNV';
+ERROR:  relation "security_tags" does not exist at character 13
+STATEMENT:  INSERT into security_tags (level_fk, compartment_fk, asset_fk) SELECT level_pk, compartment_pk, asset_pk FROM sec_levels l,sec_compartments c,assets a WHERE l.abbrv='S' and c.abbrv='ET' and a.asset_tag='CA15467296';
+ERROR:  column assets.description does not exist at character 63
+STATEMENT:  UPDATE assets SET product_fk=product_pk FROM products p WHERE assets.description=p.product_name;
+ERROR:  column "asset_pk" does not exist at character 8
+HINT:  Perhaps you meant to reference the column "assets.asset_tag".
+STATEMENT:  SELECT asset_pk FROM assets WHERE asset_tag='CA15467287'
+ERROR:  relation "asset_at" does not exist at character 127
+STATEMENT:  /* This script does some patching for things that can be inferred but were left out of
+	   the input dataset
+	*/
+	
+	
+	
+	INSERT INTO asset_at (asset_fk,facility_fk,arrive_dt) SELECT asset_fk,dst_fk,arrive_dt FROM convoys c JOIN used_by u ON c.convoy_pk=u.convoy_fk JOIN vehicles v ON u.vehicle_fk=v.vehicle_pk;
+ERROR:  relation "asset_at" does not exist at character 13
+STATEMENT:  INSERT INTO asset_at (asset_fk,facility_fk,depart_dt) SELECT asset_fk,src_fk,depart_dt FROM convoys c JOIN used_by u ON c.convoy_pk=u.convoy_fk JOIN vehicles v ON u.vehicle_fk=v.vehicle_pk;
+ERROR:  relation "asset_at" does not exist at character 13
+STATEMENT:  INSERT INTO asset_at (asset_fk,facility_fk,depart_dt) SELECT asset_fk,src_fk,load_dt
+	FROM  convoys c JOIN asset_on a ON convoy_pk=a.convoy_fk;
+ERROR:  database "lost" already exists
+STATEMENT:  CREATE DATABASE lost;
+ERROR:  relation "products" already exists
+STATEMENT:  create table products (
+	    product_pk      serial primary key,
+	    vendor          varchar(128) not null,
+	    description     text,
+	    alt_description text,
+	    product_name    varchar(128),
+	    product_model   varchar(128),
+	    price           numeric
+	);
+ERROR:  relation "assets" already exists
+STATEMENT:  create table assets (
+	    asset_pk        serial primary key,
+	    product_fk      integer, 
+	    asset_tag       varchar(32),
+	    description     text,
+	    alt_description text
+	);
+ERROR:  column "asset_pk" referenced in foreign key constraint does not exist
+STATEMENT:  create table vehicles (
+	    vehicle_pk      serial primary key,
+	    asset_fk        integer REFERENCES assets(asset_pk) not null 
+	);
+ERROR:  relation "facilities" already exists
+STATEMENT:  create table facilities (
+	    facility_pk     serial primary key,
+	    fcode           varchar(16),
+	    common_name     varchar(128),
+	    location        varchar(128) 
+	);
+ERROR:  column "asset_pk" referenced in foreign key constraint does not exist
+STATEMENT:  create table asset_at (
+	    asset_fk        integer REFERENCES assets(asset_pk) not null,
+	    facility_fk     integer REFERENCES facilities(facility_pk) not null,
+	    arrive_dt       timestamp, 
+	    depart_dt       timestamp 
+	);
+ERROR:  relation "convoys" already exists
+STATEMENT:  create table convoys (
+	    convoy_pk       serial primary key,
+	    request_id      varchar(16),
+	    src_fk          integer REFERENCES facilities(facility_pk) not null,
+	    dst_fk          integer REFERENCES facilities(facility_pk) not null,
+	    depart_dt       timestamp, 
+	    arrive_dt       timestamp  
+	);
+ERROR:  relation "waypoints" already exists
+STATEMENT:  create table waypoints (
+	    convoy_fk   integer REFERENCES convoys(convoy_pk) not null,
+	    point_dt    timestamp 
+	);
+ERROR:  relation "vehicles" does not exist
+STATEMENT:  create table used_by (
+	    vehicle_fk  integer REFERENCES vehicles(vehicle_pk) not null,
+	    convoy_fk   integer REFERENCES convoys(convoy_pk) not null
+	);
+ERROR:  column "asset_pk" referenced in foreign key constraint does not exist
+STATEMENT:  create table asset_on (
+	    asset_fk    integer REFERENCES assets(asset_pk) not null,
+	    convoy_fk   integer REFERENCES convoys(convoy_pk) not null,
+	    load_dt     timestamp, 
+	    unload_dt   timestamp  
+	);
+ERROR:  relation "users" already exists
+STATEMENT:  create table users (
+	    user_pk     serial primary key,
+	    username    varchar(64) not null,
+	    active      boolean default FALSE
+	);
+ERROR:  relation "roles" already exists
+STATEMENT:  create table roles (
+	    role_pk     serial primary key,
+	    title       varchar(32)
+	);
+ERROR:  relation "user_is" already exists
+STATEMENT:  create table user_is (
+	    user_fk     integer REFERENCES users(user_pk) not null,
+	    role_fk     integer REFERENCES roles(role_pk) not null
+	);
+ERROR:  relation "user_supports" already exists
+STATEMENT:  create table user_supports (
+	    user_fk     integer REFERENCES users(user_pk) not null,
+	    facility_fk integer REFERENCES facilities(facility_pk) not null
+	);
+ERROR:  relation "sec_levels" already exists
+STATEMENT:  create table sec_levels (
+	    level_pk    integer primary key, 
+	    abbrv       varchar(3),
+	    comment     varchar(128)
+	);
+ERROR:  relation "sec_compartments" already exists
+STATEMENT:  create table sec_compartments (
+	    compartment_pk  serial primary key,
+	    abbrv           varchar(8),
+	    comment         varchar(128)
+	);
+ERROR:  column "asset_pk" referenced in foreign key constraint does not exist
+STATEMENT:  create table security_tags (
+	    tag_pk          serial primary key,
+	    level_fk        integer REFERENCES sec_levels(level_pk) not null,
+	    compartment_fk  integer REFERENCES sec_compartments(compartment_pk) not null,
+	    
+	    user_fk         integer REFERENCES users(user_pk),
+	    asset_fk        integer REFERENCES assets(asset_pk),
+	    product_fk      integer REFERENCES products(product_pk)
+	);
+ERROR:  duplicate key value violates unique constraint "sec_levels_pkey"
+DETAIL:  Key (level_pk)=(5) already exists.
+STATEMENT:  INSERT INTO sec_levels (level_pk,abbrv,comment) VALUES (5,'u','sensitive but unclassified');
+ERROR:  duplicate key value violates unique constraint "sec_levels_pkey"
+DETAIL:  Key (level_pk)=(4) already exists.
+STATEMENT:  INSERT INTO sec_levels (level_pk,abbrv,comment) VALUES (4,'s','secret');
+ERROR:  duplicate key value violates unique constraint "sec_levels_pkey"
+DETAIL:  Key (level_pk)=(3) already exists.
+STATEMENT:  INSERT INTO sec_levels (level_pk,abbrv,comment) VALUES (3,'ts','top secret');
+ERROR:  duplicate key value violates unique constraint "sec_levels_pkey"
+DETAIL:  Key (level_pk)=(2) already exists.
+STATEMENT:  INSERT INTO sec_levels (level_pk,abbrv,comment) VALUES (2,'ss','*REDACTED*');
+ERROR:  duplicate key value violates unique constraint "sec_levels_pkey"
+DETAIL:  Key (level_pk)=(1) already exists.
+STATEMENT:  INSERT INTO sec_levels (level_pk,abbrv,comment) VALUES (1,'z','*REDACTED*');
+ERROR:  relation "security_tags" does not exist at character 13
+STATEMENT:  INSERT INTO security_tags (level_fk, compartment_fk, product_fk) SELECT level_pk, compartment_pk, max(product_pk) FROM sec_levels l,sec_compartments c,products p WHERE l.abbrv='ss' and c.abbrv='nrg' GROUP BY level_pk,compartment_pk,product_pk;
+ERROR:  column "description" of relation "assets" does not exist at character 31
+STATEMENT:  INSERT INTO assets (asset_tag,description) VALUES ('DC15467299','Red Lion');
+ERROR:  relation "asset_at" does not exist at character 13
+STATEMENT:  INSERT INTO asset_at (asset_fk,facility_fk,arrive_dt,depart_dt) SELECT asset_pk,facility_pk,'2017-01-10T00:00:00',NULL FROM assets a, facilities f WHERE a.asset_tag='DC15467299' and f.fcode='DC';
+ERROR:  relation "security_tags" does not exist at character 13
+STATEMENT:  INSERT into security_tags (level_fk, compartment_fk, asset_fk) SELECT level_pk, compartment_pk, asset_pk FROM sec_levels l,sec_compartments c,assets a WHERE l.abbrv='z' and c.abbrv='volt' and a.asset_tag='DC15467299';
+ERROR:  column "description" of relation "assets" does not exist at character 31
+STATEMENT:  INSERT INTO assets (asset_tag,description) VALUES ('DC25467300','Green Lion');
+ERROR:  relation "asset_at" does not exist at character 13
+STATEMENT:  INSERT INTO asset_at (asset_fk,facility_fk,arrive_dt,depart_dt) SELECT asset_pk,facility_pk,'2017-01-10T00:00:00',NULL FROM assets a, facilities f WHERE a.asset_tag='DC25467300' and f.fcode='DC';
+ERROR:  relation "security_tags" does not exist at character 13
+STATEMENT:  INSERT into security_tags (level_fk, compartment_fk, asset_fk) SELECT level_pk, compartment_pk, asset_pk FROM sec_levels l,sec_compartments c,assets a WHERE l.abbrv='z' and c.abbrv='volt' and a.asset_tag='DC25467300';
+ERROR:  column "description" of relation "assets" does not exist at character 31
+STATEMENT:  INSERT INTO assets (asset_tag,description) VALUES ('DC25467301','Blue Lion ');
+ERROR:  relation "asset_at" does not exist at character 13
+STATEMENT:  INSERT INTO asset_at (asset_fk,facility_fk,arrive_dt,depart_dt) SELECT asset_pk,facility_pk,'2017-01-10T00:00:00',NULL FROM assets a, facilities f WHERE a.asset_tag='DC25467301' and f.fcode='DC';
+ERROR:  relation "security_tags" does not exist at character 13
+STATEMENT:  INSERT into security_tags (level_fk, compartment_fk, asset_fk) SELECT level_pk, compartment_pk, asset_pk FROM sec_levels l,sec_compartments c,assets a WHERE l.abbrv='z' and c.abbrv='volt' and a.asset_tag='DC25467301';
+ERROR:  column "description" of relation "assets" does not exist at character 31
+STATEMENT:  INSERT INTO assets (asset_tag,description) VALUES ('DC25467302','Yellow Lion');
+ERROR:  relation "asset_at" does not exist at character 13
+STATEMENT:  INSERT INTO asset_at (asset_fk,facility_fk,arrive_dt,depart_dt) SELECT asset_pk,facility_pk,'2017-01-10T00:00:00',NULL FROM assets a, facilities f WHERE a.asset_tag='DC25467302' and f.fcode='DC';
+ERROR:  relation "security_tags" does not exist at character 13
+STATEMENT:  INSERT into security_tags (level_fk, compartment_fk, asset_fk) SELECT level_pk, compartment_pk, asset_pk FROM sec_levels l,sec_compartments c,assets a WHERE l.abbrv='z' and c.abbrv='volt' and a.asset_tag='DC25467302';
+ERROR:  column "description" of relation "assets" does not exist at character 31
+STATEMENT:  INSERT INTO assets (asset_tag,description) VALUES ('CA15467287','Olivine basalt ');
+ERROR:  relation "asset_at" does not exist at character 13
+STATEMENT:  INSERT INTO asset_at (asset_fk,facility_fk,arrive_dt,depart_dt) SELECT asset_pk,facility_pk,'2017-01-07T00:00:00',NULL FROM assets a, facilities f WHERE a.asset_tag='CA15467287' and f.fcode='HQ';
+ERROR:  relation "security_tags" does not exist at character 13
+STATEMENT:  INSERT into security_tags (level_fk, compartment_fk, asset_fk) SELECT level_pk, compartment_pk, asset_pk FROM sec_levels l,sec_compartments c,assets a WHERE l.abbrv='u' and c.abbrv='moon' and a.asset_tag='CA15467287';
+ERROR:  column "description" of relation "assets" does not exist at character 31
+STATEMENT:  INSERT INTO assets (asset_tag,description) VALUES ('CA15467288','Anorthosite');
+ERROR:  relation "asset_at" does not exist at character 13
+STATEMENT:  INSERT INTO asset_at (asset_fk,facility_fk,arrive_dt,depart_dt) SELECT asset_pk,facility_pk,'2017-01-07T00:00:00',NULL FROM assets a, facilities f WHERE a.asset_tag='CA15467288' and f.fcode='HQ';
+ERROR:  relation "security_tags" does not exist at character 13
+STATEMENT:  INSERT into security_tags (level_fk, compartment_fk, asset_fk) SELECT level_pk, compartment_pk, asset_pk FROM sec_levels l,sec_compartments c,assets a WHERE l.abbrv='u' and c.abbrv='moon' and a.asset_tag='CA15467288';
+ERROR:  column "description" of relation "assets" does not exist at character 31
+STATEMENT:  INSERT INTO assets (asset_tag,description) VALUES ('CA15467289','breccias');
+ERROR:  relation "asset_at" does not exist at character 13
+STATEMENT:  INSERT INTO asset_at (asset_fk,facility_fk,arrive_dt,depart_dt) SELECT asset_pk,facility_pk,'2017-01-07T00:00:00',NULL FROM assets a, facilities f WHERE a.asset_tag='CA15467289' and f.fcode='HQ';
+ERROR:  relation "security_tags" does not exist at character 13
+STATEMENT:  INSERT into security_tags (level_fk, compartment_fk, asset_fk) SELECT level_pk, compartment_pk, asset_pk FROM sec_levels l,sec_compartments c,assets a WHERE l.abbrv='u' and c.abbrv='moon' and a.asset_tag='CA15467289';
+ERROR:  column "description" of relation "assets" does not exist at character 31
+STATEMENT:  INSERT INTO assets (asset_tag,description) VALUES ('CA15467290','breccias');
+ERROR:  relation "asset_at" does not exist at character 13
+STATEMENT:  INSERT INTO asset_at (asset_fk,facility_fk,arrive_dt,depart_dt) SELECT asset_pk,facility_pk,'2017-01-07T00:00:00',NULL FROM assets a, facilities f WHERE a.asset_tag='CA15467290' and f.fcode='HQ';
+ERROR:  relation "security_tags" does not exist at character 13
+STATEMENT:  INSERT into security_tags (level_fk, compartment_fk, asset_fk) SELECT level_pk, compartment_pk, asset_pk FROM sec_levels l,sec_compartments c,assets a WHERE l.abbrv='u' and c.abbrv='moon' and a.asset_tag='CA15467290';
+ERROR:  column "description" of relation "assets" does not exist at character 31
+STATEMENT:  INSERT INTO assets (asset_tag,description) VALUES ('MB2222761','1 L H2O x1872');
+ERROR:  relation "asset_at" does not exist at character 13
+STATEMENT:  INSERT INTO asset_at (asset_fk,facility_fk,arrive_dt,depart_dt) SELECT asset_pk,facility_pk,'2016-12-15T00:00:00','2019-12-31T00:00:00' FROM assets a, facilities f WHERE a.asset_tag='MB2222761' and f.fcode='MB005';
+ERROR:  column "description" of relation "assets" does not exist at character 31
+STATEMENT:  INSERT INTO assets (asset_tag,description) VALUES ('MB2222762','2 L H2O x1872');
+ERROR:  relation "asset_at" does not exist at character 13
+STATEMENT:  INSERT INTO asset_at (asset_fk,facility_fk,arrive_dt,depart_dt) SELECT asset_pk,facility_pk,'2016-12-15T00:00:00','2019-12-31T00:00:00' FROM assets a, facilities f WHERE a.asset_tag='MB2222762' and f.fcode='MB005';
+ERROR:  column "description" of relation "assets" does not exist at character 31
+STATEMENT:  INSERT INTO assets (asset_tag,description) VALUES ('CA15467291','notepad');
+ERROR:  relation "asset_at" does not exist at character 13
+STATEMENT:  INSERT INTO asset_at (asset_fk,facility_fk,arrive_dt,depart_dt) SELECT asset_pk,facility_pk,'2017-01-08T00:00:00','2020-12-31T00:00:00' FROM assets a, facilities f WHERE a.asset_tag='CA15467291' and f.fcode='NC';
+ERROR:  relation "security_tags" does not exist at character 13
+STATEMENT:  INSERT into security_tags (level_fk, compartment_fk, asset_fk) SELECT level_pk, compartment_pk, asset_pk FROM sec_levels l,sec_compartments c,assets a WHERE l.abbrv='u' and c.abbrv='adm' and a.asset_tag='CA15467291';
+ERROR:  column "description" of relation "assets" does not exist at character 31
+STATEMENT:  INSERT INTO assets (asset_tag,description) VALUES ('CA15467292','H2O');
+ERROR:  relation "asset_at" does not exist at character 13
+STATEMENT:  INSERT INTO asset_at (asset_fk,facility_fk,arrive_dt,depart_dt) SELECT asset_pk,facility_pk,'2017-01-08T00:00:00','2021-12-31T00:00:00' FROM assets a, facilities f WHERE a.asset_tag='CA15467292' and f.fcode='NC';
+ERROR:  column "description" of relation "assets" does not exist at character 31
+STATEMENT:  INSERT INTO assets (asset_tag,description) VALUES ('CA15467293','Zapper');
+ERROR:  relation "asset_at" does not exist at character 13
+STATEMENT:  INSERT INTO asset_at (asset_fk,facility_fk,arrive_dt,depart_dt) SELECT asset_pk,facility_pk,'2017-01-08T00:00:00','2017-12-31T00:00:00' FROM assets a, facilities f WHERE a.asset_tag='CA15467293' and f.fcode='NC';
+ERROR:  relation "security_tags" does not exist at character 13
+STATEMENT:  INSERT into security_tags (level_fk, compartment_fk, asset_fk) SELECT level_pk, compartment_pk, asset_pk FROM sec_levels l,sec_compartments c,assets a WHERE l.abbrv='s' and c.abbrv='wpn' and a.asset_tag='CA15467293';
+ERROR:  column "description" of relation "assets" does not exist at character 31
+STATEMENT:  INSERT INTO assets (asset_tag,description) VALUES ('CA15467294','XJ 3000 scanner');
+ERROR:  relation "asset_at" does not exist at character 13
+STATEMENT:  INSERT INTO asset_at (asset_fk,facility_fk,arrive_dt,depart_dt) SELECT asset_pk,facility_pk,'2017-01-08T00:00:00',NULL FROM assets a, facilities f WHERE a.asset_tag='CA15467294' and f.fcode='NC';
+ERROR:  relation "security_tags" does not exist at character 13
+STATEMENT:  INSERT into security_tags (level_fk, compartment_fk, asset_fk) SELECT level_pk, compartment_pk, asset_pk FROM sec_levels l,sec_compartments c,assets a WHERE l.abbrv='u' and c.abbrv='adm' and a.asset_tag='CA15467294';
+ERROR:  column "description" of relation "assets" does not exist at character 31
+STATEMENT:  INSERT INTO assets (asset_tag,description) VALUES ('CA15467295','50 mm film');
+ERROR:  relation "asset_at" does not exist at character 13
+STATEMENT:  INSERT INTO asset_at (asset_fk,facility_fk,arrive_dt,depart_dt) SELECT asset_pk,facility_pk,'2017-01-08T00:00:00',NULL FROM assets a, facilities f WHERE a.asset_tag='CA15467295' and f.fcode='SPNV';
+ERROR:  relation "security_tags" does not exist at character 13
+STATEMENT:  INSERT into security_tags (level_fk, compartment_fk, asset_fk) SELECT level_pk, compartment_pk, asset_pk FROM sec_levels l,sec_compartments c,assets a WHERE l.abbrv='TS' and c.abbrv='ET' and a.asset_tag='CA15467295';
+ERROR:  relation "security_tags" does not exist at character 13
+STATEMENT:  INSERT into security_tags (level_fk, compartment_fk, asset_fk) SELECT level_pk, compartment_pk, asset_pk FROM sec_levels l,sec_compartments c,assets a WHERE l.abbrv='S' and c.abbrv='LGM' and a.asset_tag='CA15467295';
+ERROR:  column "description" of relation "assets" does not exist at character 31
+STATEMENT:  INSERT INTO assets (asset_tag,description) VALUES ('CA15467296','Atari ET video game cartridge');
+ERROR:  relation "asset_at" does not exist at character 13
+STATEMENT:  INSERT INTO asset_at (asset_fk,facility_fk,arrive_dt,depart_dt) SELECT asset_pk,facility_pk,'2017-01-08T00:00:00',NULL FROM assets a, facilities f WHERE a.asset_tag='CA15467296' and f.fcode='SPNV';
+ERROR:  relation "security_tags" does not exist at character 13
+STATEMENT:  INSERT into security_tags (level_fk, compartment_fk, asset_fk) SELECT level_pk, compartment_pk, asset_pk FROM sec_levels l,sec_compartments c,assets a WHERE l.abbrv='S' and c.abbrv='ET' and a.asset_tag='CA15467296';
+ERROR:  column assets.description does not exist at character 63
+STATEMENT:  UPDATE assets SET product_fk=product_pk FROM products p WHERE assets.description=p.product_name;
+ERROR:  column "asset_pk" does not exist at character 8
+HINT:  Perhaps you meant to reference the column "assets.asset_tag".
+STATEMENT:  SELECT asset_pk FROM assets WHERE asset_tag='CA15467287'
+ERROR:  relation "asset_at" does not exist at character 127
+STATEMENT:  /* This script does some patching for things that can be inferred but were left out of
+	   the input dataset
+	*/
+	
+	
+	
+	INSERT INTO asset_at (asset_fk,facility_fk,arrive_dt) SELECT asset_fk,dst_fk,arrive_dt FROM convoys c JOIN used_by u ON c.convoy_pk=u.convoy_fk JOIN vehicles v ON u.vehicle_fk=v.vehicle_pk;
+ERROR:  relation "asset_at" does not exist at character 13
+STATEMENT:  INSERT INTO asset_at (asset_fk,facility_fk,depart_dt) SELECT asset_fk,src_fk,depart_dt FROM convoys c JOIN used_by u ON c.convoy_pk=u.convoy_fk JOIN vehicles v ON u.vehicle_fk=v.vehicle_pk;
+ERROR:  relation "asset_at" does not exist at character 13
+STATEMENT:  INSERT INTO asset_at (asset_fk,facility_fk,depart_dt) SELECT asset_fk,src_fk,load_dt
+	FROM  convoys c JOIN asset_on a ON convoy_pk=a.convoy_fk;
+ERROR:  canceling statement due to user request
+STATEMENT:  drop schema public cascade;
+ERROR:  canceling statement due to user request
+STATEMENT:  drop schema public cascade;
+ERROR:  database "lost" is being accessed by other users
+DETAIL:  There are 2 other sessions using the database.
+STATEMENT:  DROP DATABASE lost;
+LOG:  unexpected EOF on client connection with an open transaction
+ERROR:  database "lost" is being accessed by other users
+DETAIL:  There is 1 other session using the database.
+STATEMENT:  DROP DATABASE lost;
+ERROR:  database "lost" is being accessed by other users
+DETAIL:  There is 1 other session using the database.
+STATEMENT:  DROP DATABASE lost;
+FATAL:  database "restart" does not exist
