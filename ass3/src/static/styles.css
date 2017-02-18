@@ -1,8 +1,0 @@
-body {
-    color=red;
-}
-.bodycontainer { max-height: 450px; width: 100%; margin: 0; overflow-y: auto; }
-th {
-    text-align:"center" !important;
-}
-
