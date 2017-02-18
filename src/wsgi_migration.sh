@@ -1,4 +1,4 @@
 #! /usr/bin/bash
 
-cp -R src/* $HOME/wsgi
+cp -R * $HOME/wsgi
 apachectl restart

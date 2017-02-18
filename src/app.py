@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, session, g, redirect, url_for, abort, flash
-import sys, psycopg2
+import sys, psycopg2, json
 from datetime import datetime
-from config import dbname, dbhost, dbport
+from config import dbname, dbhost, dbport, lost_priv, lost_pub, user_pub, prod_pub
 
 app = Flask(__name__)
 
@@ -40,28 +40,6 @@ def reports():
 
     return render_template('reports.html')
 
-def sql_query_generator():
-    sql_query = "SELECT * FROM assets"
-    if session['facility_inventory']:
-        facility_defined = False
-        if session['facility_name'] != "*":
-            sql_query += " WHERE fcode='" + session['facility_name'] + "'"
-            facility_defined = True
-        if not session['facility_date'] == "":
-            dt = str(datetime.strptime(session['facility_date'], "%Y-%m-%d"))
-            if facility_defined:
-                sql_query += " AND "
-            else:
-                sql_query += " WHERE "
-            sql_query += "('" + dt + "') >= depart_date"
-    else:
-        if not session['facility_date'] == "":
-            dt = str(datetime.strptime(session['facility_date'], "%Y-%m-%d"))
-            sql_query += " WHERE ('" + dt + "') >= arrive_date"
-            sql_query += " AND ('" + dt + "') <= depart_date"
-    sql_query += ";"
-    return sql_query
-
 @app.route('/logout')
 def logout():
     session['logged_in'] = False
@@ -86,19 +64,20 @@ def login():
 def connect():
     global cursor
     global conn
-    connection_string = "host='localhost' port='" + str(dbport) + "' dbname='" + db_name + "' user='osnapdev' password='secret'"
-    conn = psycopg2.connect(connection_string)
+    #connection_string = "host='localhost' port='" + str(dbport) + "' dbname='" + db_name + "' user='osnapdev' password='secret'"
+    #conn = psycopg2.connect(connection_string)
+    conn = psycopg2.connect(dbname=dbname, host=dbhost, port=dbport)
     cursor = conn.cursor()
     work_mem = 2048
     cursor.execute('SET work_mem TO ' + str(work_mem))
     print("Connected to server")
 
 if __name__ == '__main__':
-    global db_name
-    if len(sys.argv) > 1:
-        db_name = sys.argv[1]
-    else:
-        db_name = dbname
-    app.secret_key = 'super secret key'
-    app.debug = True
+    #global db_name
+    #if len(sys.argv) > 1:
+    #    db_name = sys.argv[1]
+    #else:
+    #    db_name = dbname
+    #app.secret_key = 'super secret key'
+    #app.debug = True
     #app.run(host='0.0.0.0', port=8080)
