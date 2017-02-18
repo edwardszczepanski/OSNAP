@@ -6,25 +6,25 @@ from config import dbname, dbhost, dbport
 app = Flask(__name__)
 app.secret_key = 'super secret key'
 
-@app.route('/report_filter', methods=['GET', 'POST'])
-def report_filter():
-    return render_template('report_filter.html')
-    val = None
-    if request.method == 'POST':
-        if 'facility_name' in request.form:
-            session['facility_name'] = request.form['facility_name']
-            session['facility_date'] = request.form['facility_date']
-            session['facility_inventory'] = True;
-        elif 'in_transit' in request.form:
-            session['facility_date'] = request.form['in_transit']
-            session['facility_inventory'] = False;
-        return redirect(url_for('reports'))
-    return render_template('report_filter.html')
-
 @app.route('/logout')
 def logout():
     session['logged_in'] = False
     return render_template('logout.html')
+
+@app.route('/create_user', methods=['GET', 'POST'])
+def create_user():
+    if request.method == 'POST':
+        print("arst")
+    elif request.method == 'GET':
+        if True:
+            flash('Username already exists')
+        else:
+            flash('Username was successfully added')
+    return render_template('create_user.html')
+
+@app.route('/dashboard', methods=['GET'])
+def dashboard():
+    return render_template('dashboard.html')
 
 @app.route('/', methods=['GET', 'POST'])
 def login():
@@ -39,7 +39,7 @@ def login():
             session['username'] = request.form['username']
             session['password'] = request.form['password']
             flash('Welcome ' + session['username'] + '!')
-            return redirect(url_for('report_filter'))
+            return redirect(url_for('dashboard'))
     return render_template('login.html', error=error)
 
 def connect():
