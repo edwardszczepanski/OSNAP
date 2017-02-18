@@ -1,11 +1,39 @@
-LOG:  database system was shut down at 2017-02-18 08:45:46 UTC
+LOG:  database system was shut down at 2017-02-18 22:15:34 UTC
 LOG:  MultiXact member wraparound protections are now enabled
 LOG:  database system is ready to accept connections
 LOG:  autovacuum launcher started
-FATAL:  database "osnapdev" does not exist
-ERROR:  syntax error at or near "//" at character 53
-STATEMENT:  CREATE TABLE users(
-	    user_pk serial primary key, // arstasrt
-	    user_name varchar(16),
+ERROR:  relation "users" already exists
+STATEMENT:  /*
+	 * user_pk is a serial primary key for more flexibility.
+	 * username and password have been limited to 16 characters as per the project description
+	 */
+	CREATE TABLE users(
+	    user_pk serial primary key, 
+	    username varchar(16),
 	    password varchar(16)
 	);
+ERROR:  relation "users" already exists
+STATEMENT:  /*
+	 * user_pk is a serial primary key for more flexibility.
+	 * username and password have been limited to 16 characters as per the project description
+	 */
+	CREATE TABLE users(
+	    user_pk serial primary key, 
+	    username varchar(16),
+	    password varchar(16)
+	);
+ERROR:  relation "users" already exists
+STATEMENT:  /*
+	 * user_pk is a serial primary key for more flexibility.
+	 * username and password have been limited to 16 characters as per the project description
+	 */
+	CREATE TABLE users(
+	    user_pk serial primary key, 
+	    username varchar(16),
+	    password varchar(16)
+	);
+LOG:  unexpected EOF on client connection with an open transaction
+LOG:  unexpected EOF on client connection with an open transaction
+LOG:  unexpected EOF on client connection with an open transaction
+LOG:  unexpected EOF on client connection with an open transaction
+LOG:  unexpected EOF on client connection with an open transaction
