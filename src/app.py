@@ -15,10 +15,15 @@ def logout():
 def create_user():
     conn = psycopg2.connect(dbname=dbname, host=dbhost, port=dbport)
     cursor = conn.cursor()
-    if request.method=='POST' and 'arguments' in request.form:
-        req=json.loads(request.form['arguments'])
-        username = req['username']
-        password = req['password']
+    if request.method=='POST':
+        if 'arguments' in request.form:
+            req=json.loads(request.form['arguments'])
+            username = req['username']
+            password = req['password']
+        else:
+            username = request.form['username']
+            password = request.form['password']
+
         query = "SELECT user_pk from users WHERE username ='" + username + "';"
         cursor.execute(query)
         response = cursor.fetchall()
@@ -29,13 +34,6 @@ def create_user():
             cursor.execute(query)
             conn.commit()
             flash('Username was successfully added')
-    else:
-        if request.method == 'POST':
-            username = request.form['username']
-            password = request.form['password']
-            query = "INSERT INTO users (username, password) VALUES ('" + username + "', '" + password + "');"
-            cursor.execute(query)
-            conn.commit()
     conn.close()
 
     return render_template('create_user.html')
@@ -53,31 +51,30 @@ def login():
     cursor = conn.cursor()
     error = None
 
-    if request.method=='POST' and 'arguments' in request.form:
-        req=json.loads(request.form['arguments'])
-        query = "SELECT password from users WHERE username ='" + req['username'] + "';"
-    elif request.method == 'POST':
-        query = "SELECT password from users WHERE username ='" + request.form['username'] + "';"
-    else:
-        return render_template('login.html', error=error)
-    cursor.execute(query)
-    response = cursor.fetchall()
-    conn.close()
-    if len(response) == 0:
-        error = "Username doesn't exist"
-    else:
-        password_found = False
-        for val in response:
-            if val[0] == request.form['password']:
-                password_found = True
-        if not password_found:
-            error = 'Invalid password'
+    if request.method=='POST': 
+        if 'arguments' in request.form:
+            req=json.loads(request.form['arguments'])
+            query = "SELECT password from users WHERE username ='" + req['username'] + "';"
+        elif request.method == 'POST':
+            query = "SELECT password from users WHERE username ='" + request.form['username'] + "';"
+        cursor.execute(query)
+        response = cursor.fetchall()
+        conn.close()
+        if len(response) == 0:
+            error = "Username doesn't exist"
         else:
-            session['logged_in'] = True
-            session['username'] = request.form['username']
-            session['password'] = request.form['password']
-            flash('Welcome ' + session['username'] + '!')
-            return redirect(url_for('dashboard'))
+            password_found = False
+            for val in response:
+                if val[0] == request.form['password']:
+                    password_found = True
+            if not password_found:
+                error = 'Invalid password'
+            else:
+                session['logged_in'] = True
+                session['username'] = request.form['username']
+                session['password'] = request.form['password']
+                flash('Welcome ' + session['username'] + '!')
+                return redirect(url_for('dashboard'))
     return render_template('login.html', error=error)
 
 if __name__ == '__main__':
