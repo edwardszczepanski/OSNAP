@@ -22,6 +22,8 @@
   {% else %}
     <a href="{{ url_for('logout') }}">Log out</a>
   {% endif %}
+  <br>
+    <a href="{{ url_for('create_user') }}">Create User</a>
   </div>
   {% for message in get_flashed_messages() %}
     <div class="flash">{{ message }}</div>
