@@ -1,0 +1,7 @@
+LOST Web Application using Flask and WSGI
+
+The src folder has the all the application files in
+
+Use the preflight to start the application
+
+The sql folder contains the database script(s)
