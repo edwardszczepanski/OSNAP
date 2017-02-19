@@ -14,7 +14,12 @@ def logout():
 @app.route('/create_user', methods=['GET', 'POST'])
 def create_user():
     if request.method == 'POST':
-        print("arst")
+        username = request.form['username']
+        password = request.form['password']
+        query = "INSERT INTO users (username, password) VALUES ('" + username + "', '" + password + "');"
+        print(query)
+        cur.execute(query)
+        conn.commit()
     elif request.method == 'GET':
         if True:
             flash('Username already exists')
@@ -30,9 +35,9 @@ def dashboard():
 def login():
     error = None
     if request.method == 'POST':
-        if False and request.form['username'] != 'USERNAME': #!= app.config['USERNAME']:
+        if False and request.form['username'] != 'USERNAME':
             error = 'Invalid username'
-        elif False and request.form['password'] != 'PASSWORD': #app.config['PASSWORD']:
+        elif False and request.form['password'] != 'PASSWORD':
             error = 'Invalid password'
         else:
             session['logged_in'] = True
@@ -47,9 +52,6 @@ def connect():
     global conn
     conn = psycopg2.connect(dbname=dbname, host=dbhost, port=dbport)
     cursor = conn.cursor()
-    work_mem = 2048
-    cursor.execute('SET work_mem TO ' + str(work_mem))
-    print("Connected to server")
 
 if __name__ == '__main__':
     connect()
