@@ -13,6 +13,8 @@ def logout():
 
 @app.route('/create_user', methods=['GET', 'POST'])
 def create_user():
+    conn = psycopg2.connect(dbname=dbname, host=dbhost, port=dbport)
+    cursor = conn.cursor()
     if request.method=='POST' and 'arguments' in request.form:
         req=json.loads(request.form['arguments'])
         username = req['username']
@@ -34,6 +36,7 @@ def create_user():
             query = "INSERT INTO users (username, password) VALUES ('" + username + "', '" + password + "');"
             cursor.execute(query)
             conn.commit()
+    conn.close()
 
     return render_template('create_user.html')
 
@@ -46,12 +49,14 @@ def dashboard():
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    conn = psycopg2.connect(dbname=dbname, host=dbhost, port=dbport)
+    cursor = conn.cursor()
     error = None
     if request.method == 'POST':
         query = "SELECT password from users WHERE username ='" + request.form['username'] + "';"
         cursor.execute(query)
         response = cursor.fetchall()
-        print(response)
+        conn.close()
         if len(response) == 0:
             error = "Username doesn't exist"
         else:
@@ -69,14 +74,8 @@ def login():
                 return redirect(url_for('dashboard'))
     return render_template('login.html', error=error)
 
-def connect():
-    global cursor
-    global conn
-    conn = psycopg2.connect(dbname=dbname, host=dbhost, port=dbport)
-    cursor = conn.cursor()
-
 if __name__ == '__main__':
-    connect()
     app.debug = True
-    app.run()
-    #app.run(host='0.0.0.0', port=8080)
+    #app.run()
+    #app.run(port=8080)
+    app.run(host='0.0.0.0', port=8080)
