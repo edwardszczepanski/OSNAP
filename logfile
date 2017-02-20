@@ -47,3 +47,6 @@ LOG:  unexpected EOF on client connection with an open transaction
 LOG:  unexpected EOF on client connection with an open transaction
 LOG:  unexpected EOF on client connection with an open transaction
 LOG:  unexpected EOF on client connection with an open transaction
+FATAL:  database "olst" does not exist
+ERROR:  database "hw" does not exist
+STATEMENT:  DROP DATABASE hw;

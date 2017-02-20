@@ -15,10 +15,15 @@ def logout():
 def create_user():
     conn = psycopg2.connect(dbname=dbname, host=dbhost, port=dbport)
     cursor = conn.cursor()
-    if request.method=='POST' and 'arguments' in request.form:
-        req=json.loads(request.form['arguments'])
-        username = req['username']
-        password = req['password']
+    if request.method=='POST':
+        if 'arguments' in request.form:
+            req=json.loads(request.form['arguments'])
+            username = req['username']
+            password = req['password']
+        else:
+            username = request.form['username']
+            password = request.form['password']
+
         query = "SELECT user_pk from users WHERE username ='" + username + "';"
         cursor.execute(query)
         response = cursor.fetchall()
@@ -29,13 +34,6 @@ def create_user():
             cursor.execute(query)
             conn.commit()
             flash('Username was successfully added')
-    else:
-        if request.method == 'POST':
-            username = request.form['username']
-            password = request.form['password']
-            query = "INSERT INTO users (username, password) VALUES ('" + username + "', '" + password + "');"
-            cursor.execute(query)
-            conn.commit()
     conn.close()
 
     return render_template('create_user.html')
@@ -52,8 +50,13 @@ def login():
     conn = psycopg2.connect(dbname=dbname, host=dbhost, port=dbport)
     cursor = conn.cursor()
     error = None
-    if request.method == 'POST':
-        query = "SELECT password from users WHERE username ='" + request.form['username'] + "';"
+
+    if request.method=='POST': 
+        if 'arguments' in request.form:
+            req=json.loads(request.form['arguments'])
+            query = "SELECT password from users WHERE username ='" + req['username'] + "';"
+        elif request.method == 'POST':
+            query = "SELECT password from users WHERE username ='" + request.form['username'] + "';"
         cursor.execute(query)
         response = cursor.fetchall()
         conn.close()
@@ -76,6 +79,4 @@ def login():
 
 if __name__ == '__main__':
     app.debug = True
-    #app.run()
-    #app.run(port=8080)
     app.run(host='0.0.0.0', port=8080)
