@@ -19,6 +19,38 @@ def check_duplicate(query, connection, cursor):
     else:
         return False
 
+@app.route('/add_asset', methods=['GET', 'POST'])
+def add_asset():
+    conn = psycopg2.connect(dbname=dbname, host=dbhost, port=dbport)
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM facilities;")
+    res = cursor.fetchall()
+    data = []
+    for r in res:
+        facility = {}
+        facility['fcode'] = r[1]
+        facility['common_name'] = r[2]
+        facility['location'] = r[3]
+        data.append(facility)
+    session['facilities'] = data
+
+    if request.method=='POST':
+        common = request.form['common']
+        fcode = request.form['fcode']
+        location = request.form['location']
+
+        query1 = "SELECT * from facilities WHERE fcode ='" + fcode + "';"
+        query2 = "SELECT * from facilities WHERE common_name ='" + common + "';"
+
+        if check_duplicate(query1, conn, cursor) or check_duplicate(query2, conn, cursor):
+            flash('Facility with the same common name or fcode already exists')
+        else:
+            query = "INSERT INTO facilities (common_name, fcode, location) VALUES ('" + common + "', '" + fcode + "', '" + location + "');"
+            cursor.execute(query)
+            conn.commit()
+            flash('Username was successfully added')
+    conn.close()
+    return render_template('add_asset.html')
 
 @app.route('/add_facility', methods=['GET', 'POST'])
 def add_facility():
@@ -44,7 +76,7 @@ def add_facility():
         query2 = "SELECT * from facilities WHERE common_name ='" + common + "';"
 
         if check_duplicate(query1, conn, cursor) or check_duplicate(query2, conn, cursor):
-            flash('Username already exists')
+            flash('Facility with the same common name or fcode already exists')
         else:
             query = "INSERT INTO facilities (common_name, fcode, location) VALUES ('" + common + "', '" + fcode + "', '" + location + "');"
             cursor.execute(query)

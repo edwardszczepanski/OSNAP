@@ -5,9 +5,9 @@
   <form action="{{ url_for('create_user') }}" method="post">
     <dl>
       <dt>Username:
-      <dd><input type="text" name="username">
+      <dd><input type="text" name="username" maxlength="16">
       <dt>Password:
-      <dd><input type="password" name="password">
+      <dd><input type="password" name="password" maxlength="16">
 		<br>
 		<br>
 	  <select name="role">

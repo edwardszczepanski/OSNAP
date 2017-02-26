@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% block body %}
-  <h2>Add Facility</h2>
+  <h2>Add Asset</h2>
   {% if error %}<p class="error"><strong>Error:</strong> {{ error }}{% endif %}
 
 <div="container">
@@ -24,7 +24,7 @@
 </table> 
 </div>
 
-  <form action="{{ url_for('add_facility') }}" method="post">
+  <form action="{{ url_for('add_asset') }}" method="post">
     <dl>
       <dt>Common Name:
       <dd><input type="text" name="common" maxlength="32">
