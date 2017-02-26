@@ -218,3 +218,13 @@ STATEMENT:  CREATE TABLE asset_on (
 	    load_dt TIMESTAMP,
 	    unload_dt TIMESTAMP
 	);
+ERROR:  null value in column "role_fk" violates not-null constraint
+DETAIL:  Failing row contains (1, null, , ).
+STATEMENT:  INSERT INTO users (username, password) VALUES ('', '');
+ERROR:  null value in column "role_fk" violates not-null constraint
+DETAIL:  Failing row contains (2, null, arts, arst).
+STATEMENT:  INSERT INTO users (username, password) VALUES ('arts', 'arst');
+ERROR:  column "arst" does not exist at character 63
+STATEMENT:  insert into facilities (common_name, fcode, location) values ("arst", "arst", "arst");
+ERROR:  value too long for type character varying(6)
+STATEMENT:  INSERT INTO facilities (common_name, fcode, location) VALUES ('artsarrastars', 'arsttsratars', 'arsttars');

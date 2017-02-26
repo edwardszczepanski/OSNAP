@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block body %}
+  <h2>Asset Disposal</h2>
+  {% if error %}<p class="error"><strong>Error:</strong> {{ error }}{% endif %}
+
+  <form action="{{ url_for('dispose_asset') }}" method="post">
+    <dl>
+      <dt>Asset Tag:
+      <dd><input type="text" name="asset_tag" maxlength="16">
+      <dt>Asset Disposal Date:
+      <dd><input type="date" name="date">
+      <br>
+      <br>
+	  <dd><input type="submit" value="Dispose">
+    </dl>
+  </form>
+{% endblock %}

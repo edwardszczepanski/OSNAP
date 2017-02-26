@@ -26,6 +26,12 @@
   {% endif %}
   <br>
     <a href="{{ url_for('create_user') }}">Create User</a>
+  <br>
+    <a href="{{ url_for('add_facility') }}">Add Facility</a>
+  <br>
+    <a href="{{ url_for('add_asset') }}">Add Asset</a>
+  <br>
+    <a href="{{ url_for('dispose_asset') }}">Asset Disposal</a>
   </div>
   {% for message in get_flashed_messages() %}
     <div class="flash">{{ message }}</div>
