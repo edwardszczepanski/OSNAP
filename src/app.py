@@ -23,6 +23,12 @@ def check_duplicate(query, connection, cursor):
 def dispose_asset():
     conn = psycopg2.connect(dbname=dbname, host=dbhost, port=dbport)
     cursor = conn.cursor()
+    if session['logged_in'] == False:
+        flash("You must be logged in to dispose assets")
+        return redirect(url_for('login'))
+    elif session['role'] != 1:
+        flash("You must be a logistics officer to dispose assets")
+        return redirect(url_for('login'))
     if request.method=='POST':
         asset_tag = request.form['asset_tag']
         date = request.form['date']
@@ -161,7 +167,6 @@ def create_user():
             conn.commit()
             flash('Username was successfully added')
     conn.close()
-
     return render_template('create_user.html')
 
 @app.route('/dashboard', methods=['GET'])
@@ -178,10 +183,9 @@ def login():
     error = None
 
     if request.method=='POST': 
-        query = "SELECT password from users WHERE username ='" + request.form['username'] + "';"
+        query = "SELECT password FROM users WHERE username ='" + request.form['username'] + "';"
         cursor.execute(query)
         response = cursor.fetchall()
-        conn.close()
         if len(response) == 0:
             error = "Username doesn't exist"
         else:
@@ -192,11 +196,17 @@ def login():
             if not password_found:
                 error = 'Invalid password'
             else:
+                query = "SELECT role_fk FROM users where username='" + request.form['username'] + "';"
+                cursor.execute(query)
+                response = cursor.fetchone()
+                session['role'] = response[0]
+                conn.close()
                 session['logged_in'] = True
                 session['username'] = request.form['username']
                 session['password'] = request.form['password']
                 flash('Welcome ' + session['username'] + '!')
                 return redirect(url_for('dashboard'))
+    conn.close()
     return render_template('login.html', error=error)
 
 if __name__ == '__main__':
