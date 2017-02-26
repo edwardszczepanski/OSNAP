@@ -45,20 +45,20 @@ def add_asset():
     session['facilities'] = fac_data
 
     if request.method=='POST':
-        common = request.form['common']
-        fcode = request.form['fcode']
-        location = request.form['location']
+        facility = request.form['facility']
+        asset_tag = request.form['asset_tag']
+        description = request.form['description']
+        date = request.form['date']
 
-        query1 = "SELECT * from facilities WHERE fcode ='" + fcode + "';"
-        query2 = "SELECT * from facilities WHERE common_name ='" + common + "';"
+        query = "SELECT * from assets WHERE asset_tag ='" + asset_tag + "';"
 
-        if check_duplicate(query1, conn, cursor) or check_duplicate(query2, conn, cursor):
-            flash('Facility with the same common name or fcode already exists')
+        if check_duplicate(query, conn, cursor):
+            flash('Asset with the same asset tag already exists')
         else:
-            query = "INSERT INTO facilities (common_name, fcode, location) VALUES ('" + common + "', '" + fcode + "', '" + location + "');"
+            query = "INSERT INTO assets (facility_fk, asset_tag, description, disposed) VALUES (" + facility + ", '" + asset_tag + "', '" + description + "', FALSE);"
             cursor.execute(query)
             conn.commit()
-            flash('Username was successfully added')
+            flash('Asset was successfully added')
     conn.close()
     return render_template('add_asset.html')
 
@@ -91,7 +91,7 @@ def add_facility():
             query = "INSERT INTO facilities (common_name, fcode, location) VALUES ('" + common + "', '" + fcode + "', '" + location + "');"
             cursor.execute(query)
             conn.commit()
-            flash('Username was successfully added')
+            flash('Facility was successfully added')
     conn.close()
     return render_template('add_facility.html')
 
