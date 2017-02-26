@@ -23,16 +23,26 @@ def check_duplicate(query, connection, cursor):
 def add_asset():
     conn = psycopg2.connect(dbname=dbname, host=dbhost, port=dbport)
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM facilities;")
+    cursor.execute("SELECT * FROM assets;")
     res = cursor.fetchall()
     data = []
     for r in res:
-        facility = {}
-        facility['fcode'] = r[1]
-        facility['common_name'] = r[2]
-        facility['location'] = r[3]
+        asset = {}
+        asset['facility_fk'] = r[1]
+        asset['asset_tag'] = r[2]
+        asset['description'] = r[3]
         data.append(facility)
-    session['facilities'] = data
+    session['assets'] = data
+
+    cursor.execute("SELECT * FROM facilities;")
+    res = cursor.fetchall()
+    fac_data = []
+    for r in res:
+        facility = {}
+        facility['fkey'] = r[0]
+        facility['name'] = r[2]
+        fac_data.append(facility)
+    session['facilities'] = fac_data
 
     if request.method=='POST':
         common = request.form['common']
