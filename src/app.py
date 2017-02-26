@@ -23,39 +23,15 @@ def check_duplicate(query, connection, cursor):
 def dispose_asset():
     conn = psycopg2.connect(dbname=dbname, host=dbhost, port=dbport)
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM assets;")
-    res = cursor.fetchall()
-    data = []
-    for r in res:
-        asset = {}
-        asset['asset_pk'] = r[0]
-        asset['facility_fk'] = r[1]
-        asset['asset_tag'] = r[2]
-        asset['description'] = r[3]
-        asset['disposed'] = r[4]
-        data.append(asset)
-    session['assets'] = data
-
-    cursor.execute("SELECT * FROM facilities;")
-    res = cursor.fetchall()
-    fac_data = []
-    for r in res:
-        fac = {}
-        fac['fkey'] = r[0]
-        fac['name'] = r[2]
-        fac_data.append(fac)
-    session['facilities'] = fac_data
 
     if request.method=='POST':
-        facility = request.form['facility']
         asset_tag = request.form['asset_tag']
-        description = request.form['description']
         date = request.form['date']
 
         query = "SELECT * from assets WHERE asset_tag ='" + asset_tag + "';"
 
-        if check_duplicate(query, conn, cursor):
-            flash('Asset with the same asset tag already exists')
+        if not check_duplicate(query, conn, cursor):
+            flash('No asset exists with that asset tag')
         else:
             query = "INSERT INTO assets (facility_fk, asset_tag, description, disposed) VALUES (" + facility + ", '" + asset_tag + "', '" + description + "', FALSE);"
             cursor.execute(query)
@@ -71,7 +47,7 @@ def dispose_asset():
             query2 = "INSERT INTO asset_at (asset_fk, facility_fk, arrive_dt) VALUES (" + str(res) + "," + facility + ",'" + dt + "');"
             cursor.execute(query2)
             conn.commit()
-            flash('Asset was successfully added')
+            flash('Asset was successfully disposed')
     conn.close()
     return render_template('dispose_asset.html')
  
