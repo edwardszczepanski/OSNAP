@@ -28,20 +28,22 @@ def add_asset():
     data = []
     for r in res:
         asset = {}
+        asset['asset_pk'] = r[0]
         asset['facility_fk'] = r[1]
         asset['asset_tag'] = r[2]
         asset['description'] = r[3]
-        data.append(facility)
+        asset['disposed'] = r[4]
+        data.append(asset)
     session['assets'] = data
 
     cursor.execute("SELECT * FROM facilities;")
     res = cursor.fetchall()
     fac_data = []
     for r in res:
-        facility = {}
-        facility['fkey'] = r[0]
-        facility['name'] = r[2]
-        fac_data.append(facility)
+        fac = {}
+        fac['fkey'] = r[0]
+        fac['name'] = r[2]
+        fac_data.append(fac)
     session['facilities'] = fac_data
 
     if request.method=='POST':
@@ -57,6 +59,17 @@ def add_asset():
         else:
             query = "INSERT INTO assets (facility_fk, asset_tag, description, disposed) VALUES (" + facility + ", '" + asset_tag + "', '" + description + "', FALSE);"
             cursor.execute(query)
+            conn.commit()
+            query1 = "SELECT asset_pk from assets WHERE asset_tag='" + asset_tag + "';"
+            cursor.execute(query1)
+            res = cursor.fetchone()[0]
+            dt = ''
+            if date == '':
+                str(datetime.now())
+            else:
+                dt = str(datetime.strptime(date, '%Y-%m-%d'))
+            query2 = "INSERT INTO asset_at (asset_fk, facility_fk, arrive_dt) VALUES (" + str(res) + "," + facility + ",'" + dt + "');"
+            cursor.execute(query2)
             conn.commit()
             flash('Asset was successfully added')
     conn.close()
