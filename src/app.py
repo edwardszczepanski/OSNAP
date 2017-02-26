@@ -55,7 +55,7 @@ def login():
         if 'arguments' in request.form:
             req=json.loads(request.form['arguments'])
             query = "SELECT password from users WHERE username ='" + req['username'] + "';"
-        elif request.method == 'POST':
+        else:
             query = "SELECT password from users WHERE username ='" + request.form['username'] + "';"
         cursor.execute(query)
         response = cursor.fetchall()
