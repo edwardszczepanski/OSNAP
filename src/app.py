@@ -23,32 +23,34 @@ def check_duplicate(query, connection, cursor):
 def dispose_asset():
     conn = psycopg2.connect(dbname=dbname, host=dbhost, port=dbport)
     cursor = conn.cursor()
-
     if request.method=='POST':
         asset_tag = request.form['asset_tag']
         date = request.form['date']
-
         query = "SELECT * from assets WHERE asset_tag ='" + asset_tag + "';"
-
+        
         if not check_duplicate(query, conn, cursor):
             flash('No asset exists with that asset tag')
         else:
-            #query = "INSERT INTO assets (facility_fk, asset_tag, description, disposed) VALUES (" + facility + ", '" + asset_tag + "', '" + description + "', FALSE);"
-            query = "UPDATE assets SET disposed=TRUE WHERE asset_tag = '" + asset_tag + "';"
             cursor.execute(query)
-            conn.commit()
-            query1 = "SELECT asset_pk from assets WHERE asset_tag='" + asset_tag + "';"
-            cursor.execute(query1)
-            res = cursor.fetchone()[0]
-            dt = ''
-            if date == '' or date == None:
-                dt = str(datetime.now())
+            response = cursor.fetchall()
+            if response[0][4]:
+                flash("That asset has already been disposed")
             else:
-                dt = str(datetime.strptime(date, '%Y-%m-%d'))
-            query2 = "UPDATE asset_at SET depart_dt='" + dt + "' WHERE asset_fk=" + str(res) + ";"
-            cursor.execute(query2)
-            conn.commit()
-            flash('Asset was successfully disposed')
+                query = "UPDATE assets SET disposed=TRUE WHERE asset_tag = '" + asset_tag + "';"
+                cursor.execute(query)
+                conn.commit()
+                query1 = "SELECT asset_pk from assets WHERE asset_tag='" + asset_tag + "';"
+                cursor.execute(query1)
+                res = cursor.fetchone()[0]
+                dt = ''
+                if date == '' or date == None:
+                    dt = str(datetime.now())
+                else:
+                    dt = str(datetime.strptime(date, '%Y-%m-%d'))
+                query2 = "UPDATE asset_at SET depart_dt='" + dt + "' WHERE asset_fk=" + str(res) + ";"
+                cursor.execute(query2)
+                conn.commit()
+                flash('Asset was successfully disposed')
     conn.close()
     return render_template('dispose_asset.html')
  
