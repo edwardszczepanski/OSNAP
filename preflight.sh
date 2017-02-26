@@ -10,4 +10,3 @@ psql $1 -f create_tables.sql
 cd ..
 
 cp -R src/* $HOME/wsgi
-apachectl restart

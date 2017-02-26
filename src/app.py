@@ -23,6 +23,8 @@ def create_user():
         else:
             username = request.form['username']
             password = request.form['password']
+            arst = request.form['drop-select']
+            flash(arst)
 
         query = "SELECT user_pk from users WHERE username ='" + username + "';"
         cursor.execute(query)
@@ -55,7 +57,7 @@ def login():
         if 'arguments' in request.form:
             req=json.loads(request.form['arguments'])
             query = "SELECT password from users WHERE username ='" + req['username'] + "';"
-        elif request.method == 'POST':
+        else:
             query = "SELECT password from users WHERE username ='" + request.form['username'] + "';"
         cursor.execute(query)
         response = cursor.fetchall()
