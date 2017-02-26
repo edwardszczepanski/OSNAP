@@ -19,6 +19,39 @@ def check_duplicate(query, connection, cursor):
     else:
         return False
 
+@app.route('/reports')
+def reports():
+    conn = psycopg2.connect(dbname=dbname, host=dbhost, port=dbport)
+    cursor = conn.cursor()
+    query = "SELECT * FROM assets;"
+    #cursor.execute(sql_query)
+    #res = cursor.fetchall()
+    res = []
+    processed_data = []
+    for r in res:
+        item = {}
+        item['fcode'] = r[0]
+        item['asset_tag'] = r[1]
+        item['facility'] = r[2]
+        item['arrive_date'] = r[4]
+        item['depart_date'] = r[5]
+        processed_data.append(item)
+    session['processed_data_session_name'] = processed_data
+
+    return render_template('reports.html')
+
+@app.route('/asset_report', methods=['GET', 'POST'])
+def asset_report():
+    if request.method == 'POST':
+        if request.form['asset_tag'] == '':
+            session['asset_tag'] = "*"
+        else:
+            session['asset_tag'] = str(request.form['asset_tag'])
+        session['date'] = request.form['date']
+        flash(session['date'])
+        return redirect(url_for('reports'))
+    return render_template('asset_report.html')
+
 @app.route('/dispose_asset', methods=['GET', 'POST'])
 def dispose_asset():
     conn = psycopg2.connect(dbname=dbname, host=dbhost, port=dbport)

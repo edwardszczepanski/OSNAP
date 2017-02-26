@@ -32,6 +32,8 @@
     <a href="{{ url_for('add_asset') }}">Add Asset</a>
   <br>
     <a href="{{ url_for('dispose_asset') }}">Asset Disposal</a>
+  <br>
+    <a href="{{ url_for('asset_report') }}">Asset Report</a>
   </div>
   {% for message in get_flashed_messages() %}
     <div class="flash">{{ message }}</div>
