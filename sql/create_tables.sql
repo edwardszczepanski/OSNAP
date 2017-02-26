@@ -2,6 +2,9 @@
  * user_pk is a serial primary key for more flexibility rather than using the username value.
  * username and password have been limited to 16 characters as per the project description.
  * Only one table was created as I don't see a big reason to have two separate tables.
+ * Much of the design of this schema is coming directly from earlier assignments. Although
+ * the LOST database schema is no longer being enforced I still think it is a good idea to
+ * follow much of the same principles. I may have to remove some stuff in the future.
  */
 CREATE TABLE roles (
     role_pk SERIAL PRIMARY KEY,
@@ -58,3 +61,5 @@ CREATE TABLE asset_on (
     unload_dt TIMESTAMP
 );
 
+INSERT INTO roles (role_pk, title) VALUES (1, 'Facilities Officer');
+INSERT INTO roles (role_pk, title) VALUES (2, 'Logistics Officer');

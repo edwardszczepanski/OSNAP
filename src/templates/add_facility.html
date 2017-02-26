@@ -2,14 +2,37 @@
 {% block body %}
   <h2>Add Facility</h2>
   {% if error %}<p class="error"><strong>Error:</strong> {{ error }}{% endif %}
-  <form action="{{ url_for('create_user') }}" method="post">
+
+<div="container">
+<table class="table">
+    <thead align="center">
+        <tr>
+            <th style="text-align:center !important">fcode</th>
+            <th style="text-align:center !important">Common Name</th>
+            <th style="text-align:center !important">Location</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entry in session.facilities %}
+    <tr>
+        <td>{{ entry.fcode }}</td>
+        <td>{{ entry.common_name }}</td>
+        <td>{{ entry.location }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table> 
+</div>
+
+  <form action="{{ url_for('add_facility') }}" method="post">
     <dl>
       <dt>Common Name:
-      <dd><input type="text" name="common">
+      <dd><input type="text" name="common" maxlength="32">
       <dt>fcode:
-      <dd><input type="text" name="fcode">
+      <dd><input type="text" name="fcode" maxlength="6">
       <dt>location:
-      <dd><input type="text" name="location">
+      <dd><input type="text" name="location" maxlength="128">
+      <br>
       <br>
 	  <dd><input type="submit" value="Add Facility">
     </dl>
