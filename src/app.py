@@ -23,8 +23,8 @@ def create_user():
         else:
             username = request.form['username']
             password = request.form['password']
-            arst = request.form['drop-select']
-            flash(arst)
+            #arst = request.form['drop-select']
+            flash("arst")
 
         query = "SELECT user_pk from users WHERE username ='" + username + "';"
         cursor.execute(query)
@@ -32,7 +32,7 @@ def create_user():
         if len(response) > 0:
             flash('Username already exists')
         else:
-            query = "INSERT INTO users (username, password) VALUES ('" + username + "', '" + password + "');"
+            query = "INSERT INTO users (username, password, role_fk) VALUES ('" + username + "', '" + password + "', 0);"
             cursor.execute(query)
             conn.commit()
             flash('Username was successfully added')
