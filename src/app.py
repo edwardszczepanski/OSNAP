@@ -33,18 +33,19 @@ def dispose_asset():
         if not check_duplicate(query, conn, cursor):
             flash('No asset exists with that asset tag')
         else:
-            query = "INSERT INTO assets (facility_fk, asset_tag, description, disposed) VALUES (" + facility + ", '" + asset_tag + "', '" + description + "', FALSE);"
+            #query = "INSERT INTO assets (facility_fk, asset_tag, description, disposed) VALUES (" + facility + ", '" + asset_tag + "', '" + description + "', FALSE);"
+            query = "UPDATE assets SET disposed=TRUE WHERE asset_tag = '" + asset_tag + "';"
             cursor.execute(query)
             conn.commit()
             query1 = "SELECT asset_pk from assets WHERE asset_tag='" + asset_tag + "';"
             cursor.execute(query1)
             res = cursor.fetchone()[0]
             dt = ''
-            if date == '':
-                str(datetime.now())
+            if date == '' or date == None:
+                dt = str(datetime.now())
             else:
                 dt = str(datetime.strptime(date, '%Y-%m-%d'))
-            query2 = "INSERT INTO asset_at (asset_fk, facility_fk, arrive_dt) VALUES (" + str(res) + "," + facility + ",'" + dt + "');"
+            query2 = "UPDATE asset_at SET depart_dt='" + dt + "' WHERE asset_fk=" + str(res) + ";"
             cursor.execute(query2)
             conn.commit()
             flash('Asset was successfully disposed')
@@ -97,7 +98,7 @@ def add_asset():
             res = cursor.fetchone()[0]
             dt = ''
             if date == '':
-                str(datetime.now())
+                dt = str(datetime.now())
             else:
                 dt = str(datetime.strptime(date, '%Y-%m-%d'))
             query2 = "INSERT INTO asset_at (asset_fk, facility_fk, arrive_dt) VALUES (" + str(res) + "," + facility + ",'" + dt + "');"
