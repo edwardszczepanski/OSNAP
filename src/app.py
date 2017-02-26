@@ -11,28 +11,53 @@ def logout():
     session['logged_in'] = False
     return render_template('logout.html')
 
+def check_duplicate(query, connection, cursor):
+    cursor.execute(query)
+    response = cursor.fetchall()
+    if len(response) > 0:
+        return True
+    else:
+        return False
+
+
+@app.route('/add_facility', methods=['GET', 'POST'])
+def add_facility():
+    conn = psycopg2.connect(dbname=dbname, host=dbhost, port=dbport)
+    cursor = conn.cursor()
+    if request.method=='POST':
+        common = request.form['common']
+        fcode = request.form['fcode']
+        location = request.form['location']
+
+        duplicate = False
+        query1 = "SELECT * from facilities WHERE fcode ='" + fcode + "';"
+        query2 = "SELECT * from facilities WHERE common_name ='" + common + "';"
+
+        if check_duplicate(query1, conn, cursor) or check_duplicate(query2, conn, cursor):
+            flash('Username already exists')
+        else:
+            query = "INSERT INTO users (username, password, role_fk) VALUES ('" + username + "', '" + password + "', " + role + ");"
+            cursor.execute(query)
+            conn.commit()
+            flash('Username was successfully added')
+    conn.close()
+
+    return render_template('add_facility.html')
+
 @app.route('/create_user', methods=['GET', 'POST'])
 def create_user():
     conn = psycopg2.connect(dbname=dbname, host=dbhost, port=dbport)
     cursor = conn.cursor()
     if request.method=='POST':
-        if 'arguments' in request.form:
-            req=json.loads(request.form['arguments'])
-            username = req['username']
-            password = req['password']
-        else:
-            username = request.form['username']
-            password = request.form['password']
-            #arst = request.form['drop-select']
-            flash("arst")
+        username = request.form['username']
+        password = request.form['password']
+        role = request.form['role']
 
-        query = "SELECT user_pk from users WHERE username ='" + username + "';"
-        cursor.execute(query)
-        response = cursor.fetchall()
-        if len(response) > 0:
+        query = "SELECT * from users WHERE username ='" + username + "';"
+        if check_duplicate(query, conn, cursor):
             flash('Username already exists')
         else:
-            query = "INSERT INTO users (username, password, role_fk) VALUES ('" + username + "', '" + password + "', 0);"
+            query = "INSERT INTO users (username, password, role_fk) VALUES ('" + username + "', '" + password + "', " + role + ");"
             cursor.execute(query)
             conn.commit()
             flash('Username was successfully added')
@@ -54,11 +79,7 @@ def login():
     error = None
 
     if request.method=='POST': 
-        if 'arguments' in request.form:
-            req=json.loads(request.form['arguments'])
-            query = "SELECT password from users WHERE username ='" + req['username'] + "';"
-        else:
-            query = "SELECT password from users WHERE username ='" + request.form['username'] + "';"
+        query = "SELECT password from users WHERE username ='" + request.form['username'] + "';"
         cursor.execute(query)
         response = cursor.fetchall()
         conn.close()

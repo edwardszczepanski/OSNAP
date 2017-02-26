@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block body %}
+  <h2>Add Facility</h2>
+  {% if error %}<p class="error"><strong>Error:</strong> {{ error }}{% endif %}
+  <form action="{{ url_for('create_user') }}" method="post">
+    <dl>
+      <dt>Common Name:
+      <dd><input type="text" name="common">
+      <dt>fcode:
+      <dd><input type="text" name="fcode">
+      <dt>location:
+      <dd><input type="text" name="location">
+      <br>
+	  <dd><input type="submit" value="Add Facility">
+    </dl>
+  </form>
+{% endblock %}
