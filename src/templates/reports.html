@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+{% block body %}
+{% if session.logged_in %}
+<div="container">
+<table class="table">
+    <thead align="center">
+        <tr>
+            <th style="text-align:center !important">Asset Tag</th>
+            <th style="text-align:center !important">Description</th>
+            <th style="text-align:center !important">Facility</th>
+            <th style="text-align:center !important">Arrival Date</th>
+            <th style="text-align:center !important">Disposal Date</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entry in session.processed_data_session_name %}
+    <tr>
+        <td>{{ entry.asset_tag }}</td>
+        <td>{{ entry.description }}</td>
+        <td>{{ entry.facility }}</td>
+        <td>{{ entry.arrive_date }}</td>
+        <td>{{ entry.depart_date }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table> 
+</div>
+{% endif %}
+{% endblock %}

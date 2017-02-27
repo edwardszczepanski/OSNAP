@@ -19,6 +19,50 @@ def check_duplicate(query, connection, cursor):
     else:
         return False
 
+@app.route('/reports')
+def reports():
+    conn = psycopg2.connect(dbname=dbname, host=dbhost, port=dbport)
+    cursor = conn.cursor()
+    query = "SELECT * FROM assets INNER JOIN asset_at ON asset_pk=asset_fk INNER JOIN facilities ON assets.facility_fk=facility_pk;"
+    cursor.execute(query)
+    res = cursor.fetchall()
+    processed_data = []
+    for r in res:
+        asset_tag = r[2]
+        startDate = r[7]
+        endDate = r[8]
+        if startDate != None and (asset_tag == session['asset_tag'] or session['asset_tag'] == "*"):
+            noGo = False
+            if endDate != None:
+                if session['date'] > endDate:
+                    noGo = True
+
+            if session['date'] >= startDate and not noGo:
+                item = {}
+                item['asset_tag'] = asset_tag
+                item['arrive_date'] = startDate
+                item['depart_date'] = endDate
+                item['facility'] = r[11]
+                item['description'] = r[3]
+                processed_data.append(item)
+    session['processed_data_session_name'] = processed_data
+
+    return render_template('reports.html')
+
+@app.route('/asset_report', methods=['GET', 'POST'])
+def asset_report():
+    if request.method == 'POST':
+        if request.form['asset_tag'] == '':
+            session['asset_tag'] = "*"
+        else:
+            session['asset_tag'] = str(request.form['asset_tag'])
+        if request.form['date'] == '':
+            flash('Must input a date')
+        else:
+            session['date'] = datetime.strptime(request.form['date'], '%Y-%m-%d')
+            return redirect(url_for('reports'))
+    return render_template('asset_report.html')
+
 @app.route('/dispose_asset', methods=['GET', 'POST'])
 def dispose_asset():
     conn = psycopg2.connect(dbname=dbname, host=dbhost, port=dbport)
