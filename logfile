@@ -228,3 +228,24 @@ ERROR:  column "arst" does not exist at character 63
 STATEMENT:  insert into facilities (common_name, fcode, location) values ("arst", "arst", "arst");
 ERROR:  value too long for type character varying(6)
 STATEMENT:  INSERT INTO facilities (common_name, fcode, location) VALUES ('artsarrastars', 'arsttsratars', 'arsttars');
+ERROR:  value too long for type character varying(16)
+STATEMENT:  INSERT INTO users (username, password, role_fk) VALUES ('atrsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss', 'atrssssssssssssssssssssssssssss', 1);
+ERROR:  syntax error at or near "00" at character 81
+STATEMENT:  INSERT INTO asset_at (asset_fk, facility_fk, arrive_dt) VALUES (15,1,2017-02-10 00:00:00);
+ERROR:  relation "disposed" does not exist at character 8
+STATEMENT:  update disposed set disposed=True where asset_tag='arst';
+ERROR:  invalid input syntax for type timestamp: "" at character 31
+STATEMENT:  UPDATE asset_at SET depart_dt='' WHERE asset_fk=6;
+ERROR:  insert or update on table "users" violates foreign key constraint "users_role_fk_fkey"
+DETAIL:  Key (role_fk)=(2) is not present in table "roles".
+STATEMENT:  INSERT INTO users (username, password, role_fk) VALUES ('1', '1', 2);
+ERROR:  column reference "facility_fk" is ambiguous at character 88
+STATEMENT:  SELECT * FROM assets INNER JOIN asset_at ON asset_pk=asset_fk INNER JOIN facilities ON facility_fk = facility_pk;
+ERROR:  column reference "facility_fk" is ambiguous at character 88
+STATEMENT:  SELECT * FROM assets INNER JOIN asset_at ON asset_pk=asset_fk INNER JOIN facilities ON facility_fk = facility_pk;
+ERROR:  column reference "facility_fk" is ambiguous at character 88
+STATEMENT:  SELECT * FROM assets INNER JOIN asset_at ON asset_pk=asset_fk INNER JOIN facilities ON facility_fk = facility_pk;
+ERROR:  column reference "facility_fk" is ambiguous at character 88
+STATEMENT:  SELECT * FROM assets INNER JOIN asset_at ON asset_pk=asset_fk INNER JOIN facilities ON facility_fk = facility_pk;
+ERROR:  column reference "facility_fk" is ambiguous at character 88
+STATEMENT:  SELECT * FROM assets INNER JOIN asset_at ON asset_pk=asset_fk INNER JOIN facilities ON facility_fk=facility_pk;

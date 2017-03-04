@@ -21,6 +21,8 @@ def check_duplicate(query, connection, cursor):
 
 @app.route('/reports')
 def reports():
+#    if session['facility'] == None or session['date'] == None:
+#        return redirect(url_for('asset_report'))
     conn = psycopg2.connect(dbname=dbname, host=dbhost, port=dbport)
     cursor = conn.cursor()
     query = "SELECT * FROM assets INNER JOIN asset_at ON asset_pk=asset_fk INNER JOIN facilities ON assets.facility_fk=facility_pk;"
@@ -31,12 +33,11 @@ def reports():
         asset_tag = r[2]
         startDate = r[7]
         endDate = r[8]
-        if startDate != None and (asset_tag == session['asset_tag'] or session['asset_tag'] == "*"):
+        if startDate != None and (r[11] == session['facility'] or session['facility'] == "*"):
             noGo = False
             if endDate != None:
                 if session['date'] > endDate:
                     noGo = True
-
             if session['date'] >= startDate and not noGo:
                 item = {}
                 item['asset_tag'] = asset_tag
@@ -46,16 +47,16 @@ def reports():
                 item['description'] = r[3]
                 processed_data.append(item)
     session['processed_data_session_name'] = processed_data
-
+    conn.close()
     return render_template('reports.html')
 
 @app.route('/asset_report', methods=['GET', 'POST'])
 def asset_report():
     if request.method == 'POST':
-        if request.form['asset_tag'] == '':
-            session['asset_tag'] = "*"
+        if request.form['facility'] == '':
+            session['facility'] = "*"
         else:
-            session['asset_tag'] = str(request.form['asset_tag'])
+            session['facility'] = str(request.form['facility'])
         if request.form['date'] == '':
             flash('Must input a date')
         else:
@@ -67,7 +68,10 @@ def asset_report():
 def dispose_asset():
     conn = psycopg2.connect(dbname=dbname, host=dbhost, port=dbport)
     cursor = conn.cursor()
-    if session['logged_in'] == False:
+    if not 'logged_in' in session:
+        flash("You must be logged in to dispose assets")
+        return redirect(url_for('login'))
+    elif session['logged_in'] == False:
         flash("You must be logged in to dispose assets")
         return redirect(url_for('login'))
     elif session['role'] != 1:
