@@ -57,6 +57,5 @@ CREATE TABLE in_transit (
     unload_dt TIMESTAMP
 );
 
-
 INSERT INTO roles (role_pk, title) VALUES (1, 'Facilities Officer');
 INSERT INTO roles (role_pk, title) VALUES (2, 'Logistics Officer');
