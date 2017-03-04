@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+{% block body %}
+  <h2>Transfer Request</h2>
+  {% if error %}<p class="error"><strong>Error:</strong> {{ error }}{% endif %}
+
+  <form action="{{ url_for('transfer_req') }}" method="post">
+    <dl>
+
+      <dt>Asset Tag:
+      <dd><select name="asset_tag">
+          {% for entry in session.asset_tag %}
+            <option value="{{ entry.asset_fk }}">{{ entry.asset_tag }}</option>
+          {% endfor %}
+      </select>
+
+
+      <dt>Source Facility:
+      <dd><select name="src_facility">
+          {% for entry in session.facilities %}
+            <option value="{{ entry.fkey }}">{{ entry.name }}</option>
+          {% endfor %}
+      </select>
+
+      <dt>Destination Facility:
+      <dd><select name="dest_facility">
+          {% for entry in session.facilities %}
+            <option value="{{ entry.fkey }}">{{ entry.name }}</option>
+          {% endfor %}
+      </select>
+
+      <br>
+      <br>
+	  <dd><input type="submit" value="Request">
+    </dl>
+  </form>
+{% endblock %}
