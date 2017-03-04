@@ -68,7 +68,10 @@ def asset_report():
 def dispose_asset():
     conn = psycopg2.connect(dbname=dbname, host=dbhost, port=dbport)
     cursor = conn.cursor()
-    if session['logged_in'] == False:
+    if not 'logged_in' in session:
+        flash("You must be logged in to dispose assets")
+        return redirect(url_for('login'))
+    elif session['logged_in'] == False:
         flash("You must be logged in to dispose assets")
         return redirect(url_for('login'))
     elif session['role'] != 1:

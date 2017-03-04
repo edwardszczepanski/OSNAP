@@ -1,0 +1,10 @@
+LOG:  database system was shut down at 2017-03-04 19:33:23 UTC
+LOG:  MultiXact member wraparound protections are now enabled
+LOG:  database system is ready to accept connections
+LOG:  autovacuum launcher started
+ERROR:  insert or update on table "users" violates foreign key constraint "users_role_fk_fkey"
+DETAIL:  Key (role_fk)=(0) is not present in table "roles".
+STATEMENT:  INSERT INTO users (username, password, role_fk) VALUES ('1', '1', 0);
+ERROR:  insert or update on table "users" violates foreign key constraint "users_role_fk_fkey"
+DETAIL:  Key (role_fk)=(0) is not present in table "roles".
+STATEMENT:  INSERT INTO users (username, password, role_fk) VALUES ('2', '2', 0);
