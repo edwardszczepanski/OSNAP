@@ -33,11 +33,6 @@ CREATE TABLE assets (
     disposed BOOLEAN
 );
 
-CREATE TABLE vehicles (
-    vehicle_pk SERIAL PRIMARY KEY,
-    asset_fk INTEGER REFERENCES assets(asset_pk) NOT NULL
-);
-
 CREATE TABLE asset_at (
     asset_fk INTEGER REFERENCES assets(asset_pk) NOT NULL,
     facility_fk INTEGER REFERENCES facilities(facility_pk) NOT NULL,
@@ -45,21 +40,23 @@ CREATE TABLE asset_at (
     depart_dt TIMESTAMP
 );
 
-CREATE TABLE convoys (
-    convoy_pk SERIAL PRIMARY KEY,
-    request_id VARCHAR(16),
+CREATE TABLE requests (
+    asset_fk INTEGER REFERENCES assets(asset_pk) NOT NULL,
+    user_fk INTEGER REFERENCES users(user_pk) NOT NULL,
     src_fk INTEGER REFERENCES facilities(facility_pk) NOT NULL,
-    dst_fk INTEGER REFERENCES facilities(facility_pk) NOT NULL,
-    arrive_dt TIMESTAMP,
-    depart_dt TIMESTAMP
+    dest_fk INTEGER REFERENCES facilities(facility_pk) NOT NULL,
+    request_dt TIMESTAMP,
+    approve_dt TIMESTAMP,
+    approved BOOLEAN NOT NULL
 );
 
-CREATE TABLE asset_on (
-    asset_fk INTEGER REFERENCES assets(asset_pk) NOT NULL,
-    convoy_fk INTEGER REFERENCES convoys(convoy_pk) NOT NULL,
+CREATE TABLE in_transit (
+    src_fk INTEGER REFERENCES facilities(facility_pk) NOT NULL,
+    dest_fk INTEGER REFERENCES facilities(facility_pk) NOT NULL,
     load_dt TIMESTAMP,
     unload_dt TIMESTAMP
 );
+
 
 INSERT INTO roles (role_pk, title) VALUES (1, 'Facilities Officer');
 INSERT INTO roles (role_pk, title) VALUES (2, 'Logistics Officer');
