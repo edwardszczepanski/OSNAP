@@ -6,6 +6,8 @@ from config import dbname, dbhost, dbport
 app = Flask(__name__)
 app.secret_key = 'super secret key'
 
+
+
 @app.route('/logout')
 def logout():
     session['logged_in'] = False
@@ -21,8 +23,8 @@ def check_duplicate(query, connection, cursor):
 
 @app.route('/reports')
 def reports():
-#    if session['facility'] == None or session['date'] == None:
-#        return redirect(url_for('asset_report'))
+    if not 'facility' in session or not 'date' in session:
+        return redirect(url_for('asset_report'))
     conn = psycopg2.connect(dbname=dbname, host=dbhost, port=dbport)
     cursor = conn.cursor()
     query = "SELECT * FROM assets INNER JOIN asset_at ON asset_pk=asset_fk INNER JOIN facilities ON assets.facility_fk=facility_pk;"
@@ -66,17 +68,19 @@ def asset_report():
 
 @app.route('/dispose_asset', methods=['GET', 'POST'])
 def dispose_asset():
-    conn = psycopg2.connect(dbname=dbname, host=dbhost, port=dbport)
-    cursor = conn.cursor()
     if not 'logged_in' in session:
         flash("You must be logged in to dispose assets")
         return redirect(url_for('login'))
     elif session['logged_in'] == False:
         flash("You must be logged in to dispose assets")
         return redirect(url_for('login'))
-    elif session['role'] != 1:
+    elif session['role'] != 2:
         flash("You must be a logistics officer to dispose assets")
         return redirect(url_for('login'))
+
+    conn = psycopg2.connect(dbname=dbname, host=dbhost, port=dbport)
+    cursor = conn.cursor()
+
     if request.method=='POST':
         asset_tag = request.form['asset_tag']
         date = request.form['date']
@@ -257,6 +261,31 @@ def login():
     conn.close()
     return render_template('login.html', error=error)
 
+@app.route('/transfer_req', methods=['GET', 'POST'])
+def transfer_req():
+    if not 'logged_in' in session:
+        flash("You must be logged in to initiate transfers")
+        return redirect(url_for('login'))
+    elif session['logged_in'] == False:
+        flash("You must be logged in to initiate transfers")
+        return redirect(url_for('login'))
+    elif session['role'] != 2:
+        flash("You must be a logistics officer to initiate transfers")
+        return redirect(url_for('login'))
+
+    conn = psycopg2.connect(dbname=dbname, host=dbhost, port=dbport)
+    cursor = conn.cursor()
+
+    #if request.method=='POST':
+    #    asset_tag = request.form['asset_tag']
+    #    date = request.form['date']
+                #cursor.execute(query)
+                #conn.commit()
+    #            flash('Stuff happened')
+    conn.close()
+    return render_template('transfer_req.html')
+
 if __name__ == '__main__':
     app.debug = True
     app.run(host='0.0.0.0', port=8080)
+
