@@ -71,7 +71,7 @@ def dispose_asset():
     if not 'logged_in' in session:
         flash("You must be logged in to dispose assets")
         return redirect(url_for('login'))
-    elif session['logged_in'] == False:
+    if session['logged_in'] == False:
         flash("You must be logged in to dispose assets")
         return redirect(url_for('login'))
     elif session['role'] != 2:
@@ -249,14 +249,18 @@ def login():
                 error = 'Invalid password'
             else:
                 query = "SELECT role_fk FROM users where username='" + request.form['username'] + "';"
+                query2 = "SELECT user_pk FROM users where username='" + request.form['username'] + "';"
                 cursor.execute(query)
                 response = cursor.fetchone()
                 session['role'] = response[0]
-                conn.close()
+                cursor.execute(query2)
+                response = cursor.fetchone()
+                session['user_pk'] = response[0]
                 session['logged_in'] = True
                 session['username'] = request.form['username']
                 session['password'] = request.form['password']
                 flash('Welcome ' + session['username'] + '!')
+                conn.close()
                 return redirect(url_for('dashboard'))
     conn.close()
     return render_template('login.html', error=error)
@@ -276,12 +280,35 @@ def transfer_req():
     conn = psycopg2.connect(dbname=dbname, host=dbhost, port=dbport)
     cursor = conn.cursor()
 
-    #if request.method=='POST':
-    #    asset_tag = request.form['asset_tag']
-    #    date = request.form['date']
-                #cursor.execute(query)
-                #conn.commit()
-    #            flash('Stuff happened')
+    cursor.execute("SELECT * FROM facilities;")
+    res = cursor.fetchall()
+    fac_data = []
+    for r in res:
+        fac = {}
+        fac['fkey'] = r[0]
+        fac['name'] = r[2]
+        fac_data.append(fac)
+    session['facilities'] = fac_data
+
+    cursor.execute("SELECT * FROM assets;")
+    res = cursor.fetchall()
+    fac_data = []
+    for r in res:
+        fac = {}
+        fac['asset_fk'] = r[0]
+        fac['asset_tag'] = r[2]
+        fac_data.append(fac)
+    session['asset_tag'] = fac_data
+
+    if request.method=='POST':
+        asset_tag = request.form['asset_tag']
+        src_facility = request.form['src_facility']
+        dest_facility = request.form['dest_facility']
+        flash(str(asset_tag) + " " + str(src_facility) + " " + str(dest_facility))
+        flash(session['user_pk'])
+        query = "INSERT INTO requests (asset_fk, user_fk, src_fk, dest_fk, request_dt, approved) VALUES ();"
+        dt = str(datetime.now())
+
     conn.close()
     return render_template('transfer_req.html')
 
