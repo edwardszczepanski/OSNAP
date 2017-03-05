@@ -2,6 +2,40 @@
 {% block body %}
 {% if session.logged_in %}
 <h2>DASHBOARD</h2>
-</form>
+{% if session.role == 1 %}
+fac fac fac
+Transfer Requests Awaiting Approval
+<form>
+<table class="table">
+    <thead align="center">
+        <tr>
+            <th style="text-align:center !important">Select</th>
+            <th style="text-align:center !important">Asset FK</th>
+            <th style="text-align:center !important">User FK</th>
+            <th style="text-align:center !important">Source Facility</th>
+            <th style="text-align:center !important">Destination Facility</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entry in session.requests %}
+    <tr>
+        <input type="radio" name="myRadioButtons" value={{ entry.request_pk}}>
+        <td>{{ entry.asset_fk }}</td>
+        <td>{{ entry.user_fk }}</td>
+        <td>{{ entry.src_fac }}</td>
+        <td>{{ entry.dest_fac }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</from>
+{% else %}
+log log log
+<form>
+
+</from>
+{% endif %}
+{% else %}
+Please Log In
 {% endif %}
 {% endblock %}

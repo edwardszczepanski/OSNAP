@@ -140,6 +140,9 @@ def add_asset():
     session['facilities'] = fac_data
 
     if request.method=='POST':
+        if not 'facility' in request.form or not 'asset_tag' in request.form or not 'description' in request.form:
+            flash("All values must be valid")
+            return redirect(url_for("add_asset"))
         facility = request.form['facility']
         asset_tag = request.form['asset_tag']
         description = request.form['description']
@@ -223,8 +226,28 @@ def create_user():
 
 @app.route('/dashboard', methods=['GET'])
 def dashboard():
+    conn = psycopg2.connect(dbname=dbname, host=dbhost, port=dbport)
+    cursor = conn.cursor()
+    if 'logged_in' not in session:
+        return redirect(url_for('login'))
     if session['logged_in'] == False:
         return redirect(url_for('login'))
+    if session['role'] == 1:
+        flash("facilities officer")
+        query = "SELECT * FROM requests;"
+        cursor.execute(query)
+        res = cursor.fetchall()
+        fac_data = []
+        for r in res:
+            fac = {}
+            fac['fkey'] = r[0]
+            fac['name'] = r[2]
+            fac_data.append(fac)
+        #session['requests'] = fac_data
+        session['requests'] = None
+
+    elif session['role'] == 2:
+        flash("logistics officer")
     return render_template('dashboard.html')
 
 @app.route('/', methods=['GET', 'POST'])
@@ -301,13 +324,18 @@ def transfer_req():
     session['asset_tag'] = fac_data
 
     if request.method=='POST':
-        asset_tag = request.form['asset_tag']
-        src_facility = request.form['src_facility']
-        dest_facility = request.form['dest_facility']
-        flash(str(asset_tag) + " " + str(src_facility) + " " + str(dest_facility))
-        flash(session['user_pk'])
-        query = "INSERT INTO requests (asset_fk, user_fk, src_fk, dest_fk, request_dt, approved) VALUES ();"
+        if not 'asset_tag' in request.form or not 'src_facility' in request.form or not 'dest_facility' in request.form:
+            flash("All values must be valid")
+            return redirect(url_for('transfer_req'))
+
+        asset_tag = str(request.form['asset_tag'])
+        src_facility = str(request.form['src_facility'])
+        dest_facility = str(request.form['dest_facility'])
         dt = str(datetime.now())
+        query = "INSERT INTO requests (asset_fk, user_fk, src_fk, dest_fk, request_dt, approved) VALUES (" +  asset_tag + "," + str(session['user_pk']) + "," + src_facility + "," + dest_facility + ",'" + dt + "', FALSE" + ");"
+        cursor.execute(query)
+        conn.commit()
+        flash("Transfer request was successfully submitted")
 
     conn.close()
     return render_template('transfer_req.html')
