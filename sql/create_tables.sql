@@ -41,6 +41,7 @@ CREATE TABLE asset_at (
 );
 
 CREATE TABLE requests (
+    request_pk SERIAL PRIMARY KEY,
     asset_fk INTEGER REFERENCES assets(asset_pk) NOT NULL,
     user_fk INTEGER REFERENCES users(user_pk) NOT NULL,
     src_fk INTEGER REFERENCES facilities(facility_pk) NOT NULL,
@@ -51,6 +52,7 @@ CREATE TABLE requests (
 );
 
 CREATE TABLE in_transit (
+    in_transit_pk SERIAL PRIMARY KEY,
     src_fk INTEGER REFERENCES facilities(facility_pk) NOT NULL,
     dest_fk INTEGER REFERENCES facilities(facility_pk) NOT NULL,
     load_dt TIMESTAMP,

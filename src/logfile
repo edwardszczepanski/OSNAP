@@ -8,3 +8,14 @@ LOG:  database system was shut down at 2017-03-04 22:08:26 UTC
 LOG:  MultiXact member wraparound protections are now enabled
 LOG:  database system is ready to accept connections
 LOG:  autovacuum launcher started
+ERROR:  syntax error at or near "*" at character 8
+STATEMENT:  DELETE * FROM assets;
+ERROR:  update or delete on table "assets" violates foreign key constraint "asset_at_asset_fk_fkey" on table "asset_at"
+DETAIL:  Key (asset_pk)=(1) is still referenced from table "asset_at".
+STATEMENT:  DELETE FROM assets;
+ERROR:  insert or update on table "requests" violates foreign key constraint "requests_asset_fk_fkey"
+DETAIL:  Key (asset_fk)=(3) is not present in table "assets".
+STATEMENT:  INSERT INTO requests (asset_fk, user_fk, src_fk, dest_fk, request_dt, approved) VALUES (3,5,4,4,'2017-03-04 23:01:04.903597', FALSE);
+ERROR:  update or delete on table "assets" violates foreign key constraint "asset_at_asset_fk_fkey" on table "asset_at"
+DETAIL:  Key (asset_pk)=(1) is still referenced from table "asset_at".
+STATEMENT:  DELETE FROM assets;
