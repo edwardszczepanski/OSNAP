@@ -23,6 +23,8 @@
     <a href="{{ url_for('login') }}">Log in</a>
   {% else %}
     <a href="{{ url_for('logout') }}">Log out</a>
+    <br>
+    <a href="{{ url_for('dashboard') }}">Dashboard</a>
   {% endif %}
   <br>
     <a href="{{ url_for('create_user') }}">Create User</a>
@@ -31,14 +33,16 @@
   <br>
     <a href="{{ url_for('add_asset') }}">Add Asset</a>
   <br>
+    <a href="{{ url_for('asset_report') }}">Asset Report</a>
+  {% if session.role == 2 %}
+  <br>
     <a href="{{ url_for('dispose_asset') }}">Asset Disposal</a>
   <br>
-    <a href="{{ url_for('asset_report') }}">Asset Report</a>
-  <br>
     <a href="{{ url_for('transfer_req') }}">Transfer Request</a>
+  {% endif %}
   </div>
   {% for message in get_flashed_messages() %}
-    <div class="flash">{{ message }}</div>
+  <div class="flash"><h4>{{ message }}</h4></div>
   {% endfor %}
   {% block body %}{% endblock %}
 </div>
