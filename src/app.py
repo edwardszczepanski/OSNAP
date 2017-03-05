@@ -232,7 +232,7 @@ def dashboard():
     if session['logged_in'] == False:
         return redirect(url_for('login'))
     if session['role'] == 1: # Facility Officers
-        query = "SELECT * FROM requests;"
+        query = "SELECT * FROM requests WHERE approved=FALSE;"
         cursor.execute(query)
         res = cursor.fetchall()
         requests = []
@@ -243,8 +243,7 @@ def dashboard():
             dict['user_fk'] = r[2]
             dict['src_fac'] = r[3]
             dict['dest_fac'] = r[4]
-            if not r[7]:
-                requests.append(dict)
+            requests.append(dict)
         session['requests'] = requests
         if request.method == 'POST':
             if 'myRequest' not in request.form:
@@ -261,10 +260,32 @@ def dashboard():
                     cursor.execute(query)
                     conn.commit()
                     query = "INSERT INTO in_transit (src_fk, dest_fk, load_dt, unload_dt) VALUES " + ";"
-                    flash(query)
                     flash("Request was successfully rejected")
     elif session['role'] == 2:
-        flash("logistics officer")
+        cursor.execute("SELECT * FROM requests WHERE approved=TRUE;")
+        res = cursor.fetchall()
+        requests = []
+        for r in res:
+            dict = {}
+            dict['request_pk'] = r[0]
+            dict['asset_fk'] = r[1]
+            dict['user_fk'] = r[2]
+            dict['src_fac'] = r[3]
+            dict['dest_fac'] = r[4]
+            requests.append(dict)
+        session['requests'] = requests
+        if request.method == 'POST':
+            if 'myRequest' not in request.form or 'load' not in request.form or 'unload' not in request.form:
+                flash("Please include both dates and select an entry")
+            else:
+                load = str(datetime.strptime(request.form['load'], '%Y-%m-%d'))
+                unload = str(datetime.strptime(request.form['unload'], '%Y-%m-%d'))
+                query = "INSERT INTO in_transit (request_fk, load_dt, unload_dt) VALUES (" + str(request.form['myRequest']) + ",'" + load + "','" + unload + "');"
+                flash(query)
+                cursor.execute(query)
+                conn.commit()
+                flash("Successfully updated the transit information")
+                    
     conn.close()
     return render_template('dashboard.html')
 
