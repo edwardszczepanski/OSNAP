@@ -11,6 +11,7 @@ app.secret_key = 'super secret key'
 @app.route('/logout')
 def logout():
     session['logged_in'] = False
+    session['role'] = 0
     return render_template('logout.html')
 
 def check_duplicate(query, connection, cursor):
@@ -257,6 +258,11 @@ def dashboard():
                     cursor.execute(query)
                     conn.commit()
                     flash("Request was successfully approved")
+                elif 'rejectButton' in request.form:
+                    query = "DELETE FROM requests WHERE request_pk=" + str(request.form['myRequest']) + ";"
+                    cursor.execute(query)
+                    conn.commit()
+                    flash("Request was successfully rejected")
 
     elif session['role'] == 2:
         flash("logistics officer")
@@ -300,6 +306,19 @@ def login():
                 return redirect(url_for('dashboard'))
     conn.close()
     return render_template('login.html', error=error)
+
+@app.route('/approve_req', methods=['GET', 'POST'])
+def approve_req():
+    if not 'logged_in' in session:
+        flash("You must be logged in to approve requests")
+        return redirect(url_for('login'))
+    elif session['logged_in'] == False:
+        flash("You must be logged in to approve requests")
+        return redirect(url_for('login'))
+    elif session['role'] != 1:
+        flash("You must be a facilities officer to approve requests")
+        return redirect(url_for('login'))
+    return redirect(url_for('dashboard'))
 
 @app.route('/transfer_req', methods=['GET', 'POST'])
 def transfer_req():
