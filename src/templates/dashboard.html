@@ -34,10 +34,35 @@
 </form>
 
 {% else %}
-log log log
-<form>
-
-</from>
+<form action="{{ url_for('dashboard') }}" method="post">
+<table class="table">
+    <thead align="center">
+        <tr>
+            <th style="text-align:center !important">Select</th>
+            <th style="text-align:center !important">Asset FK</th>
+            <th style="text-align:center !important">User FK</th>
+            <th style="text-align:center !important">Source Facility</th>
+            <th style="text-align:center !important">Destination Facility</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entry in session.requests %}
+    <tr>
+        <td><input type="radio" name="myRequest" value={{ entry.request_pk}}></td>
+        <td>{{ entry.asset_fk }}</td>
+        <td>{{ entry.user_fk }}</td>
+        <td>{{ entry.src_fac }}</td>
+        <td>{{ entry.dest_fac }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<br>
+<br>
+<dd><input type="date" name="load">
+<dd><input type="date" name="unload">
+<dd><input type="submit" name="updateButton" value="Update Transit">
+</form>
 {% endif %}
 {% else %}
 Please Log In
