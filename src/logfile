@@ -42,3 +42,5 @@ STATEMENT:  8
 ERROR:  syntax error at or near "8" at character 1
 STATEMENT:  8
 	UPDATE requests SET approved=TRUE WHERE request_pk=8;
+ERROR:  column "faci" does not exist at character 99
+STATEMENT:  SELECT * FROM assets a JOIN asset_at aa ON asset_pk=asset_fk INNER JOIN facilities ON facility_fk=faci;

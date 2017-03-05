@@ -27,7 +27,6 @@ CREATE TABLE facilities (
 
 CREATE TABLE assets (
     asset_pk SERIAL PRIMARY KEY,
-    facility_fk INTEGER REFERENCES facilities(facility_pk) NOT NULL,
     asset_tag VARCHAR(16),
     description TEXT,
     disposed BOOLEAN
@@ -53,8 +52,7 @@ CREATE TABLE requests (
 
 CREATE TABLE in_transit (
     in_transit_pk SERIAL PRIMARY KEY,
-    src_fk INTEGER REFERENCES facilities(facility_pk) NOT NULL,
-    dest_fk INTEGER REFERENCES facilities(facility_pk) NOT NULL,
+    request_fk INTEGER REFERENCES requests(request_pk) NOT NULL,
     load_dt TIMESTAMP,
     unload_dt TIMESTAMP
 );

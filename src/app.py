@@ -6,8 +6,6 @@ from config import dbname, dbhost, dbport
 app = Flask(__name__)
 app.secret_key = 'super secret key'
 
-
-
 @app.route('/logout')
 def logout():
     session['logged_in'] = False
@@ -28,27 +26,28 @@ def reports():
         return redirect(url_for('asset_report'))
     conn = psycopg2.connect(dbname=dbname, host=dbhost, port=dbport)
     cursor = conn.cursor()
-    query = "SELECT * FROM assets INNER JOIN asset_at ON asset_pk=asset_fk INNER JOIN facilities ON assets.facility_fk=facility_pk;"
+    #query = "SELECT * FROM assets INNER JOIN asset_at ON asset_pk=asset_fk INNER JOIN facilities ON assets.facility_fk=facility_pk;"
+
+    query = "SELECT * FROM assets a JOIN asset_at aa ON asset_pk=asset_fk INNER JOIN facilities ON facility_fk=facility_pk WHERE facilities.common_name LIKE '%"+str(session['facility'])+"%' AND '"+str(session['date'])+"' >= aa.arrive_dt;"
     cursor.execute(query)
     res = cursor.fetchall()
     processed_data = []
     for r in res:
-        asset_tag = r[2]
-        startDate = r[7]
-        endDate = r[8]
-        if startDate != None and (r[11] == session['facility'] or session['facility'] == "*"):
-            noGo = False
-            if endDate != None:
-                if session['date'] > endDate:
-                    noGo = True
-            if session['date'] >= startDate and not noGo:
-                item = {}
-                item['asset_tag'] = asset_tag
-                item['arrive_date'] = startDate
-                item['depart_date'] = endDate
-                item['facility'] = r[11]
-                item['description'] = r[3]
-                processed_data.append(item)
+        endDate = r[7]
+        valid = False
+        if endDate == None:
+            valid = True
+        else:
+            if endDate >= session['date']:
+                valid = True
+        if valid:
+            item = {}
+            item['asset_tag'] = r[1]
+            item['arrive_date'] = r[6]
+            item['depart_date'] = endDate
+            item['facility'] = r[10]
+            item['description'] = r[2]
+            processed_data.append(item)
     session['processed_data_session_name'] = processed_data
     conn.close()
     return render_template('reports.html')
@@ -57,7 +56,7 @@ def reports():
 def asset_report():
     if request.method == 'POST':
         if request.form['facility'] == '':
-            session['facility'] = "*"
+            session['facility'] = ""
         else:
             session['facility'] = str(request.form['facility'])
         if request.form['date'] == '':
@@ -92,7 +91,7 @@ def dispose_asset():
         else:
             cursor.execute(query)
             response = cursor.fetchall()
-            if response[0][4]:
+            if response[0][3]:
                 flash("That asset has already been disposed")
             else:
                 query = "UPDATE assets SET disposed=TRUE WHERE asset_tag = '" + asset_tag + "';"
@@ -123,10 +122,9 @@ def add_asset():
     for r in res:
         asset = {}
         asset['asset_pk'] = r[0]
-        asset['facility_fk'] = r[1]
-        asset['asset_tag'] = r[2]
-        asset['description'] = r[3]
-        asset['disposed'] = r[4]
+        asset['asset_tag'] = r[1]
+        asset['description'] = r[2]
+        asset['disposed'] = r[3]
         data.append(asset)
     session['assets'] = data
 
@@ -154,7 +152,7 @@ def add_asset():
         if check_duplicate(query, conn, cursor):
             flash('Asset with the same asset tag already exists')
         else:
-            query = "INSERT INTO assets (facility_fk, asset_tag, description, disposed) VALUES (" + facility + ", '" + asset_tag + "', '" + description + "', FALSE);"
+            query = "INSERT INTO assets (asset_tag, description, disposed) VALUES ('" + asset_tag + "', '" + description + "', FALSE);"
             cursor.execute(query)
             conn.commit()
             query1 = "SELECT asset_pk from assets WHERE asset_tag='" + asset_tag + "';"
@@ -262,8 +260,9 @@ def dashboard():
                     query = "DELETE FROM requests WHERE request_pk=" + str(request.form['myRequest']) + ";"
                     cursor.execute(query)
                     conn.commit()
+                    query = "INSERT INTO in_transit (src_fk, dest_fk, load_dt, unload_dt) VALUES " + ";"
+                    flash(query)
                     flash("Request was successfully rejected")
-
     elif session['role'] == 2:
         flash("logistics officer")
     conn.close()
@@ -317,6 +316,19 @@ def approve_req():
         return redirect(url_for('login'))
     elif session['role'] != 1:
         flash("You must be a facilities officer to approve requests")
+        return redirect(url_for('login'))
+    return redirect(url_for('dashboard'))
+
+@app.route('/update_transit', methods=['GET', 'POST'])
+def update_transit():
+    if not 'logged_in' in session:
+        flash("You must be logged in to update transit")
+        return redirect(url_for('login'))
+    elif session['logged_in'] == False:
+        flash("You must be logged in to update transit")
+        return redirect(url_for('login'))
+    elif session['role'] != 3:
+        flash("You must be a logistics officer to update transit")
         return redirect(url_for('login'))
     return redirect(url_for('dashboard'))
 

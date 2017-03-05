@@ -8,7 +8,6 @@
     <thead align="center">
         <tr>
             <th style="text-align:center !important">Asset PK</th>
-            <th style="text-align:center !important">Facility FK</th>
             <th style="text-align:center !important">Asset Tag</th>
             <th style="text-align:center !important">Description</th>
             <th style="text-align:center !important">Disposed</th>
@@ -18,7 +17,6 @@
     {% for entry in session.assets %}
     <tr>
         <td>{{ entry.asset_pk }}</td>
-        <td>{{ entry.facility_fk }}</td>
         <td>{{ entry.asset_tag }}</td>
         <td>{{ entry.description }}</td>
         <td>{{ entry.disposed }}</td>
