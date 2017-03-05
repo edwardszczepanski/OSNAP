@@ -232,7 +232,7 @@ def dashboard():
         return redirect(url_for('login'))
     if session['logged_in'] == False:
         return redirect(url_for('login'))
-    if session['role'] == 1:
+    if session['role'] == 1: # Facility Officers
         query = "SELECT * FROM requests;"
         cursor.execute(query)
         res = cursor.fetchall()
@@ -244,18 +244,19 @@ def dashboard():
             dict['user_fk'] = r[2]
             dict['src_fac'] = r[3]
             dict['dest_fac'] = r[4]
-            requests.append(dict)
+            if not r[7]:
+                requests.append(dict)
         session['requests'] = requests
         if request.method == 'POST':
             if 'myRequest' not in request.form:
-                flash("Please have a request selected to approve")
+                flash("Please have a request selected to approve or reject")
             else:
-                dt = str(datetime.now())
-                query = "UPDATE requests SET approved=TRUE" + ", approve_dt='" + dt + "' WHERE request_pk = " + str(request.form['myRequest']) + ";"
-                cursor.execute(query)
-                conn.commit()
-                flash("Request was successfully approved")
-
+                if 'approveButton' in request.form:
+                    dt = str(datetime.now())
+                    query = "UPDATE requests SET approved=TRUE" + ", approve_dt='" + dt + "' WHERE request_pk = " + str(request.form['myRequest']) + ";"
+                    cursor.execute(query)
+                    conn.commit()
+                    flash("Request was successfully approved")
 
     elif session['role'] == 2:
         flash("logistics officer")
