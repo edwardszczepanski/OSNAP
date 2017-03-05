@@ -224,7 +224,7 @@ def create_user():
     conn.close()
     return render_template('create_user.html')
 
-@app.route('/dashboard', methods=['GET'])
+@app.route('/dashboard', methods=['GET', 'POST'])
 def dashboard():
     conn = psycopg2.connect(dbname=dbname, host=dbhost, port=dbport)
     cursor = conn.cursor()
@@ -233,21 +233,33 @@ def dashboard():
     if session['logged_in'] == False:
         return redirect(url_for('login'))
     if session['role'] == 1:
-        flash("facilities officer")
         query = "SELECT * FROM requests;"
         cursor.execute(query)
         res = cursor.fetchall()
-        fac_data = []
+        requests = []
         for r in res:
-            fac = {}
-            fac['fkey'] = r[0]
-            fac['name'] = r[2]
-            fac_data.append(fac)
-        #session['requests'] = fac_data
-        session['requests'] = None
+            dict = {}
+            dict['request_pk'] = r[0]
+            dict['asset_fk'] = r[1]
+            dict['user_fk'] = r[2]
+            dict['src_fac'] = r[3]
+            dict['dest_fac'] = r[4]
+            requests.append(dict)
+        session['requests'] = requests
+        if request.method == 'POST':
+            if 'myRequest' not in request.form:
+                flash("Please have a request selected to approve")
+            else:
+                dt = str(datetime.now())
+                query = "UPDATE requests SET approved=TRUE" + ", approve_dt='" + dt + "' WHERE request_pk = " + str(request.form['myRequest']) + ";"
+                cursor.execute(query)
+                conn.commit()
+                flash("Request was successfully approved")
+
 
     elif session['role'] == 2:
         flash("logistics officer")
+    conn.close()
     return render_template('dashboard.html')
 
 @app.route('/', methods=['GET', 'POST'])
@@ -272,10 +284,10 @@ def login():
                 error = 'Invalid password'
             else:
                 query = "SELECT role_fk FROM users where username='" + request.form['username'] + "';"
-                query2 = "SELECT user_pk FROM users where username='" + request.form['username'] + "';"
                 cursor.execute(query)
                 response = cursor.fetchone()
                 session['role'] = response[0]
+                query2 = "SELECT user_pk FROM users where username='" + request.form['username'] + "';"
                 cursor.execute(query2)
                 response = cursor.fetchone()
                 session['user_pk'] = response[0]

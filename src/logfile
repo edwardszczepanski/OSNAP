@@ -19,3 +19,26 @@ STATEMENT:  INSERT INTO requests (asset_fk, user_fk, src_fk, dest_fk, request_dt
 ERROR:  update or delete on table "assets" violates foreign key constraint "asset_at_asset_fk_fkey" on table "asset_at"
 DETAIL:  Key (asset_pk)=(1) is still referenced from table "asset_at".
 STATEMENT:  DELETE FROM assets;
+ERROR:  insert or update on table "requests" violates foreign key constraint "requests_user_fk_fkey"
+DETAIL:  Key (user_fk)=(2) is not present in table "users".
+STATEMENT:  INSERT INTO requests (asset_fk, user_fk, src_fk, dest_fk, request_dt, approved) VALUES (1,2,1,1,'2017-03-05 01:50:16.737692', FALSE);
+ERROR:  insert or update on table "requests" violates foreign key constraint "requests_user_fk_fkey"
+DETAIL:  Key (user_fk)=(2) is not present in table "users".
+STATEMENT:  INSERT INTO requests (asset_fk, user_fk, src_fk, dest_fk, request_dt, approved) VALUES (1,2,1,1,'2017-03-05 01:51:11.333154', FALSE);
+ERROR:  insert or update on table "requests" violates foreign key constraint "requests_user_fk_fkey"
+DETAIL:  Key (user_fk)=(2) is not present in table "users".
+STATEMENT:  INSERT INTO requests (asset_fk, user_fk, src_fk, dest_fk, request_dt, approved) VALUES (1,2,1,1,'2017-03-05 01:51:11.333154', FALSE);
+ERROR:  syntax error at or near "," at character 55
+STATEMENT:  UPDATE requests SET approved=TRUE WHERE request_pk = 8, approve_dt='2017-03-05 02:16:02.172012';
+ERROR:  syntax error at or near "8" at character 1
+STATEMENT:  8
+	UPDATE requests SET approved=TRUE, approve_dt='2017-03-05 02:18:30.775387' WHERE request_pk = 8;
+ERROR:  syntax error at or near "8" at character 1
+STATEMENT:  8
+	UPDATE requests SET approved=TRUE, approve_dt='2017-03-05 02:18:30.775387' WHERE request_pk=8;
+ERROR:  syntax error at or near "8" at character 1
+STATEMENT:  8
+	UPDATE requests SET approved=TRUE WHERE request_pk=8;
+ERROR:  syntax error at or near "8" at character 1
+STATEMENT:  8
+	UPDATE requests SET approved=TRUE WHERE request_pk=8;
