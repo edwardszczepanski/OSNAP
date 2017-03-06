@@ -5,6 +5,9 @@
  * Much of the design of this schema is coming directly from earlier assignments. Although
  * the LOST database schema is no longer being enforced I still think it is a good idea to
  * follow much of the same principles. I may have to remove some stuff in the future.
+ * This has been updated for revision #3. After last assignment I had some technical debt so that was difficult to fix. Not so much here, but in my SQL queries. I had a location foreign key in assets, which doesn't really make sense... Fixed now.
+ * I made my requests and in_transit two separate tables. in_transit is associated with requests. It is a one-to-one relationship. Pretty simple. All in_transit holds really is start and end dates.
+ * Requests holds most of the information. I think it is a pretty solid data model.
  */
 CREATE TABLE roles (
     role_pk SERIAL PRIMARY KEY,
