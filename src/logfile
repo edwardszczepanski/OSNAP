@@ -46,3 +46,18 @@ ERROR:  column "faci" does not exist at character 99
 STATEMENT:  SELECT * FROM assets a JOIN asset_at aa ON asset_pk=asset_fk INNER JOIN facilities ON facility_fk=faci;
 ERROR:  syntax error at or near "(" at character 8
 STATEMENT:  INSERT (request_fk, load_dt, unload_dt) INTO in_transit VALUES (1,'2017-03-09 00:00:00','2017-03-16 00:00:00');
+ERROR:  column "rolename" does not exist at character 33
+STATEMENT:  SELECT role_pk FROM roles WHERE rolename='logistics_officer';
+ERROR:  column "rolename" does not exist at character 33
+STATEMENT:  SELECT role_pk FROM roles WHERE rolename='logistics_officer';
+ERROR:  relation "transit" does not exist at character 15
+STATEMENT:  SELECT * FROM transit WHERE load_time IS Null AND unload_time IS Null
+ERROR:  syntax error at or near "." at character 222
+STATEMENT:  create table asset_at (
+	    asset_fk    integer REFERENCES assets(asset_pk) not null,
+	    facility_fk integer REFERENCES facilities(facility_pk) not null,
+	    arrive_dt   timestamp default now(),
+	    depart_dt   timestamp. 
+	);
+ERROR:  invalid input syntax for integer: "arst" at character 27
+STATEMENT:  insert into users values ('arst', 'arst');
