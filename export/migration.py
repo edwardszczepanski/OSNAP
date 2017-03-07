@@ -9,20 +9,42 @@ def main():
     transfers()
 
 def users():
-    cursor.execute("SELECT * FROM users;")
-    response = cursor.fetchall()
-
-    with open('eggs.csv', 'w', newline='\n') as csvfile:
-        spamwriter = csv.writer(csvfile, quotechar="'", quoting=csv.QUOTE_MINIMAL)
-        spamwriter.writerow(['Spam'] * 5 + ['Baked Beans'])
-        spamwriter.writerow(['Spam', 'Lovely Spam', 'Wonderful Spam'])
-    return
+    with open('users.csv', 'w', newline='\n') as csvfile:
+        mywriter = csv.writer(csvfile, quotechar="'", quoting=csv.QUOTE_MINIMAL)
+        mywriter.writerow(['username', 'password', 'role', 'active'])
+        cursor.execute("SELECT * FROM users;")
+        response = cursor.fetchall()
+        for entry in response:
+            username = entry[2]
+            password = entry[3]
+            active="TRUE"
+            cursor.execute("SELECT * FROM roles WHERE role_pk=" + str(entry[1]) + ";")
+            role = cursor.fetchone()[1]
+            mywriter.writerow([username] + [password] + [role] + [active])
 
 def facilities():
-    return
+    with open('facilities.csv', 'w', newline='\n') as csvfile:
+        mywriter = csv.writer(csvfile, quotechar="'", quoting=csv.QUOTE_MINIMAL)
+        mywriter.writerow(['fcode', 'common_name'])
+        cursor.execute("SELECT * FROM facilities;")
+        response = cursor.fetchall()
+        for entry in response:
+            fcode = entry[1]
+            common_name = entry[2]
+            mywriter.writerow([fcode] + [common_name])
 
 def assets():
-    return
+    with open('assets.csv', 'w', newline='\n') as csvfile:
+        mywriter = csv.writer(csvfile, quotechar="'", quoting=csv.QUOTE_MINIMAL)
+        mywriter.writerow(['asset_tag', 'description', 'facility', 'acquired', 'disposed'])
+        cursor.execute("SELECT * FROM assets;")
+        response = cursor.fetchall()
+        for entry in response:
+            asset_tag = entry[1]
+            description = entry[2]
+            cursor.execute("SELECT * FROM asset_at WHERE asset_fk=" + str(entry[0]) + ";")
+            asset_at = cursor.fetchone()[1]
+            mywriter.writerow([username] + [password] + [role] + [active])
 
 def transfers():
     return
