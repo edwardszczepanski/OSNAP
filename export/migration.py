@@ -3,40 +3,29 @@ from random import randint
 
 def main():
     connect()
-    dir = os.getcwd() + "/osnap_legacy/"
-    for filename in glob.iglob(dir + "*.csv"):
-        if "inventory" in filename:
-            name = filename.split('/')[-1].split('_')[0]
-            insert("facilities", ["fcode", "common_name", "location"], [name, name, name])
-            cursor.execute("SELECT facility_pk FROM facilities WHERE fcode = '" + name + "';")
-            facility_pk = cursor.fetchone()[0]
-            inventory(filename, facility_pk)
-    conn.commit()
+    users()
+    facilities()
+    assets()
+    transfers()
 
-def inventory(filename, facility_fk):
-    reader = read(filename)
-    head = next(reader)
-    for row in reader:
-        insert("assets", ["asset_tag", "description"], [row[0], row[2]])
-        cursor.execute("SELECT asset_pk FROM assets WHERE asset_tag = '" + row[0] + "';")
-        asset_fk = cursor.fetchone()[0]
-        insert("asset_at", ["asset_fk", "facility_fk"], [asset_fk, facility_fk])
+def users():
+    cursor.execute("SELECT * FROM users;")
+    response = cursor.fetchall()
 
-def read(filename):
-    return csv.reader(open(filename, newline=''), delimiter=',', quotechar='|')
+    with open('eggs.csv', 'w', newline='\n') as csvfile:
+        spamwriter = csv.writer(csvfile, quotechar="'", quoting=csv.QUOTE_MINIMAL)
+        spamwriter.writerow(['Spam'] * 5 + ['Baked Beans'])
+        spamwriter.writerow(['Spam', 'Lovely Spam', 'Wonderful Spam'])
+    return
 
-def insert(table, columns, values):
-    column_string = ','.join(columns)
-    value_string = ""
-    for i in range(len(values)):
-        if type(values[i]) is str:
-            value_string += ("'" + values[i] + "'")
-        else:
-            value_string += (str(values[i]))
-        if i != (len(values) - 1):
-            value_string += ","
-    string = "INSERT INTO {}({}) VALUES ({});".format(table, column_string, value_string)
-    cursor.execute(string)
+def facilities():
+    return
+
+def assets():
+    return
+
+def transfers():
+    return
 
 def connect():
     global cursor
