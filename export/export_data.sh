@@ -1,5 +1,7 @@
 #! /bin/bash
 db_name=$1
-port=$2
+output=$2
 
-python3 migration.py $db_name $port
+python3 migration.py $db_name
+mkdir --parents $2; mv *.csv $_
+

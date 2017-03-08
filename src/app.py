@@ -259,7 +259,6 @@ def dashboard():
                     query = "DELETE FROM requests WHERE request_pk=" + str(request.form['myRequest']) + ";"
                     cursor.execute(query)
                     conn.commit()
-                    query = "INSERT INTO in_transit (src_fk, dest_fk, load_dt, unload_dt) VALUES " + ";"
                     flash("Request was successfully rejected")
     elif session['role'] == 2:
         cursor.execute("SELECT * FROM requests WHERE approved=TRUE;")
@@ -281,7 +280,6 @@ def dashboard():
                 load = str(datetime.strptime(request.form['load'], '%Y-%m-%d'))
                 unload = str(datetime.strptime(request.form['unload'], '%Y-%m-%d'))
                 query = "INSERT INTO in_transit (request_fk, load_dt, unload_dt) VALUES (" + str(request.form['myRequest']) + ",'" + load + "','" + unload + "');"
-                flash(query)
                 cursor.execute(query)
                 conn.commit()
                 flash("Successfully updated the transit information")

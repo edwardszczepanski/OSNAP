@@ -51,7 +51,7 @@ CREATE TABLE requests (
     request_dt TIMESTAMP,
     approve_dt TIMESTAMP,
     approved BOOLEAN NOT NULL,
-    approve_user_fk INTEGER REFERENCES users(user_pk) NOT NULL
+    approve_user_fk INTEGER REFERENCES users(user_pk)
 );
 
 CREATE TABLE in_transit (

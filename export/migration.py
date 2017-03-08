@@ -91,7 +91,7 @@ def transfers():
 def connect():
     global cursor
     global conn
-    connection_string = "host='localhost' port='" + port + "' dbname='" + db_name + "' user='osnapdev' password='secret'"
+    connection_string = "host='localhost' port='" + "5432" + "' dbname='" + db_name + "' user='osnapdev' password='secret'"
     conn = psycopg2.connect(connection_string)
     cursor = conn.cursor()
     work_mem = 2048
@@ -100,10 +100,8 @@ def connect():
 if __name__ == '__main__':
     global db_name
     global port
-    if len(sys.argv) == 3:
+    if len(sys.argv) == 2:
         db_name = sys.argv[1]
-        port = sys.argv[2]
     else:
         db_name = "lost"
-        port = "5432"
     main()
