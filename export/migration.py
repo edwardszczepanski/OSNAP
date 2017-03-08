@@ -68,16 +68,24 @@ def transfers():
             cursor.execute("SELECT * FROM facilities WHERE facility_pk=" + str(entry[3]) + ";")
             source = cursor.fetchone()[2]
             cursor.execute("SELECT * FROM facilities WHERE facility_pk=" + str(entry[4]) + ";")
-            # Below are the approved ones
             destination = cursor.fetchone()[2]
-            approve_dt = str(entry[6].strftime('%Y-%m-%d %H:%M:%S'))
-            cursor.execute("SELECT * FROM users WHERE user_pk=" + str(entry[8]) + ";")
-            approve_by = cursor.fetchone()[2]
+            # Below are the approved ones
+            approve_dt = "NULL"
+            if entry[6] != None:
+                approve_dt = str(entry[6].strftime('%Y-%m-%d %H:%M:%S'))
+            approve_by = "NULL"
+            if entry[8] != None:
+                cursor.execute("SELECT * FROM users WHERE user_pk=" + str(entry[8]) + ";")
+                approve_by = cursor.fetchone()[2]
             # These two queries are passed back and may not be complete
+            load_dt = "NULL"
+            unload_dt = "NULL"
             cursor.execute("SELECT * FROM in_transit WHERE request_fk=" + str(entry[0]) + ";")
-            load_dt = str(cursor.fetchone()[2].strftime('%Y-%m-%d %H:%M:%S'))
-            cursor.execute("SELECT * FROM in_transit WHERE request_fk=" + str(entry[0]) + ";")
-            unload_dt = str(cursor.fetchone()[3].strftime('%Y-%m-%d %H:%M:%S'))
+            if len(cursor.fetchall()) > 0:
+                cursor.execute("SELECT * FROM in_transit WHERE request_fk=" + str(entry[0]) + ";")
+                load_dt = str(cursor.fetchone()[2].strftime('%Y-%m-%d %H:%M:%S'))
+                cursor.execute("SELECT * FROM in_transit WHERE request_fk=" + str(entry[0]) + ";")
+                unload_dt = str(cursor.fetchone()[3].strftime('%Y-%m-%d %H:%M:%S'))
             mywriter.writerow([asset_tag] + [request_by] + [request_dt] + [approve_by] + [approve_dt] + [source] + [destination] + [load_dt] + [unload_dt])
 
 def connect():
