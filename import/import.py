@@ -1,5 +1,5 @@
 import psycopg2, os, sys, csv, glob
-from random import randint
+from datetime import datetime
 
 def main():
     connect()
@@ -21,44 +21,43 @@ def facilities(filename):
     reader = read(filename)
     head = next(reader)
     for row in reader:
-        insert("facilities", ["fcode", "common_name", "location"], [name, name, name])
-    return
+        insert("facilities", ["fcode", "common_name", "location"], [row[0], row[1], row[0]])
+    conn.commit()
+
 
 def assets(filename):
     reader = read(filename)
     head = next(reader)
     for row in reader:
-        print(row)
-        #insert("assets)
+        insert("assets", ["asset_tag", "description"], [row[0], row[1]])
+        cursor.execute("SELECT * FROM assets WHERE asset_tag = '" + row[0] + "';")
+        asset_fk = cursor.fetchone()[0]
+        cursor.execute("SELECT * FROM facilities WHERE fcode = '" + row[2] + "';")
+        facility_fk = cursor.fetchone()[0]
+        arrive_dt = "NULL"
+        depart_dt = "NULL"
+        if row[3] != 'NULL':
+            arrive_dt = str(datetime.strptime(row[3], '%Y-%m-%d'))
+        if row[4] != 'NULL':
+            depart_dt = str(datetime.strptime(row[4], '%Y-%m-%d'))
+        insert("asset_at", ["asset_fk", "facility_fk", "arrive_dt", "depart_dt"], [asset_fk, facility_fk, arrive_dt, depart_dt])
+        conn.commit()
         
-            
-def transfers(filename):
-    return
-            
 def users(filename):
-    return
-            
-
-def legacy():
-    dir = os.getcwd() + "/osnap_legacy/"
-    for filename in glob.iglob(dir + "*.csv"):
-        if "inventory" in filename:
-            name = filename.split('/')[-1].split('_')[0]
-            insert("facilities", ["fcode", "common_name", "location"], [name, name, name])
-            cursor.execute("SELECT facility_pk FROM facilities WHERE fcode = '" + name + "';")
-            facility_pk = cursor.fetchone()[0]
-            inventory(filename, facility_pk)
-    conn.commit()
-
-def inventory(filename, facility_fk):
     reader = read(filename)
     head = next(reader)
     for row in reader:
-        insert("assets", ["asset_tag", "description"], [row[0], row[2]])
-        cursor.execute("SELECT asset_pk FROM assets WHERE asset_tag = '" + row[0] + "';")
-        asset_fk = cursor.fetchone()[0]
-        insert("asset_at", ["asset_fk", "facility_fk"], [asset_fk, facility_fk])
+        cursor.execute("SELECT * FROM roles WHERE title = '" + row[2] + "';")
+        role_fk = cursor.fetchone()[0]
+        insert("users", ["role_fk", "username", "password"], [role_fk, row[0], row[1]])
 
+
+def transfers(filename):
+    reader = read(filename)
+    head = next(reader)
+    #for row in reader:
+            
+            
 def read(filename):
     return csv.reader(open(filename, newline=''), delimiter=',', quotechar='|')
 
@@ -66,7 +65,7 @@ def insert(table, columns, values):
     column_string = ','.join(columns)
     value_string = ""
     for i in range(len(values)):
-        if type(values[i]) is str:
+        if type(values[i]) is str and values[i] != 'NULL':
             value_string += ("'" + values[i] + "'")
         else:
             value_string += (str(values[i]))
