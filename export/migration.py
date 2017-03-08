@@ -17,7 +17,7 @@ def users():
         for entry in response:
             username = entry[2]
             password = entry[3]
-            active="TRUE"
+            active = str(entry[4])
             cursor.execute("SELECT * FROM roles WHERE role_pk=" + str(entry[1]) + ";")
             role = cursor.fetchone()[1]
             mywriter.writerow([username] + [password] + [role] + [active])
@@ -50,7 +50,7 @@ def assets():
             if asset_at:
                 facility_fk = str(asset_at[0])
                 cursor.execute("SELECT * FROM facilities WHERE facility_pk=" + facility_fk + ";")
-                facility = cursor.fetchone()[2]
+                facility = cursor.fetchone()[1]
                 acquired = str(asset_at[2].strftime('%Y-%m-%d'))
                 if asset_at[3] != None:
                     disposed = str(asset_at[3].strftime('%Y-%m-%d'))
@@ -80,7 +80,7 @@ def transfers():
             if entry[8] != None:
                 cursor.execute("SELECT * FROM users WHERE user_pk=" + str(entry[8]) + ";")
                 approve_by = cursor.fetchone()[2]
-            # These two queries are passed back and may not be complete
+            # These two queries that are passed back and may not be complete
             load_dt = "NULL"
             unload_dt = "NULL"
             cursor.execute("SELECT * FROM in_transit WHERE request_fk=" + str(entry[0]) + ";")

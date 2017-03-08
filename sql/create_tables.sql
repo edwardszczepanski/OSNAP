@@ -18,7 +18,8 @@ CREATE TABLE users(
     user_pk SERIAL PRIMARY KEY, 
     role_fk INTEGER REFERENCES roles(role_pk) NOT NULL,
     username VARCHAR(16) UNIQUE NOT NULL,
-    password VARCHAR(16) NOT NULL
+    password VARCHAR(16) NOT NULL,
+    active BOOLEAN DEFAULT TRUE
 );
 
 CREATE TABLE facilities (

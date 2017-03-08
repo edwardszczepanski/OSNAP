@@ -49,7 +49,7 @@ def users(filename):
     for row in reader:
         cursor.execute("SELECT * FROM roles WHERE title = '" + row[2] + "';")
         role_fk = cursor.fetchone()[0]
-        insert("users", ["role_fk", "username", "password"], [role_fk, row[0], row[1]])
+        insert("users", ["role_fk", "username", "password", "status"], [role_fk, row[0], row[1]], row[2])
     conn.commit()
 
 
@@ -99,10 +99,6 @@ def insert(table, columns, values):
             value_string += ","
     string = "INSERT INTO {}({}) VALUES ({});".format(table, column_string, value_string)
     cursor.execute(string)
-
-        #insert("requests", ["asset_fk", "user_fk", "src_fk", "dest_fk", "request_dt", "approve_dt", "approve_user_fk"], [asset_fk, ])
-        #insert("in_transit", ["request_fk", "load_dt", "unload_dt"], [role_fk, row[0], row[1]])
-            
             
 def read(filename):
     return csv.reader(open(filename, newline=''), delimiter=',', quotechar='|')
