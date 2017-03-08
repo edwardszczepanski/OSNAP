@@ -24,7 +24,6 @@ def facilities(filename):
         insert("facilities", ["fcode", "common_name", "location"], [row[0], row[1], row[0]])
     conn.commit()
 
-
 def assets(filename):
     reader = read(filename)
     head = next(reader)
@@ -49,7 +48,7 @@ def users(filename):
     for row in reader:
         cursor.execute("SELECT * FROM roles WHERE title = '" + row[2] + "';")
         role_fk = cursor.fetchone()[0]
-        insert("users", ["role_fk", "username", "password", "status"], [role_fk, row[0], row[1]], row[2])
+        insert("users", ["role_fk", "username", "password", "active"], [role_fk, row[0], row[1], row[3]])
     conn.commit()
 
 

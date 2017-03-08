@@ -48,7 +48,7 @@ def assets():
             acquired = "NULL"
             disposed = "NULL"
             if asset_at:
-                facility_fk = str(asset_at[0])
+                facility_fk = str(asset_at[1])
                 cursor.execute("SELECT * FROM facilities WHERE facility_pk=" + facility_fk + ";")
                 facility = cursor.fetchone()[1]
                 acquired = str(asset_at[2].strftime('%Y-%m-%d'))

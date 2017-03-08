@@ -1,10 +1,10 @@
 username,password,role,active
-malcom,svalley,Logistics Officer,TRUE
-kaylee,sh1ny,Facilities Officer,TRUE
-inara,AeICfUZdNUyg,Facilities Officer,TRUE
-jayne,b00m,Logistics Officer,TRUE
-river,2x2HandsOfBlue,Logistics Officer,TRUE
-shepherd,h4v3n,Facilities Officer,TRUE
-simon,river,Facilities Officer,TRUE
-zoe,svalley,Logistics Officer,TRUE
-wash,dinosaurs,Facilities Officer,TRUE
+malcom,svalley,Logistics Officer,True
+kaylee,sh1ny,Facilities Officer,True
+inara,AeICfUZdNUyg,Facilities Officer,True
+jayne,b00m,Logistics Officer,True
+river,2x2HandsOfBlue,Logistics Officer,True
+shepherd,h4v3n,Facilities Officer,False
+simon,river,Facilities Officer,True
+zoe,svalley,Logistics Officer,True
+wash,dinosaurs,Facilities Officer,False
