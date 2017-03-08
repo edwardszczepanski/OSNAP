@@ -3,7 +3,6 @@ from datetime import datetime
 
 def main():
     connect()
-    """
     for filename in glob.iglob(input + "*"):
         if "facilities" in filename:
             facilities(filename)
@@ -13,7 +12,6 @@ def main():
     for filename in glob.iglob(input + "*"):
         if "assets" in filename:
             assets(filename)
-    """
     for filename in glob.iglob(input + "*"):
         if "transfers" in filename:
             transfers(filename)
