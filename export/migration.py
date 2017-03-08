@@ -43,11 +43,26 @@ def assets():
             asset_tag = entry[1]
             description = entry[2]
             cursor.execute("SELECT * FROM asset_at WHERE asset_fk=" + str(entry[0]) + ";")
-            asset_at = cursor.fetchone()[1]
-            mywriter.writerow([username] + [password] + [role] + [active])
+            asset_at = cursor.fetchone()
+            facility_fk = str(asset_at[0])
+            cursor.execute("SELECT * FROM facilities WHERE facility_pk=" + facility_fk + ";")
+            facility = cursor.fetchone()[2]
+            acquired = str(asset_at[2].strftime('%Y-%m-%d'))
+            disposed = "NULL"
+            if asset_at[3] != None:
+                disposed = str(asset_at[3].strftime('%Y-%m-%d'))
+            mywriter.writerow([asset_tag] + [description] + [facility] + [acquired] + [disposed])
 
 def transfers():
-    return
+    with open('facilities.csv', 'w', newline='\n') as csvfile:
+        mywriter = csv.writer(csvfile, quotechar="'", quoting=csv.QUOTE_MINIMAL)
+        mywriter.writerow(['fcode', 'common_name'])
+        cursor.execute("SELECT * FROM facilities;")
+        response = cursor.fetchall()
+        for entry in response:
+            fcode = entry[1]
+            common_name = entry[2]
+            mywriter.writerow([fcode] + [common_name])
 
 def connect():
     global cursor
