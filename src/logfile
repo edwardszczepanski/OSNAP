@@ -61,3 +61,9 @@ STATEMENT:  create table asset_at (
 	);
 ERROR:  invalid input syntax for integer: "arst" at character 27
 STATEMENT:  insert into users values ('arst', 'arst');
+LOG:  database system was shut down at 2017-03-07 22:36:35 UTC
+LOG:  MultiXact member wraparound protections are now enabled
+LOG:  database system is ready to accept connections
+LOG:  autovacuum launcher started
+ERROR:  column "user_fk" does not exist at character 27
+STATEMENT:  SELECT * FROM roles WHERE user_fk=1;

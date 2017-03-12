@@ -251,7 +251,7 @@ def dashboard():
             else:
                 if 'approveButton' in request.form:
                     dt = str(datetime.now())
-                    query = "UPDATE requests SET approved=TRUE" + ", approve_dt='" + dt + "' WHERE request_pk = " + str(request.form['myRequest']) + ";"
+                    query = "UPDATE requests SET approve_user_fk=" + str(session['user_pk']) + ", approved=TRUE" + ", approve_dt='" + dt + "' WHERE request_pk = " + str(request.form['myRequest']) + ";"
                     cursor.execute(query)
                     conn.commit()
                     flash("Request was successfully approved")
