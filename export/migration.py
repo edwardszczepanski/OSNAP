@@ -54,20 +54,44 @@ def assets():
             mywriter.writerow([asset_tag] + [description] + [facility] + [acquired] + [disposed])
 
 def transfers():
-    with open('facilities.csv', 'w', newline='\n') as csvfile:
+    with open('transfers.csv', 'w', newline='\n') as csvfile:
         mywriter = csv.writer(csvfile, quotechar="'", quoting=csv.QUOTE_MINIMAL)
-        mywriter.writerow(['fcode', 'common_name'])
-        cursor.execute("SELECT * FROM facilities;")
+        mywriter.writerow(['asset_tag', 'request_by', 'request_dt', 'approve_by', 'approve_dt', 'source', 'destination', 'load_dt', 'unload_dt'])
+        cursor.execute("SELECT * FROM requests;")
         response = cursor.fetchall()
         for entry in response:
-            fcode = entry[1]
-            common_name = entry[2]
-            mywriter.writerow([fcode] + [common_name])
+            cursor.execute("SELECT * FROM assets WHERE asset_pk=" + str(entry[1]) + ";")
+            asset_tag = cursor.fetchone()[1]
+            cursor.execute("SELECT * FROM users WHERE user_pk=" + str(entry[2]) + ";")
+            request_by = cursor.fetchone()[2]
+            request_dt = str(entry[5].strftime('%Y-%m-%d %H:%M:%S'))
+            cursor.execute("SELECT * FROM facilities WHERE facility_pk=" + str(entry[3]) + ";")
+            source = cursor.fetchone()[2]
+            cursor.execute("SELECT * FROM facilities WHERE facility_pk=" + str(entry[4]) + ";")
+            destination = cursor.fetchone()[2]
+            # Below are the approved ones
+            approve_dt = "NULL"
+            if entry[6] != None:
+                approve_dt = str(entry[6].strftime('%Y-%m-%d %H:%M:%S'))
+            approve_by = "NULL"
+            if entry[8] != None:
+                cursor.execute("SELECT * FROM users WHERE user_pk=" + str(entry[8]) + ";")
+                approve_by = cursor.fetchone()[2]
+            # These two queries are passed back and may not be complete
+            load_dt = "NULL"
+            unload_dt = "NULL"
+            cursor.execute("SELECT * FROM in_transit WHERE request_fk=" + str(entry[0]) + ";")
+            if len(cursor.fetchall()) > 0:
+                cursor.execute("SELECT * FROM in_transit WHERE request_fk=" + str(entry[0]) + ";")
+                load_dt = str(cursor.fetchone()[2].strftime('%Y-%m-%d %H:%M:%S'))
+                cursor.execute("SELECT * FROM in_transit WHERE request_fk=" + str(entry[0]) + ";")
+                unload_dt = str(cursor.fetchone()[3].strftime('%Y-%m-%d %H:%M:%S'))
+            mywriter.writerow([asset_tag] + [request_by] + [request_dt] + [approve_by] + [approve_dt] + [source] + [destination] + [load_dt] + [unload_dt])
 
 def connect():
     global cursor
     global conn
-    connection_string = "host='localhost' port='" + port + "' dbname='" + db_name + "' user='osnapdev' password='secret'"
+    connection_string = "host='localhost' port='" + "5432" + "' dbname='" + db_name + "' user='osnapdev' password='secret'"
     conn = psycopg2.connect(connection_string)
     cursor = conn.cursor()
     work_mem = 2048
@@ -76,10 +100,8 @@ def connect():
 if __name__ == '__main__':
     global db_name
     global port
-    if len(sys.argv) == 3:
+    if len(sys.argv) == 2:
         db_name = sys.argv[1]
-        port = sys.argv[2]
     else:
         db_name = "lost"
-        port = "5432"
     main()
