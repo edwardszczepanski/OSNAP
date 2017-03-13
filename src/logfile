@@ -103,3 +103,91 @@ ERROR:  syntax error at or near ";" at character 34
 STATEMENT:  SELECT * FROM users INNER JOIN  q;
 ERROR:  column "user_pk" does not exist at character 32
 STATEMENT:  SELECT * FROM facilities WHERE user_pk=1;
+ERROR:  relation "roles" already exists
+STATEMENT:  /*
+	 * user_pk is a serial primary key for more flexibility rather than using the username value.
+	 * username and password have been limited to 16 characters as per the project description.
+	 * Only one table was created as I don't see a big reason to have two separate tables.
+	 * Much of the design of this schema is coming directly from earlier assignments. Although
+	 * the LOST database schema is no longer being enforced I still think it is a good idea to
+	 * follow much of the same principles. I may have to remove some stuff in the future.
+	 * This has been updated for revision #3. After last assignment I had some technical debt so that was difficult to fix. Not so much here, but in my SQL queries. I had a location foreign key in assets, which doesn't really make sense... Fixed now.
+	 * I made my requests and in_transit two separate tables. in_transit is associated with requests. It is a one-to-one relationship. Pretty simple. All in_transit holds really is start and end dates.
+	 * Requests holds most of the information. I think it is a pretty solid data model.
+	 */
+	CREATE TABLE roles (
+	    role_pk SERIAL PRIMARY KEY,
+	    title VARCHAR(32)
+	);
+ERROR:  relation "users" already exists
+STATEMENT:  CREATE TABLE users(
+	    user_pk SERIAL PRIMARY KEY, 
+	    role_fk INTEGER REFERENCES roles(role_pk) NOT NULL,
+	    username VARCHAR(16) UNIQUE NOT NULL,
+	    password VARCHAR(16) NOT NULL
+	);
+ERROR:  relation "facilities" already exists
+STATEMENT:  CREATE TABLE facilities (
+	    facility_pk SERIAL PRIMARY KEY,
+	    fcode VARCHAR(6),
+	    common_name VARCHAR(32),
+	    location VARCHAR(128)
+	);
+ERROR:  relation "assets" already exists
+STATEMENT:  CREATE TABLE assets (
+	    asset_pk SERIAL PRIMARY KEY,
+	    asset_tag VARCHAR(16),
+	    description TEXT,
+	    disposed BOOLEAN
+	);
+ERROR:  relation "asset_at" already exists
+STATEMENT:  CREATE TABLE asset_at (
+	    asset_fk INTEGER REFERENCES assets(asset_pk) NOT NULL,
+	    facility_fk INTEGER REFERENCES facilities(facility_pk) NOT NULL,
+	    arrive_dt TIMESTAMP,
+	    depart_dt TIMESTAMP
+	);
+ERROR:  relation "requests" already exists
+STATEMENT:  CREATE TABLE requests (
+	    request_pk SERIAL PRIMARY KEY,
+	    asset_fk INTEGER REFERENCES assets(asset_pk) NOT NULL,
+	    user_fk INTEGER REFERENCES users(user_pk) NOT NULL,
+	    src_fk INTEGER REFERENCES facilities(facility_pk) NOT NULL,
+	    dest_fk INTEGER REFERENCES facilities(facility_pk) NOT NULL,
+	    request_dt TIMESTAMP,
+	    approve_dt TIMESTAMP,
+	    approved BOOLEAN NOT NULL,
+	    approve_user_fk INTEGER REFERENCES users(user_pk)
+	);
+ERROR:  relation "in_transit" already exists
+STATEMENT:  CREATE TABLE in_transit (
+	    in_transit_pk SERIAL PRIMARY KEY,
+	    request_fk INTEGER REFERENCES requests(request_pk) NOT NULL,
+	    load_dt TIMESTAMP,
+	    unload_dt TIMESTAMP
+	);
+ERROR:  duplicate key value violates unique constraint "roles_pkey"
+DETAIL:  Key (role_pk)=(1) already exists.
+STATEMENT:  INSERT INTO roles (role_pk, title) VALUES (1, 'Facilities Officer');
+ERROR:  duplicate key value violates unique constraint "roles_pkey"
+DETAIL:  Key (role_pk)=(2) already exists.
+STATEMENT:  INSERT INTO roles (role_pk, title) VALUES (2, 'Logistics Officer');
+ERROR:  column "facility" does not exist at character 8
+HINT:  Perhaps you meant to reference the column "facilities.facility_pk".
+STATEMENT:  SELECT facility FROM facilities WHERE fcode = 'HQ';
+ERROR:  invalid input syntax for type timestamp: "NULL" at character 100
+STATEMENT:  INSERT INTO asset_at(asset_fk,facility_fk,arrive_dt,depart_dt) VALUES (11,10,'1998-02-06 00:00:00','NULL');
+ERROR:  column "role_fk" of relation "facilities" does not exist at character 24
+STATEMENT:  INSERT INTO facilities(role_fk,username,password) VALUES ('malcom','malcom','svalley');
+ERROR:  duplicate key value violates unique constraint "users_username_key"
+DETAIL:  Key (username)=(malcom) already exists.
+STATEMENT:  INSERT INTO users(role_fk,username,password) VALUES (2,'malcom','svalley');
+ERROR:  duplicate key value violates unique constraint "users_username_key"
+DETAIL:  Key (username)=(malcom) already exists.
+STATEMENT:  INSERT INTO users(role_fk,username,password) VALUES (2,'malcom','svalley');
+ERROR:  null value in column "approved" violates not-null constraint
+DETAIL:  Failing row contains (1, 12, 1, 11, 16, 2005-02-18 00:00:00, 2005-02-20 00:00:00, null, 3).
+STATEMENT:  INSERT INTO requests(asset_fk,user_fk,src_fk,dest_fk,request_dt,approve_dt,approve_user_fk) VALUES (12,1,11,16,'2005-02-18 00:00:00','2005-02-20 00:00:00',3);
+ERROR:  column "asset_fk" does not exist at character 28
+HINT:  Perhaps you meant to reference the column "assets.asset_pk".
+STATEMENT:  SELECT * FROM assets WHERE asset_fk=10;

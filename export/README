@@ -1,0 +1,7 @@
+export_data.sh - Usage: ./export_data.sh my_db_name ./some/directory/path/
+If the folders in the second argument have not been created, they will be created
+
+migration.py - This file generates all the CSVs and takes in the first argument given to the export_data script.
+This script is not be run directly, but can be. 
+
+lost_data - Downloaded files for comparison to my generated files
