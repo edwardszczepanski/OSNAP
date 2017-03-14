@@ -1,0 +1,5 @@
+import_data.sh - Usage: ./import_data.sh my_db_name ./dir/where/CSVs/are/
+    This is a simple program that simply passed in the arguments to the python file
+
+import.py 
+    This file is invoked by the shell script. It will go through all the files in the specified directory and search for CSVs with the correct names. It will them import the data in the database.
