@@ -7,35 +7,64 @@ app = Flask(__name__)
 app.secret_key = 'super secret key'
 app.debug = True
 
-@app.route('/rest/activate_user', methods=('POST',))
+@app.route('/activate_user', methods=('POST',))
 def activate_user():
     conn = psycopg2.connect(dbname=dbname,host=dbhost,port=dbport)
-    cur  = conn.cursor()
+    cursor  = conn.cursor()
     if request.method=='POST' and 'arguments' in request.form:
         req=json.loads(request.form['arguments'])
 
     dat = dict()
     dat['timestamp'] = req['timestamp']
     dat['result'] = 'OK'
-
-    try:
-        cur.execute("INSERT INTO users (username) VALUES ('" + req['username'] + "');")
-        conn.commit()
-    except Exception as e:
+    dat['input'] = req
+    facilityOfficer = None
+    if req['role'] == "facofc":
+        facilityOfficer = True
+    elif req['role'] == "logofc":
+        facilityOfficer = False
+    else:
         dat['result'] = 'FAIL'
+
+    if facilityOfficer != None:
+        try:
+            query = "SELECT * FROM users WHERE username='" + req['username'] + "';"
+            cursor.execute(query)
+            response = cursor.fetchall()
+            if len(response) > 0:
+                query = "DELETE FROM users WHERE username=" + req['username'] + ";"
+                cursor.execute(query)
+            if facilityOfficer:
+                query = "INSERT INTO users (username, password, role) VALUES ('" + req['username'] + "', '" + req['password'] + "', 1);"
+            else:
+                query = "INSERT INTO users (username, password, role_fk) VALUES ('" + req['username'] + "', '" + req['password'] + "', 2);"
+            cursor.execute(query)
+            conn.commit()
+        except Exception as e:
+            dat['result'] = 'FAIL'
 
     data = json.dumps(dat)
     conn.close()
     return data
 
-@app.route('/rest/suspend_user', methods=('POST',))
-def suspend_user():
+@app.route('/revoke_user', methods=('POST',))
+def revoke_user():
     if request.method=='POST' and 'arguments' in request.form:
         req=json.loads(request.form['arguments'])
 
     dat = dict()
     dat['timestamp'] = req['timestamp']
     dat['result'] = 'OK'
+    try:
+        query = "SELECT * FROM users WHERE username='" + req['username'] + "';"
+        cursor.execute(query)
+        response = cursor.fetchall()
+        if len(response) > 0:
+            query = "DELETE FROM users WHERE username=" + req['username'] + ";"
+            cursor.execute(query)
+        conn.commit()
+    except Exception as e:
+        dat['result'] = 'FAIL'
     data = json.dumps(dat)
     return data
 
@@ -115,7 +144,7 @@ def dispose_asset():
     if request.method=='POST':
         asset_tag = request.form['asset_tag']
         date = request.form['date']
-        query = "SELECT * from assets WHERE asset_tag ='" + asset_tag + "';"
+        query = "SELECT * FROM assets WHERE asset_tag ='" + asset_tag + "';"
         
         if not check_duplicate(query, conn, cursor):
             flash('No asset exists with that asset tag')
