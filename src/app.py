@@ -5,6 +5,7 @@ from config import dbname, dbhost, dbport
 
 app = Flask(__name__)
 app.secret_key = 'super secret key'
+app.debug = True
 
 @app.route('/logout')
 def logout():
@@ -201,8 +202,7 @@ def add_facility():
             cursor.execute(query)
             conn.commit()
             flash('Facility was successfully added')
-        return render_template('dashboard.html')
-        return redirect(url_for('dashboard'))
+            return redirect(url_for('dashboard'))
     conn.close()
     return render_template('add_facility.html')
 
@@ -279,12 +279,14 @@ def dashboard():
             requests.append(dict)
         session['requests'] = requests
         if request.method == 'POST':
-            if 'myRequest' not in request.form or 'load' not in request.form or 'unload' not in request.form:
+            if 'myRequest' not in request.form or request.form['load'] == "" or request.form['unload'] == "":
                 flash("Please include both dates and select an entry")
             else:
                 load = str(datetime.strptime(request.form['load'], '%Y-%m-%d'))
                 unload = str(datetime.strptime(request.form['unload'], '%Y-%m-%d'))
                 query = "INSERT INTO in_transit (request_fk, load_dt, unload_dt) VALUES (" + str(request.form['myRequest']) + ",'" + load + "','" + unload + "');"
+                cursor.execute(query)
+                query = "DELETE FROM requests WHERE request_pk=" + str(request.form['myRequest']) + ";"
                 cursor.execute(query)
                 conn.commit()
                 flash("Successfully updated the transit information")
@@ -405,11 +407,11 @@ def transfer_req():
         cursor.execute(query)
         conn.commit()
         flash("Transfer request was successfully submitted")
+        return redirect(url_for('dashboard'))
 
     conn.close()
     return render_template('transfer_req.html')
 
 if __name__ == '__main__':
-    app.debug = True
     app.run(host='0.0.0.0', port=8080)
 
