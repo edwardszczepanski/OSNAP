@@ -236,6 +236,7 @@ def add_facility():
     conn.close()
     return render_template('add_facility.html')
 
+"""
 @app.route('/create_user', methods=['GET', 'POST'])
 def create_user():
     conn = psycopg2.connect(dbname=dbname, host=dbhost, port=dbport)
@@ -255,6 +256,7 @@ def create_user():
             flash('Username was successfully added')
     conn.close()
     return render_template('create_user.html')
+"""
 
 @app.route('/dashboard', methods=['GET', 'POST'])
 def dashboard():
