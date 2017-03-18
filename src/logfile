@@ -414,3 +414,6 @@ LOG:  database system was shut down at 2017-03-18 07:27:27 UTC
 LOG:  MultiXact member wraparound protections are now enabled
 LOG:  database system is ready to accept connections
 LOG:  autovacuum launcher started
+ERROR:  update or delete on table "requests" violates foreign key constraint "in_transit_request_fk_fkey" on table "in_transit"
+DETAIL:  Key (request_pk)=(1) is still referenced from table "in_transit".
+STATEMENT:  DELETE FROM requests WHERE request_pk=1;

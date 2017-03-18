@@ -286,7 +286,7 @@ def dashboard():
                 unload = str(datetime.strptime(request.form['unload'], '%Y-%m-%d'))
                 query = "INSERT INTO in_transit (request_fk, load_dt, unload_dt) VALUES (" + str(request.form['myRequest']) + ",'" + load + "','" + unload + "');"
                 cursor.execute(query)
-                query = "DELETE FROM requests WHERE request_pk=" + str(request.form['myRequest']) + ";"
+                query = "UPDATE requests SET approved=FALSE WHERE request_pk = '" + str(request.form['myRequest']) + "';"
                 cursor.execute(query)
                 conn.commit()
                 flash("Successfully updated the transit information")
