@@ -1,6 +1,3 @@
-# This client can be used to interact with the LOST interface prior to encryption
-# implementation
-
 import sys
 import json
 import datetime
@@ -12,13 +9,15 @@ from urllib.parse   import urlencode
 def main():
     # Check the CLI arguments
     if len(sys.argv)<3 :
-        print("Usage: python3 %s <url> <username>"%sys.argv[0])
+        print("Usage: python3 %s <url> <username> <password> <facofc|logofc>"%sys.argv[0])
         return
     
     # Prep the arguments blob
     args = dict()
     args['timestamp'] = datetime.datetime.utcnow().isoformat()
     args['username']  = sys.argv[2]
+    args['password']  = sys.argv[3]
+    args['role']  = sys.argv[4]
 
     # Print a message to let the user know what is being tried
     print("Activating user: %s"%args['username'])
@@ -43,4 +42,3 @@ def main():
 
 if __name__=='__main__':
     main()
-    

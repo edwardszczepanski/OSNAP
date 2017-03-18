@@ -1,6 +1,3 @@
-# This client can be used to interact with the LOST interface prior to encryption
-# implementation
-
 import sys
 import json
 import datetime
