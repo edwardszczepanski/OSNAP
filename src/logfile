@@ -469,3 +469,5 @@ ERROR:  column "aoienoien" does not exist at character 34
 STATEMENT:  DELETE FROM users WHERE username=aoienoien;
 ERROR:  column "newuser" does not exist at character 34
 STATEMENT:  DELETE FROM users WHERE username=newUser;
+ERROR:  column "role" of relation "users" does not exist at character 40
+STATEMENT:  INSERT INTO users (username, password, role) VALUES ('newUser', 'heyyoo', 1);

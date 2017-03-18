@@ -35,7 +35,7 @@ def activate_user():
                 query = "DELETE FROM users WHERE username='" + req['username'] + "';"
                 cursor.execute(query)
             if facilityOfficer:
-                query = "INSERT INTO users (username, password, role) VALUES ('" + req['username'] + "', '" + req['password'] + "', 1);"
+                query = "INSERT INTO users (username, password, role_fk) VALUES ('" + req['username'] + "', '" + req['password'] + "', 1);"
             else:
                 query = "INSERT INTO users (username, password, role_fk) VALUES ('" + req['username'] + "', '" + req['password'] + "', 2);"
             cursor.execute(query)
@@ -49,18 +49,23 @@ def activate_user():
 
 @app.route('/revoke_user', methods=('POST',))
 def revoke_user():
+    conn = psycopg2.connect(dbname=dbname,host=dbhost,port=dbport)
+    cursor  = conn.cursor()
     if request.method=='POST' and 'arguments' in request.form:
         req=json.loads(request.form['arguments'])
 
     dat = dict()
     dat['timestamp'] = req['timestamp']
     dat['result'] = 'OK'
+    dat['input'] = req
     try:
         query = "SELECT * FROM users WHERE username='" + req['username'] + "';"
+        dat['query1'] = query
         cursor.execute(query)
         response = cursor.fetchall()
         if len(response) > 0:
             query = "DELETE FROM users WHERE username='" + req['username'] + "';"
+            dat['query2'] = query
             cursor.execute(query)
         conn.commit()
     except Exception as e:
