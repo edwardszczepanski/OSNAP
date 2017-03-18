@@ -7,6 +7,38 @@ app = Flask(__name__)
 app.secret_key = 'super secret key'
 app.debug = True
 
+@app.route('/rest/activate_user', methods=('POST',))
+def activate_user():
+    conn = psycopg2.connect(dbname=dbname,host=dbhost,port=dbport)
+    cur  = conn.cursor()
+    if request.method=='POST' and 'arguments' in request.form:
+        req=json.loads(request.form['arguments'])
+
+    dat = dict()
+    dat['timestamp'] = req['timestamp']
+    dat['result'] = 'OK'
+
+    try:
+        cur.execute("INSERT INTO users (username) VALUES ('" + req['username'] + "');")
+        conn.commit()
+    except Exception as e:
+        dat['result'] = 'FAIL'
+
+    data = json.dumps(dat)
+    conn.close()
+    return data
+
+@app.route('/rest/suspend_user', methods=('POST',))
+def suspend_user():
+    if request.method=='POST' and 'arguments' in request.form:
+        req=json.loads(request.form['arguments'])
+
+    dat = dict()
+    dat['timestamp'] = req['timestamp']
+    dat['result'] = 'OK'
+    data = json.dumps(dat)
+    return data
+
 @app.route('/logout')
 def logout():
     session['logged_in'] = False
