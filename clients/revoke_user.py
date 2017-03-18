@@ -8,7 +8,7 @@ from urllib.parse   import urlencode
 
 def main():
     # Check the CLI arguments
-    if len(sys.argv)<3 :
+    if len(sys.argv)< 3:
         print("Usage: python3 %s <url> <username>"%sys.argv[0])
         return
     
@@ -28,7 +28,7 @@ def main():
     #print("sending:\n%s"%data)
     
     # Make the resquest
-    req = Request(sys.argv[1],data.encode('ascii'),method='POST')
+    req = Request(sys.argv[1] + "revoke_user",data.encode('ascii'),method='POST')
     res = urlopen(req)
     
     # Parse the response
@@ -36,6 +36,7 @@ def main():
     
     # Print the result code
     print("Call to LOST returned: %s"%resp['result'])
+    print(resp)
     
 
 if __name__=='__main__':

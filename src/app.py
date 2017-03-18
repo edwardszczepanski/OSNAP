@@ -32,7 +32,7 @@ def activate_user():
             cursor.execute(query)
             response = cursor.fetchall()
             if len(response) > 0:
-                query = "DELETE FROM users WHERE username=" + req['username'] + ";"
+                query = "DELETE FROM users WHERE username='" + req['username'] + "';"
                 cursor.execute(query)
             if facilityOfficer:
                 query = "INSERT INTO users (username, password, role) VALUES ('" + req['username'] + "', '" + req['password'] + "', 1);"
@@ -60,7 +60,7 @@ def revoke_user():
         cursor.execute(query)
         response = cursor.fetchall()
         if len(response) > 0:
-            query = "DELETE FROM users WHERE username=" + req['username'] + ";"
+            query = "DELETE FROM users WHERE username='" + req['username'] + "';"
             cursor.execute(query)
         conn.commit()
     except Exception as e:
