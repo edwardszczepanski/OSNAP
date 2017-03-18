@@ -167,6 +167,7 @@ def add_asset():
             cursor.execute(query2)
             conn.commit()
             flash('Asset was successfully added')
+            return redirect(url_for('dashboard'))
     conn.close()
     return render_template('add_asset.html')
 
@@ -200,6 +201,8 @@ def add_facility():
             cursor.execute(query)
             conn.commit()
             flash('Facility was successfully added')
+        return render_template('dashboard.html')
+        return redirect(url_for('dashboard'))
     conn.close()
     return render_template('add_facility.html')
 
@@ -255,11 +258,13 @@ def dashboard():
                     cursor.execute(query)
                     conn.commit()
                     flash("Request was successfully approved")
+                    return redirect(url_for('dashboard'))
                 elif 'rejectButton' in request.form:
                     query = "DELETE FROM requests WHERE request_pk=" + str(request.form['myRequest']) + ";"
                     cursor.execute(query)
                     conn.commit()
                     flash("Request was successfully rejected")
+                    return redirect(url_for('dashboard'))
     elif session['role'] == 2:
         cursor.execute("SELECT * FROM requests WHERE approved=TRUE;")
         res = cursor.fetchall()
@@ -283,6 +288,7 @@ def dashboard():
                 cursor.execute(query)
                 conn.commit()
                 flash("Successfully updated the transit information")
+                return redirect(url_for('dashboard'))
                     
     conn.close()
     return render_template('dashboard.html')
