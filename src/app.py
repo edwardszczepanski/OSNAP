@@ -27,8 +27,6 @@ def reports():
         return redirect(url_for('asset_report'))
     conn = psycopg2.connect(dbname=dbname, host=dbhost, port=dbport)
     cursor = conn.cursor()
-    #query = "SELECT * FROM assets INNER JOIN asset_at ON asset_pk=asset_fk INNER JOIN facilities ON assets.facility_fk=facility_pk;"
-
     query = "SELECT * FROM assets a JOIN asset_at aa ON asset_pk=asset_fk INNER JOIN facilities ON facility_fk=facility_pk WHERE facilities.common_name LIKE '%"+str(session['facility'])+"%' AND '"+str(session['date'])+"' >= aa.arrive_dt;"
     cursor.execute(query)
     res = cursor.fetchall()
