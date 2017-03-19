@@ -410,3 +410,10 @@ FATAL:  database "lost" does not exist
 FATAL:  database "LOST" does not exist
 ERROR:  column "role_fk" of relation "user_name" does not exist at character 44
 STATEMENT:  INSERT INTO user_name (username, password, role_fk, active) VALUES ('malcom', 'svalley', '1', 'TRUE');
+LOG:  database system was shut down at 2017-03-18 07:27:27 UTC
+LOG:  MultiXact member wraparound protections are now enabled
+LOG:  database system is ready to accept connections
+LOG:  autovacuum launcher started
+ERROR:  update or delete on table "requests" violates foreign key constraint "in_transit_request_fk_fkey" on table "in_transit"
+DETAIL:  Key (request_pk)=(1) is still referenced from table "in_transit".
+STATEMENT:  DELETE FROM requests WHERE request_pk=1;

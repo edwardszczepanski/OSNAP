@@ -5,6 +5,7 @@ from config import dbname, dbhost, dbport
 
 app = Flask(__name__)
 app.secret_key = 'super secret key'
+app.debug = True
 
 @app.route('/logout')
 def logout():
@@ -26,8 +27,6 @@ def reports():
         return redirect(url_for('asset_report'))
     conn = psycopg2.connect(dbname=dbname, host=dbhost, port=dbport)
     cursor = conn.cursor()
-    #query = "SELECT * FROM assets INNER JOIN asset_at ON asset_pk=asset_fk INNER JOIN facilities ON assets.facility_fk=facility_pk;"
-
     query = "SELECT * FROM assets a JOIN asset_at aa ON asset_pk=asset_fk INNER JOIN facilities ON facility_fk=facility_pk WHERE facilities.common_name LIKE '%"+str(session['facility'])+"%' AND '"+str(session['date'])+"' >= aa.arrive_dt;"
     cursor.execute(query)
     res = cursor.fetchall()
@@ -167,6 +166,7 @@ def add_asset():
             cursor.execute(query2)
             conn.commit()
             flash('Asset was successfully added')
+            return redirect(url_for('dashboard'))
     conn.close()
     return render_template('add_asset.html')
 
@@ -200,6 +200,7 @@ def add_facility():
             cursor.execute(query)
             conn.commit()
             flash('Facility was successfully added')
+            return redirect(url_for('dashboard'))
     conn.close()
     return render_template('add_facility.html')
 
@@ -255,11 +256,13 @@ def dashboard():
                     cursor.execute(query)
                     conn.commit()
                     flash("Request was successfully approved")
+                    return redirect(url_for('dashboard'))
                 elif 'rejectButton' in request.form:
                     query = "DELETE FROM requests WHERE request_pk=" + str(request.form['myRequest']) + ";"
                     cursor.execute(query)
                     conn.commit()
                     flash("Request was successfully rejected")
+                    return redirect(url_for('dashboard'))
     elif session['role'] == 2:
         cursor.execute("SELECT * FROM requests WHERE approved=TRUE;")
         res = cursor.fetchall()
@@ -274,15 +277,18 @@ def dashboard():
             requests.append(dict)
         session['requests'] = requests
         if request.method == 'POST':
-            if 'myRequest' not in request.form or 'load' not in request.form or 'unload' not in request.form:
+            if 'myRequest' not in request.form or request.form['load'] == "" or request.form['unload'] == "":
                 flash("Please include both dates and select an entry")
             else:
                 load = str(datetime.strptime(request.form['load'], '%Y-%m-%d'))
                 unload = str(datetime.strptime(request.form['unload'], '%Y-%m-%d'))
                 query = "INSERT INTO in_transit (request_fk, load_dt, unload_dt) VALUES (" + str(request.form['myRequest']) + ",'" + load + "','" + unload + "');"
                 cursor.execute(query)
+                query = "UPDATE requests SET approved=FALSE WHERE request_pk = '" + str(request.form['myRequest']) + "';"
+                cursor.execute(query)
                 conn.commit()
                 flash("Successfully updated the transit information")
+                return redirect(url_for('dashboard'))
                     
     conn.close()
     return render_template('dashboard.html')
@@ -399,11 +405,11 @@ def transfer_req():
         cursor.execute(query)
         conn.commit()
         flash("Transfer request was successfully submitted")
+        return redirect(url_for('dashboard'))
 
     conn.close()
     return render_template('transfer_req.html')
 
 if __name__ == '__main__':
-    app.debug = True
     app.run(host='0.0.0.0', port=8080)
 
