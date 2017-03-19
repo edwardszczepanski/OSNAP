@@ -417,3 +417,57 @@ LOG:  autovacuum launcher started
 ERROR:  update or delete on table "requests" violates foreign key constraint "in_transit_request_fk_fkey" on table "in_transit"
 DETAIL:  Key (request_pk)=(1) is still referenced from table "in_transit".
 STATEMENT:  DELETE FROM requests WHERE request_pk=1;
+ERROR:  column "username" does not exist at character 28
+STATEMENT:  SELECT * FROM assets WHERE username='arst';
+ERROR:  column "username" does not exist at character 28
+STATEMENT:  SELECT * FROM assets WHERE username='arstoienoien';
+ERROR:  column "username" does not exist at character 28
+STATEMENT:  SELECT * FROM assets WHERE username='arstoienoien';
+ERROR:  column "username" does not exist at character 28
+STATEMENT:  SELECT * FROM assets WHERE username='arstoienoien';
+ERROR:  column "username" does not exist at character 28
+STATEMENT:  SELECT * FROM assets WHERE username='arstoienoien';
+ERROR:  column "username" does not exist at character 28
+STATEMENT:  SELECT * FROM assets WHERE username='arstoienoien';
+ERROR:  column "username" does not exist at character 28
+STATEMENT:  SELECT * FROM assets WHERE username='arstoienoien';
+ERROR:  column "username" does not exist at character 28
+STATEMENT:  SELECT * FROM assets WHERE username='aoienoien';
+ERROR:  column "username" does not exist at character 28
+STATEMENT:  SELECT * FROM assets WHERE username='aoienoien';
+ERROR:  column "username" does not exist at character 28
+STATEMENT:  SELECT * FROM assets WHERE username='aoienoien';
+ERROR:  INSERT has more target columns than expressions at character 30
+STATEMENT:  INSERT INTO users (username, password) VALUES ('aoienoien');
+ERROR:  null value in column "role_fk" violates not-null constraint
+DETAIL:  Failing row contains (4, null, aoienoien, arst, t).
+STATEMENT:  INSERT INTO users (username, password) VALUES ('aoienoien', 'arst');
+ERROR:  null value in column "role_fk" violates not-null constraint
+DETAIL:  Failing row contains (5, null, aoienoien, arst, t).
+STATEMENT:  INSERT INTO users (username, password) VALUES ('aoienoien', 'arst');
+ERROR:  column "role" of relation "users" does not exist at character 40
+STATEMENT:  INSERT INTO users (username, password, role) VALUES ('aoienoien', 'arst', 2);
+ERROR:  column "role" of relation "users" does not exist at character 40
+STATEMENT:  INSERT INTO users (username, password, role) VALUES ('aoienoien', 'arst', 2);
+ERROR:  column "role" of relation "users" does not exist at character 40
+STATEMENT:  INSERT INTO users (username, password, role) VALUES ('aoienoien', 'arst', 2);
+ERROR:  column "aoienoien" does not exist at character 34
+STATEMENT:  DELETE FROM users WHERE username=aoienoien;
+ERROR:  column "aoienoien" does not exist at character 34
+STATEMENT:  DELETE FROM users WHERE username=aoienoien;
+ERROR:  column "aoienoien" does not exist at character 34
+STATEMENT:  DELETE FROM users WHERE username=aoienoien;
+ERROR:  column "aoienoien" does not exist at character 34
+STATEMENT:  DELETE FROM users WHERE username=aoienoien;
+ERROR:  column "aoienoien" does not exist at character 34
+STATEMENT:  DELETE FROM users WHERE username=aoienoien;
+ERROR:  column "aoienoien" does not exist at character 34
+STATEMENT:  DELETE FROM users WHERE username=aoienoien;
+ERROR:  column "aoienoien" does not exist at character 34
+STATEMENT:  DELETE FROM users WHERE username=aoienoien;
+ERROR:  column "aoienoien" does not exist at character 34
+STATEMENT:  DELETE FROM users WHERE username=aoienoien;
+ERROR:  column "newuser" does not exist at character 34
+STATEMENT:  DELETE FROM users WHERE username=newUser;
+ERROR:  column "role" of relation "users" does not exist at character 40
+STATEMENT:  INSERT INTO users (username, password, role) VALUES ('newUser', 'heyyoo', 1);

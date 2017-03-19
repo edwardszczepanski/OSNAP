@@ -7,6 +7,72 @@ app = Flask(__name__)
 app.secret_key = 'super secret key'
 app.debug = True
 
+@app.route('/activate_user', methods=('POST',))
+def activate_user():
+    conn = psycopg2.connect(dbname=dbname,host=dbhost,port=dbport)
+    cursor  = conn.cursor()
+    if request.method=='POST' and 'arguments' in request.form:
+        req=json.loads(request.form['arguments'])
+
+    dat = dict()
+    dat['timestamp'] = req['timestamp']
+    dat['result'] = 'OK'
+    dat['input'] = req
+    facilityOfficer = None
+    if req['role'] == "facofc":
+        facilityOfficer = True
+    elif req['role'] == "logofc":
+        facilityOfficer = False
+    else:
+        dat['result'] = 'FAIL'
+
+    if facilityOfficer != None:
+        try:
+            query = "SELECT * FROM users WHERE username='" + req['username'] + "';"
+            cursor.execute(query)
+            response = cursor.fetchall()
+            if len(response) > 0:
+                query = "DELETE FROM users WHERE username='" + req['username'] + "';"
+                cursor.execute(query)
+            if facilityOfficer:
+                query = "INSERT INTO users (username, password, role_fk) VALUES ('" + req['username'] + "', '" + req['password'] + "', 1);"
+            else:
+                query = "INSERT INTO users (username, password, role_fk) VALUES ('" + req['username'] + "', '" + req['password'] + "', 2);"
+            cursor.execute(query)
+            conn.commit()
+        except Exception as e:
+            dat['result'] = 'FAIL'
+
+    data = json.dumps(dat)
+    conn.close()
+    return data
+
+@app.route('/revoke_user', methods=('POST',))
+def revoke_user():
+    conn = psycopg2.connect(dbname=dbname,host=dbhost,port=dbport)
+    cursor  = conn.cursor()
+    if request.method=='POST' and 'arguments' in request.form:
+        req=json.loads(request.form['arguments'])
+
+    dat = dict()
+    dat['timestamp'] = req['timestamp']
+    dat['result'] = 'OK'
+    dat['input'] = req
+    try:
+        query = "SELECT * FROM users WHERE username='" + req['username'] + "';"
+        dat['query1'] = query
+        cursor.execute(query)
+        response = cursor.fetchall()
+        if len(response) > 0:
+            query = "DELETE FROM users WHERE username='" + req['username'] + "';"
+            dat['query2'] = query
+            cursor.execute(query)
+        conn.commit()
+    except Exception as e:
+        dat['result'] = 'FAIL'
+    data = json.dumps(dat)
+    return data
+
 @app.route('/logout')
 def logout():
     session['logged_in'] = False
@@ -83,7 +149,7 @@ def dispose_asset():
     if request.method=='POST':
         asset_tag = request.form['asset_tag']
         date = request.form['date']
-        query = "SELECT * from assets WHERE asset_tag ='" + asset_tag + "';"
+        query = "SELECT * FROM assets WHERE asset_tag ='" + asset_tag + "';"
         
         if not check_duplicate(query, conn, cursor):
             flash('No asset exists with that asset tag')
@@ -204,6 +270,7 @@ def add_facility():
     conn.close()
     return render_template('add_facility.html')
 
+"""
 @app.route('/create_user', methods=['GET', 'POST'])
 def create_user():
     conn = psycopg2.connect(dbname=dbname, host=dbhost, port=dbport)
@@ -223,6 +290,7 @@ def create_user():
             flash('Username was successfully added')
     conn.close()
     return render_template('create_user.html')
+"""
 
 @app.route('/dashboard', methods=['GET', 'POST'])
 def dashboard():
