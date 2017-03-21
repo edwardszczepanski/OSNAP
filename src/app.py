@@ -280,28 +280,6 @@ def add_facility():
     conn.close()
     return render_template('add_facility.html')
 
-"""
-@app.route('/create_user', methods=['GET', 'POST'])
-def create_user():
-    conn = psycopg2.connect(dbname=dbname, host=dbhost, port=dbport)
-    cursor = conn.cursor()
-    if request.method=='POST':
-        username = request.form['username']
-        password = request.form['password']
-        role = request.form['role']
-
-        query = "SELECT * from users WHERE username ='" + username + "';"
-        if check_duplicate(query, conn, cursor):
-            flash('Username already exists')
-        else:
-            query = "INSERT INTO users (username, password, role_fk) VALUES ('" + username + "', '" + password + "', " + role + ");"
-            cursor.execute(query)
-            conn.commit()
-            flash('Username was successfully added')
-    conn.close()
-    return render_template('create_user.html')
-"""
-
 @app.route('/dashboard', methods=['GET', 'POST'])
 def dashboard():
     conn = psycopg2.connect(dbname=dbname, host=dbhost, port=dbport)
