@@ -448,7 +448,7 @@ def transfer_req():
         fac_data.append(fac)
     session['facilities'] = fac_data
 
-    cursor.execute("SELECT * FROM assets;")
+    cursor.execute("SELECT * FROM assets WHERE disposed=FALSE;")
     res = cursor.fetchall()
     fac_data = []
     for r in res:
