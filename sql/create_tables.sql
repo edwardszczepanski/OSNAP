@@ -33,7 +33,7 @@ CREATE TABLE assets (
     asset_pk SERIAL PRIMARY KEY,
     asset_tag VARCHAR(16),
     description TEXT,
-    disposed BOOLEAN
+    disposed BOOLEAN DEFAULT FALSE
 );
 
 CREATE TABLE asset_at (
