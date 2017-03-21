@@ -216,6 +216,8 @@ def add_asset():
 
         if check_duplicate(query, conn, cursor):
             flash('Asset with the same asset tag already exists')
+        elif facility == "" or asset_tag == "" or description == "":
+            flash('Fill out all values to add an asset')
         else:
             query = "INSERT INTO assets (asset_tag, description, disposed) VALUES ('" + asset_tag + "', '" + description + "', FALSE);"
             cursor.execute(query)
@@ -261,6 +263,8 @@ def add_facility():
 
         if check_duplicate(query1, conn, cursor) or check_duplicate(query2, conn, cursor):
             flash('Facility with the same common name or fcode already exists')
+        elif common == "" or fcode == "" or location == "":
+            flash('Fill out all values to add a facility')
         else:
             query = "INSERT INTO facilities (common_name, fcode, location) VALUES ('" + common + "', '" + fcode + "', '" + location + "');"
             cursor.execute(query)
@@ -348,6 +352,10 @@ def dashboard():
             if 'myRequest' not in request.form or request.form['load'] == "" or request.form['unload'] == "":
                 flash("Please include both dates and select an entry")
             else:
+                if datetime.strptime(request.form['load'], '%Y-%m-%d') > datetime.strptime(request.form['unload'], '%Y-%m-%d'):
+                    flash("Load date must come before the unload date")
+                    return redirect(url_for('dashboard'))
+
                 load = str(datetime.strptime(request.form['load'], '%Y-%m-%d'))
                 unload = str(datetime.strptime(request.form['unload'], '%Y-%m-%d'))
                 query = "INSERT INTO in_transit (request_fk, load_dt, unload_dt) VALUES (" + str(request.form['myRequest']) + ",'" + load + "','" + unload + "');"
@@ -456,7 +464,7 @@ def transfer_req():
     for r in res:
         fac = {}
         fac['asset_fk'] = r[0]
-        fac['asset_tag'] = r[2]
+        fac['asset_tag'] = r[1]
         fac_data.append(fac)
     session['asset_tag'] = fac_data
 
@@ -469,6 +477,11 @@ def transfer_req():
         src_facility = str(request.form['src_facility'])
         dest_facility = str(request.form['dest_facility'])
         dt = str(datetime.now())
+
+        if src_facility == dest_facility:
+            flash("Ensure that the source and destination facilities are different")
+            return redirect(url_for('transfer_req'))
+
         query = "INSERT INTO requests (asset_fk, user_fk, src_fk, dest_fk, request_dt, approved) VALUES (" +  asset_tag + "," + str(session['user_pk']) + "," + src_facility + "," + dest_facility + ",'" + dt + "', FALSE" + ");"
         cursor.execute(query)
         conn.commit()
@@ -480,4 +493,3 @@ def transfer_req():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)
-

@@ -471,3 +471,11 @@ ERROR:  column "newuser" does not exist at character 34
 STATEMENT:  DELETE FROM users WHERE username=newUser;
 ERROR:  column "role" of relation "users" does not exist at character 40
 STATEMENT:  INSERT INTO users (username, password, role) VALUES ('newUser', 'heyyoo', 1);
+LOG:  database system was shut down at 2017-03-21 06:08:38 UTC
+LOG:  MultiXact member wraparound protections are now enabled
+LOG:  database system is ready to accept connections
+LOG:  autovacuum launcher started
+ERROR:  syntax error at or near "[" at character 65
+STATEMENT:  INSERT INTO in_transit (request_fk, load_dt, unload_dt) VALUES ([,'2017-03-14 00:00:00','2017-03-18 00:00:00');
+ERROR:  syntax error at or near "[" at character 65
+STATEMENT:  INSERT INTO in_transit (request_fk, load_dt, unload_dt) VALUES ([1,,'2017-03-14 00:00:00','2017-03-18 00:00:00');
