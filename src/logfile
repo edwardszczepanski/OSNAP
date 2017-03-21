@@ -559,3 +559,5 @@ STATEMENT:  CREATE TABLE asset_at (
 	    arrive_dt TIMESTAMP,
 	    depart_dt TIMESTAMP
 	);
+ERROR:  column "disposed" does not exist at character 32
+STATEMENT:  SELECT * FROM facilities WHERE disposed=FALSE;
