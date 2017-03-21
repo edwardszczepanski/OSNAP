@@ -396,20 +396,26 @@ def login():
             if not password_found:
                 error = 'Invalid password'
             else:
-                query = "SELECT role_fk FROM users where username='" + request.form['username'] + "';"
+                query = "SELECT active FROM users where username='" + request.form['username'] + "';"
                 cursor.execute(query)
                 response = cursor.fetchone()
-                session['role'] = response[0]
-                query2 = "SELECT user_pk FROM users where username='" + request.form['username'] + "';"
-                cursor.execute(query2)
-                response = cursor.fetchone()
-                session['user_pk'] = response[0]
-                session['logged_in'] = True
-                session['username'] = request.form['username']
-                session['password'] = request.form['password']
-                flash('Welcome ' + session['username'] + '!')
-                conn.close()
-                return redirect(url_for('dashboard'))
+                if not response[0]:
+                    error = 'Account is not activated'
+                else:
+                    query = "SELECT role_fk FROM users where username='" + request.form['username'] + "';"
+                    cursor.execute(query)
+                    response = cursor.fetchone()
+                    session['role'] = response[0]
+                    query2 = "SELECT user_pk FROM users where username='" + request.form['username'] + "';"
+                    cursor.execute(query2)
+                    response = cursor.fetchone()
+                    session['user_pk'] = response[0]
+                    session['logged_in'] = True
+                    session['username'] = request.form['username']
+                    session['password'] = request.form['password']
+                    flash('Welcome ' + session['username'] + '!')
+                    conn.close()
+                    return redirect(url_for('dashboard'))
     conn.close()
     return render_template('login.html', error=error)
 
