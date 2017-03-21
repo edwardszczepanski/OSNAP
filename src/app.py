@@ -19,10 +19,13 @@ def activate_user():
     dat['result'] = 'OK'
     dat['input'] = req
     facilityOfficer = None
+    roleVal = -1
     if req['role'] == "facofc":
         facilityOfficer = True
+        roleVal = '1'
     elif req['role'] == "logofc":
         facilityOfficer = False
+        roleVal = '2'
     else:
         dat['result'] = 'FAIL'
 
@@ -32,9 +35,9 @@ def activate_user():
             cursor.execute(query)
             response = cursor.fetchall()
             if len(response) > 0:
-                query = "DELETE FROM users WHERE username='" + req['username'] + "';"
+                query = "UPDATE users SET password='" + req['password'] + "', role_fk="  + roleVal + ", active=TRUE WHERE username='" + req['username'] + "';"
                 cursor.execute(query)
-            if facilityOfficer:
+            elif facilityOfficer:
                 query = "INSERT INTO users (username, password, role_fk) VALUES ('" + req['username'] + "', '" + req['password'] + "', 1);"
             else:
                 query = "INSERT INTO users (username, password, role_fk) VALUES ('" + req['username'] + "', '" + req['password'] + "', 2);"
@@ -63,9 +66,12 @@ def revoke_user():
         dat['query1'] = query
         cursor.execute(query)
         response = cursor.fetchall()
+        dat['do i make it'] = len(response)
         if len(response) > 0:
-            query = "DELETE FROM users WHERE username='" + req['username'] + "';"
-            dat['query2'] = query
+            dat['do i make it'] = "yes"
+            query = "UPDATE users SET active=FALSE WHERE username='" + req['username'] + "';"
+            dat['arst'] = query
+            #query = "DELETE FROM users WHERE username='" + req['username'] + "';"
             cursor.execute(query)
         conn.commit()
     except Exception as e:

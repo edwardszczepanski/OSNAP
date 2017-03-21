@@ -479,3 +479,12 @@ ERROR:  syntax error at or near "[" at character 65
 STATEMENT:  INSERT INTO in_transit (request_fk, load_dt, unload_dt) VALUES ([,'2017-03-14 00:00:00','2017-03-18 00:00:00');
 ERROR:  syntax error at or near "[" at character 65
 STATEMENT:  INSERT INTO in_transit (request_fk, load_dt, unload_dt) VALUES ([1,,'2017-03-14 00:00:00','2017-03-18 00:00:00');
+ERROR:  update or delete on table "users" violates foreign key constraint "requests_user_fk_fkey" on table "requests"
+DETAIL:  Key (user_pk)=(1) is still referenced from table "requests".
+STATEMENT:  DELETE FROM users WHERE username='1';
+ERROR:  column "rolefk" of relation "users" does not exist at character 32
+STATEMENT:  UPDATE users SET password='4', rolefk=2 WHERE username='4';
+ERROR:  column "rolefk" of relation "users" does not exist at character 32
+STATEMENT:  UPDATE users SET password='4', rolefk=2 WHERE username='4';
+ERROR:  column "rolefk" of relation "users" does not exist at character 32
+STATEMENT:  UPDATE users SET password='4', rolefk=2 WHERE username='4';
